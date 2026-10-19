@@ -1,0 +1,25 @@
+{
+  "name": "cabalsalud-web",
+  "version": "1.0.0",
+  "description": "Plataforma web oficial de Clínica Cabal Salud (cabalsalud.cl) con Pasarela Directa (Transbank Webpay Plus & Mercado Pago) y acoplamiento Headless con Gentia (gentia.cl)",
+  "main": "api/index.ts",
+  "scripts": {
+    "build": "node -e \"require('fs').cpSync('public', 'dist', {recursive: true})\"",
+    "compile": "tsc",
+    "start": "node dist/api/index.js",
+    "dev": "ts-node api/index.ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mercadopago": "^2.1.0",
+    "transbank-sdk": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

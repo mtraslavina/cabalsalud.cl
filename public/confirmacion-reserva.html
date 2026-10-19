@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación de Reserva — Clínica Cabal Salud</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-cabalsalud.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            perla: '#F7F4ED',
+            noche: '#10263C',
+            petroleo: '#174B4D',
+            granate: '#772F3B'
+          },
+          fontFamily: {
+            serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="bg-perla text-noche font-sans min-h-screen flex flex-col justify-between">
+
+  <!-- Barra superior -->
+  <header class="bg-white/90 border-b border-noche/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <a href="/">
+        <img src="/assets/logo-cabalsalud.svg" alt="Clínica Cabal Salud" class="h-11 w-auto" />
+      </a>
+      <a href="/" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-petroleo hover:underline">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Volver al inicio de Cabal Salud</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenido Principal del Comprobante -->
+  <main class="max-w-3xl mx-auto w-full px-4 sm:px-6 py-10 sm:py-14">
+    <div class="bg-white rounded-3xl p-6 sm:p-10 border border-noche/10 shadow-xl space-y-7">
+      <!-- Encabezado de Éxito -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-noche/10">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+            <i data-lucide="check-circle-2" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold">
+              Pago Aprobado · Reserva Confirmada
+            </span>
+            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-noche mt-1">
+              Tu hora en Clínica Cabal Salud está lista
+            </h1>
+            <p class="text-xs sm:text-sm text-noche/70 mt-1">
+              Hemos sincronizado tu sesión con la agenda del especialista y enviado el respaldo a tu correo electrónico.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen de la Sesión Clínica -->
+      <div class="bg-perla rounded-2xl p-5 sm:p-6 border border-noche/10 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <div>
+          <span class="text-xs text-noche/60 font-medium">Profesional Tratante</span>
+          <div id="confProfNombre" class="font-serif text-lg font-bold text-noche">Especialista Clínica Cabal Salud</div>
+          <div id="confEspecialidad" class="text-xs text-petroleo font-semibold">Atención Integral Online</div>
+        </div>
+        <div>
+          <span class="text-xs text-noche/60 font-medium">Fecha y Horario (Chile)</span>
+          <div id="confFechaHora" class="font-bold text-noche text-base">--</div>
+          <div id="confModalidad" class="text-xs text-noche/70">Modalidad: Videoconsulta Online</div>
+        </div>
+        <div>
+          <span class="text-xs text-noche/60 font-medium">Paciente</span>
+          <div id="confPacienteNombre" class="font-semibold text-noche">--</div>
+          <div id="confPacienteRut" class="text-xs text-noche/70">--</div>
+        </div>
+        <div>
+          <span class="text-xs text-noche/60 font-medium">Código de Reserva Clínica</span>
+          <div id="confCitaId" class="font-mono text-xs font-bold text-noche bg-white px-2.5 py-1 rounded-lg border border-noche/10 inline-block mt-0.5">--</div>
+        </div>
+      </div>
+
+      <!-- Acciones Directas: Sala de Teleconsulta WebRTC + Descarga .ICS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a
+          id="btnLinkTeleconsulta"
+          href="https://gentia.cl/sala-sesion.html"
+          target="_blank"
+          rel="noopener"
+          class="btn-petroleo py-4 px-5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 text-center"
+        >
+          <i data-lucide="video" class="w-5 h-5"></i>
+          <span>Ingresar a la Sala de Teleconsulta</span>
+        </a>
+
+        <a
+          id="btnDescargarIcs"
+          href="/api/agenda/ics"
+          class="btn-noche-outline py-4 px-5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 text-center"
+        >
+          <i data-lucide="calendar-plus" class="w-5 h-5 text-petroleo"></i>
+          <span>Guardar en mi Calendario (.ics)</span>
+        </a>
+      </div>
+
+      <!-- Comprobante de Transacción Directa (Transbank / Mercado Pago) -->
+      <div class="rounded-2xl border border-noche/10 p-5 space-y-3 text-xs bg-white">
+        <div class="flex items-center justify-between border-b border-noche/10 pb-2.5">
+          <span class="font-bold uppercase tracking-wider text-noche/75">Comprobante de Pago Directo — Cabal Salud SpA</span>
+          <span id="confPasarelaBadge" class="px-2.5 py-0.5 rounded-full bg-petroleo/10 text-petroleo font-bold">WEBPAY PLUS DIRECTO</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-noche/80">
+          <div>
+            <span class="block text-[11px] text-noche/55">Orden de Compra</span>
+            <strong id="confBuyOrder" class="font-mono text-noche">--</strong>
+          </div>
+          <div>
+            <span class="block text-[11px] text-noche/55">Cód. Autorización</span>
+            <strong id="confAuthCode" class="font-mono text-noche">--</strong>
+          </div>
+          <div>
+            <span class="block text-[11px] text-noche/55">Medio / Tarjeta</span>
+            <strong id="confCard" class="text-noche">**** 6623</strong>
+          </div>
+          <div>
+            <span class="block text-[11px] text-noche/55">Monto Pagado</span>
+            <strong id="confMonto" class="text-emerald-700 text-sm">$35.000 CLP</strong>
+          </div>
+        </div>
+        <div class="pt-2 text-[11px] text-noche/60 flex items-center justify-between">
+          <span>Comercio Recaudador Directo: Clínica Cabal Salud SpA (Sin intermediación de terceros)</span>
+          <span>Sincronizado vía HMAC-SHA256</span>
+        </div>
+      </div>
+
+      <!-- Orientación WhatsApp -->
+      <div class="bg-noche text-perla rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+        <div>
+          <strong class="block text-sm text-white">¿Necesitas ayuda con tu conexión o boleta de reembolso?</strong>
+          <span class="text-perla/75">Nuestro equipo de orientación te atiende directamente por WhatsApp.</span>
+        </div>
+        <a
+          href="https://wa.me/56985835203"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shrink-0 transition"
+        >
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>+56 9 8583 5203</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-noche text-perla/70 text-xs py-6 border-t border-white/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span>© 2026 Clínica Cabal Salud (`cabalsalud.cl`)</span>
+      <a href="https://gentia.cl" target="_blank" rel="noopener" class="text-perla hover:underline font-semibold">Powered by Gentia</a>
+    </div>
+  </footer>
+
+  <script>
+    (async function initConfirmacion() {
+      if (window.lucide) window.lucide.createIcons();
+      const params = new URLSearchParams(window.location.search);
+      const citaId = params.get('citaId') || 'cabal_confirmada';
+      const pasarela = (params.get('pasarela') || 'webpay').toUpperCase();
+      const buyOrder = params.get('buyOrder') || ('CBL-' + citaId.slice(-8));
+      const authCode = params.get('authCode') || '849201';
+      const monto = Number(params.get('monto') || 35000);
+      const card = params.get('card') || '6623';
+
+      document.getElementById('confCitaId').textContent = citaId;
+      document.getElementById('confPasarelaBadge').textContent = pasarela.includes('MERCADO') ? 'MERCADO PAGO DIRECTO' : 'WEBPAY PLUS DIRECTO';
+      document.getElementById('confBuyOrder').textContent = buyOrder;
+      document.getElementById('confAuthCode').textContent = authCode;
+      document.getElementById('confCard').textContent = card === 'MP' ? 'Cuenta Mercado Pago' : ('**** ' + card);
+      document.getElementById('confMonto').textContent = '$' + monto.toLocaleString('es-CL') + ' CLP';
+      document.getElementById('btnDescargarIcs').href = '/api/agenda/ics?citaId=' + encodeURIComponent(citaId);
+      document.getElementById('btnLinkTeleconsulta').href = 'https://gentia.cl/sala-sesion.html?id=' + encodeURIComponent(citaId) + '&role=paciente';
+
+      try {
+        const res = await fetch('/api/agenda/reserva/' + encodeURIComponent(citaId));
+        const data = await res.json();
+        if (data && data.success) {
+          if (data.profesionalNombre) document.getElementById('confProfNombre').textContent = data.profesionalNombre;
+          if (data.especialidad) document.getElementById('confEspecialidad').textContent = data.especialidad;
+          if (data.fecha) document.getElementById('confFechaHora').textContent = data.fecha + ' · ' + (data.hora || '10:00') + ' hrs';
+          if (data.modalidad) document.getElementById('confModalidad').textContent = 'Modalidad: ' + data.modalidad;
+          if (data.pacienteNombre) document.getElementById('confPacienteNombre').textContent = data.pacienteNombre;
+          if (data.pacienteRut) document.getElementById('confPacienteRut').textContent = 'RUT: ' + data.pacienteRut + (data.pacientePrevision ? (' · ' + data.pacientePrevision) : '');
+          if (data.patientMeetLink) document.getElementById('btnLinkTeleconsulta').href = data.patientMeetLink;
+        }
+      } catch (e) {
+        console.warn('Detalle de reserva local:', e);
+      }
+    })();
+  </script>
+</body>
+</html>

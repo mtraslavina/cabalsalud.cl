@@ -1,0 +1,175 @@
+/* ============================================================================
+   CLÍNICA CABAL SALUD (cabalsalud.cl) — HOJA DE ESTILOS OFICIAL
+   Conceptos Centrales: Claridad, Cercanía y Criterio
+   ============================================================================ */
+
+:root {
+  /* Paleta de Colores Oficial */
+  --cabal-perla: #F7F4ED;
+  --cabal-perla-dark: #ECE7DB;
+  --cabal-azul-noche: #10263C;
+  --cabal-azul-noche-soft: #1B3956;
+  --cabal-verde-petroleo: #174B4D;
+  --cabal-verde-petroleo-hover: #11393B;
+  --cabal-granate: #772F3B;
+  --cabal-granate-soft: #FDF2F4;
+
+  /* Tipografías Oficiales */
+  --font-serif: 'Source Serif 4', Georgia, Cambria, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Sombras y Bordes Orgánicos */
+  --shadow-soft: 0 12px 32px -10px rgba(16, 38, 60, 0.08);
+  --shadow-elevated: 0 24px 48px -12px rgba(16, 38, 60, 0.16);
+  --border-subtle: rgba(16, 38, 60, 0.10);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--cabal-perla);
+  color: var(--cabal-azul-noche);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--cabal-perla);
+  color: var(--cabal-azul-noche);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .font-serif-cabal {
+  font-family: var(--font-serif);
+  color: var(--cabal-azul-noche);
+  letter-spacing: -0.015em;
+}
+
+/* Botones Oficiales */
+.btn-petroleo {
+  background-color: var(--cabal-verde-petroleo);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 18px -4px rgba(23, 75, 77, 0.35);
+}
+
+.btn-petroleo:hover {
+  background-color: var(--cabal-verde-petroleo-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -4px rgba(23, 75, 77, 0.45);
+}
+
+.btn-noche-outline {
+  border: 1.5px solid rgba(16, 38, 60, 0.22);
+  color: var(--cabal-azul-noche);
+  background-color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-noche-outline:hover {
+  border-color: var(--cabal-verde-petroleo);
+  background-color: #FFFFFF;
+  color: var(--cabal-verde-petroleo);
+}
+
+/* Badges de Subespecialidades Estrella (Granate #772F3B) */
+.badge-granate {
+  background-color: rgba(119, 47, 59, 0.10);
+  color: var(--cabal-granate);
+  border: 1px solid rgba(119, 47, 59, 0.24);
+  font-weight: 600;
+}
+
+.badge-granate-solid {
+  background-color: var(--cabal-granate);
+  color: #F7F4ED;
+  font-weight: 600;
+}
+
+.filter-pill {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-pill.active-petroleo {
+  background-color: var(--cabal-verde-petroleo);
+  color: #FFFFFF;
+  border-color: var(--cabal-verde-petroleo);
+  box-shadow: 0 4px 12px rgba(23, 75, 77, 0.25);
+}
+
+.filter-pill.active-granate {
+  background-color: var(--cabal-granate);
+  color: #FFFFFF;
+  border-color: var(--cabal-granate);
+  box-shadow: 0 4px 12px rgba(119, 47, 59, 0.28);
+}
+
+/* Tarjetas de Profesionales */
+.prof-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(16, 38, 60, 0.09);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.prof-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+  border-color: rgba(23, 75, 77, 0.32);
+}
+
+/* Drawer / Modal de Agendamiento In-Page */
+.drawer-backdrop {
+  background: rgba(16, 38, 60, 0.55);
+  backdrop-filter: blur(5px);
+  transition: opacity 0.28s ease;
+}
+
+.drawer-panel {
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Slots de Horarios */
+.time-slot-btn {
+  border: 1.5px solid rgba(16, 38, 60, 0.14);
+  background: #FFFFFF;
+  color: var(--cabal-azul-noche);
+  border-radius: 12px;
+  padding: 0.65rem 0.75rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.18s ease;
+}
+
+.time-slot-btn:hover:not(:disabled) {
+  border-color: var(--cabal-verde-petroleo);
+  background: rgba(23, 75, 77, 0.05);
+}
+
+.time-slot-btn.selected {
+  background: var(--cabal-verde-petroleo);
+  color: #FFFFFF;
+  border-color: var(--cabal-verde-petroleo);
+  box-shadow: 0 4px 12px rgba(23, 75, 77, 0.28);
+}
+
+/* Scrollbar sutil */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F4ED;
+}
+::-webkit-scrollbar-thumb {
+  background: #C5BFA8;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #174B4D;
+}

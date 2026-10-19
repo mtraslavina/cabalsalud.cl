@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 68" fill="none">
+  <g transform="translate(4, 6)">
+    <rect x="0" y="0" width="56" height="56" rx="16" fill="#F7F4ED" fill-opacity="0.12" stroke="#F7F4ED" stroke-opacity="0.25" stroke-width="1.5"/>
+    <path d="M28 13C19.7157 13 13 19.7157 13 28C13 36.2843 19.7157 43 28 43C32.4 43 36.35 41.1 39.1 38.1" stroke="#F7F4ED" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M28 20V36M20 28H36" stroke="#F7F4ED" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="40.5" cy="17.5" r="4.5" fill="#772F3B" stroke="#F7F4ED" stroke-width="2"/>
+  </g>
+  <text x="72" y="34" fill="#F7F4ED" font-family="'Source Serif 4', Georgia, serif" font-weight="700" font-size="25" letter-spacing="-0.02em">Cabal Salud</text>
+  <text x="73" y="52" fill="#F7F4ED" fill-opacity="0.8" font-family="'Inter', system-ui, sans-serif" font-weight="600" font-size="10.5" letter-spacing="0.14em">RED DE SALUD INTEGRAL · CHILE</text>
+</svg>
