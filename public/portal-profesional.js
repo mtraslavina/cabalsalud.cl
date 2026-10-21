@@ -422,6 +422,9 @@
     document.getElementById("editExperiencia").value = prof.experienciaDetalle || "";
     document.getElementById("editEspecialidades").value = (prof.especialidades || []).join(", ");
     document.getElementById("editPrecioCLP").value = prof.precioCLP || 35000;
+    if (document.getElementById("editDuracionMinutos")) {
+      document.getElementById("editDuracionMinutos").value = String(prof.duracionMinutos || 50);
+    }
 
     // Subespecialidades estrella
     const subIds = prof.subespecialidadIds || [];
@@ -553,6 +556,7 @@
       modalidades,
       previsiones,
       precioCLP: Number(document.getElementById("editPrecioCLP")?.value || 35000),
+      duracionMinutos: Number(document.getElementById("editDuracionMinutos")?.value || 50),
       formacionAcademica: formacionActualizada
     };
 

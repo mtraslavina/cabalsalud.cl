@@ -1533,6 +1533,7 @@ app.get("/api/profesionales/lista", (_req, res) => {
       rnpi: p.rnpi,
       universidad: p.universidad,
       precioCLP: p.precioCLP,
+      duracionMinutos: p.duracionMinutos || 50,
       modalidades: p.modalidades,
       previsiones: p.previsiones,
       subespecialidadIds: p.subespecialidadIds,

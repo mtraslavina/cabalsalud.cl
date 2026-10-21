@@ -377,18 +377,18 @@
           </div>
         </div>
 
-        <!-- 5. Modalidades, Previsión y Arancel -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- 5. Modalidades, Previsión, Arancel y Duración de Sesión -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
             <label class="block text-xs font-semibold text-noche/80 mb-1">Modalidades de Atención</label>
             <div class="space-y-1.5 pt-1 text-xs">
               <label class="flex items-center gap-2">
                 <input type="checkbox" id="checkModOnline" checked class="accent-petroleo w-4 h-4" />
-                <span>Online (Videoconsulta Segura)</span>
+                <span>Online (Videoconsulta)</span>
               </label>
               <label class="flex items-center gap-2">
                 <input type="checkbox" id="checkModTerreno" class="accent-granate w-4 h-4" />
-                <span>Visita Domiciliaria / a Terreno</span>
+                <span>Visita a Terreno</span>
               </label>
             </div>
           </div>
@@ -402,7 +402,7 @@
               </label>
               <label class="flex items-center gap-2">
                 <input type="checkbox" id="checkPrevIsapre" checked class="accent-petroleo w-4 h-4" />
-                <span>Reembolso Isapres (Emisión de Boleta)</span>
+                <span>Reembolso Isapres</span>
               </label>
               <label class="flex items-center gap-2">
                 <input type="checkbox" id="checkPrevFonasa" checked class="accent-petroleo w-4 h-4" />
@@ -414,7 +414,20 @@
           <div>
             <label class="block text-xs font-semibold text-noche/80 mb-1">Arancel por Sesión (CLP) *</label>
             <input type="number" id="editPrecioCLP" step="1000" min="15000" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-serif font-bold text-noche focus:outline-none focus:border-petroleo" />
-            <div class="text-[11px] text-noche/60 mt-1">Duración: 50 minutos estándar.</div>
+            <div class="text-[11px] text-noche/60 mt-1">Cobro directo a Cabal Salud.</div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Duración de la Sesión *</label>
+            <select id="editDuracionMinutos" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-semibold text-noche focus:outline-none focus:border-petroleo">
+              <option value="30">30 minutos</option>
+              <option value="45">45 minutos</option>
+              <option value="50" selected>50 minutos (Estándar)</option>
+              <option value="60">60 minutos (1 hora)</option>
+              <option value="75">75 minutos</option>
+              <option value="90">90 minutos (1.5 horas)</option>
+            </select>
+            <div class="text-[11px] text-noche/60 mt-1">Tiempo de atención con paciente.</div>
           </div>
         </div>
 
