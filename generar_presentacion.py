@@ -489,7 +489,7 @@ p_leyes = add_link_pill(s7, Inches(9.1), Inches(4.0), Inches(3.3), Inches(0.36),
                         "--- blinda legalmente a Cabal Salud ante --->", C_PERLA, C_ESMERALDA)
 n_leyes = add_concept_node(s7, Inches(9.0), Inches(4.7), Inches(3.5), Inches(1.2),
                            "Auditorías Sanitarias y de Datos",
-                           "Ley N° 20.584 (Derechos del Paciente)\nD.S. N° 41 (Custodia 15 años) y Ley N° 21.719\nPamela y Lilians acreditan custodia delegada",
+                           "Ley N° 20.584 (Derechos del Paciente)\nD.S. N° 41 (Custodia 15 años) y Ley N° 21.719\nCabal Salud acredita custodia delegada",
                            C_BLANCO, C_ESMERALDA, C_NOCHE)
 
 # Centro Abajo: El Consultante
@@ -559,38 +559,37 @@ if os.path.exists(img_path_3):
 # ==============================================================================
 s9 = prs.slides.add_slide(blank_layout)
 set_slide_background(s9, C_PERLA)
-add_header(s9, "Ficha Clínica Electrónica y Epicrisis Cifrada (Integración Gentia)")
+add_header(s9, "Gestión Clínica de Pacientes, Evoluciones DAP y Bóveda Gentia")
 
 c_info9 = add_card(s9, Inches(0.8), Inches(1.8), Inches(4.8), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
 tf9 = c_info9.text_frame
 tf9.word_wrap = True
 tf9.margin_left = tf9.margin_right = Inches(0.3)
-tf9.margin_top = Inches(0.25)
+tf9.margin_top = Inches(0.2)
 
 p = tf9.paragraphs[0]
-p.text = "Custodia y Cumplimiento Normativo"
+p.text = "Conectado al Motor de Gentia (Sin Migrar)"
 p.font.name = "Georgia"
-p.font.size = Pt(16)
+p.font.size = Pt(15)
 p.font.bold = True
 p.font.color.rgb = C_ESMERALDA
-p.space_after = Pt(8)
+p.space_after = Pt(6)
 
 p = tf9.add_paragraph()
 p.text = (
-    "• Resguardo ante Auditorías Sanitarias:\n"
-    "  Si la Superintendencia de Salud o el Consejo de Protección de Datos fiscaliza a Cabal Salud, "
-    "las administradoras demuestran que las historias clínicas están blindadas bajo la custodia criptográfica de Gentia.\n\n"
-    "• Módulos Clínicos Disponibles:\n"
-    "  1. Anamnesis y motivo de consulta inicial.\n"
-    "  2. Diagnóstico codificado (CIE-11 / DSM-5).\n"
-    "  3. Notas de evolución sesión a sesión con fecha.\n"
-    "  4. Epicrisis oficial descargable para Isapres.\n"
-    "  5. Consentimiento informado verificado.\n\n"
-    "• Retención Legal de 15 Años:\n"
-    "  Cumplimiento íntegro del Decreto Supremo N° 41 del MINSAL."
+    "• Operación Clínica Completa en cabalsalud.cl:\n"
+    "  El terapeuta dispone de 'Crear Paciente' y 'Editar Paciente', búsqueda en vivo por RUT/Nombre y filtros por previsión.\n\n"
+    "• Anamnesis, CIE-11 y Banderas Rojas:\n"
+    "  Registro de motivo de consulta, diagnósticos CIE-11, antecedentes psiquiátricos/fármacos y alertas críticas (Riesgo Suicida, VIF, Abuso).\n\n"
+    "• Examen Mental V70 & Evoluciones DAP:\n"
+    "  Evaluación de 8 esferas psíquicas, notas DAP con sliders de síntomas (Ansiedad, Depresión, Estrés 0-10) y sellado SHA-256.\n\n"
+    "• Derivación & Epicrisis Oficial:\n"
+    "  Interconsulta interna entre los 9 especialistas de Cabal Salud y emisión de epicrisis para reembolso Isapre/Fonasa.\n\n"
+    "• Custodia Legal Delegada (15 Años):\n"
+    "  Los datos sensibles no residen en el hosting público, sino en la bóveda criptográfica AES-256 de Gentia (Ley 20.584, D.S. N° 41 y Ley 21.719)."
 )
 p.font.name = "Calibri"
-p.font.size = Pt(11)
+p.font.size = Pt(10.5)
 
 img_path_6 = os.path.join(os.getcwd(), "presentation_assets", "06_ficha_clinica.png")
 if not os.path.exists(img_path_6):
