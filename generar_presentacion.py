@@ -4,7 +4,7 @@ from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
-from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 
 # 1. Configuración de Dimensiones y Paleta Oficial Cabal Salud
 prs = Presentation()
@@ -119,6 +119,13 @@ def add_link_pill(slide, left, top, width, height, text, bg_color=C_PERLA, text_
     p.font.color.rgb = text_color
     p.alignment = PP_ALIGN.CENTER
     return shape
+
+# Helper para Líneas Conectoras Reales entre Nodos
+def add_connector_line(slide, x1, y1, x2, y2, color=C_PETROLEO, width=1.5):
+    conn = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, x1, y1, x2, y2)
+    conn.line.color.rgb = color
+    conn.line.width = Pt(width)
+    return conn
 
 # ==============================================================================
 # SLIDE 1: PORTADA EJECUTIVA
@@ -253,11 +260,30 @@ p.font.color.rgb = C_NOCHE
 
 # ==============================================================================
 # SLIDE 3: MAPA CONCEPTUAL 1 (MACRO) — ARQUITECTURA DEL ECOSISTEMA
-# (MAPA CONCEPTUAL REAL CON NODOS JERÁRQUICOS Y PASTILLAS DE CONEXIÓN)
+# (MAPA CONCEPTUAL REAL CON LÍNEAS CONECTORAS, NODOS Y VERBOS DE ENLACE)
 # ==============================================================================
 s3 = prs.slides.add_slide(blank_layout)
 set_slide_background(s3, C_PERLA)
 add_header(s3, "Mapa Conceptual 1: Ecosistema Integral, Flujo de Fondos y Custodia Clínica")
+
+# LÍNEAS CONECTORAS (Se agregan primero para quedar bajo los nodos)
+# Rama Izquierda (Financiera / SII)
+add_connector_line(s3, Inches(4.7), Inches(2.1), Inches(4.3), Inches(2.1), C_GRANATE, 2.0)
+add_connector_line(s3, Inches(2.6), Inches(2.26), Inches(2.6), Inches(2.6), C_GRANATE, 2.0)
+add_connector_line(s3, Inches(2.6), Inches(3.7), Inches(2.6), Inches(4.0), C_GRANATE, 2.0)
+add_connector_line(s3, Inches(2.6), Inches(4.36), Inches(2.6), Inches(4.7), C_GRANATE, 2.0)
+
+# Rama Derecha (Custodia Clínica / Gentia / Minsal)
+add_connector_line(s3, Inches(8.6), Inches(2.1), Inches(8.9), Inches(2.1), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(10.65), Inches(2.26), Inches(10.65), Inches(2.6), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(10.65), Inches(3.7), Inches(10.65), Inches(4.0), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(10.65), Inches(4.36), Inches(10.65), Inches(4.7), C_ESMERALDA, 2.0)
+
+# Rama Central (Pacientes / Portal Especialistas)
+add_connector_line(s3, Inches(6.65), Inches(2.8), Inches(6.65), Inches(3.1), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(6.65), Inches(3.46), Inches(6.65), Inches(3.7), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(6.65), Inches(4.65), Inches(6.65), Inches(4.9), C_PETROLEO, 2.0)
+add_connector_line(s3, Inches(6.65), Inches(5.26), Inches(6.65), Inches(5.5), C_NOCHE, 2.0)
 
 # Nodo Central: CLÍNICA CABAL SALUD SpA
 n_cabal = add_concept_node(s3, Inches(4.7), Inches(1.8), Inches(3.9), Inches(1.0),
@@ -267,14 +293,14 @@ n_cabal = add_concept_node(s3, Inches(4.7), Inches(1.8), Inches(3.9), Inches(1.0
 
 # Rama 1: Recaudación Directa (Izquierda Arriba)
 p_recauda = add_link_pill(s3, Inches(1.3), Inches(1.9), Inches(3.0), Inches(0.36),
-                          "--- recauda 100% directo sin intermediar --->", C_PERLA, C_GRANATE)
+                          "recauda 100% directo sin intermediar", C_PERLA, C_GRANATE)
 n_pasarelas = add_concept_node(s3, Inches(0.8), Inches(2.6), Inches(3.6), Inches(1.1),
                                "Cuentas Bancarias Cabal Salud",
                                "Transbank Webpay Plus & Mercado Pago Chile\n(Fondos van directo a cuenta de la clínica)",
                                C_BLANCO, C_GRANATE, C_NOCHE)
 
 p_sii = add_link_pill(s3, Inches(1.0), Inches(4.0), Inches(3.2), Inches(0.36),
-                      "--- blinda exención tributaria ante --->", C_PERLA, C_GRANATE)
+                      "blinda exención tributaria ante", C_PERLA, C_GRANATE)
 n_sii = add_concept_node(s3, Inches(0.8), Inches(4.7), Inches(3.6), Inches(1.0),
                          "Servicio de Impuestos Internos (SII)",
                          "Exención de IVA garantizada (Art. 12 Letra E N° 8)\nEmisión de Boletas Exentas sin comisiones",
@@ -282,14 +308,14 @@ n_sii = add_concept_node(s3, Inches(0.8), Inches(4.7), Inches(3.6), Inches(1.0),
 
 # Rama 2: Custodia Clínica Sensible (Derecha Arriba)
 p_delega = add_link_pill(s3, Inches(8.9), Inches(1.9), Inches(3.3), Inches(0.36),
-                         "--- delega custodia clínica sensible a --->", C_PERLA, C_PETROLEO)
+                         "delega custodia clínica sensible a", C_PERLA, C_PETROLEO)
 n_gentia = add_concept_node(s3, Inches(8.8), Inches(2.6), Inches(3.7), Inches(1.1),
                             "Motor Clínico Headless Gentia",
                             "Bóveda Cifrada de Salud (gentia.cl)\nCifrado en reposo AES-256 e inmutabilidad",
                             C_BLANCO, C_PETROLEO, C_NOCHE)
 
 p_minsal = add_link_pill(s3, Inches(9.0), Inches(4.0), Inches(3.3), Inches(0.36),
-                         "--- blinda ante fiscalización legal de --->", C_PERLA, C_PETROLEO)
+                         "blinda ante fiscalización legal de", C_PERLA, C_PETROLEO)
 n_minsal = add_concept_node(s3, Inches(8.8), Inches(4.7), Inches(3.7), Inches(1.0),
                             "Superintendencia de Salud / Agencia Datos",
                             "Cumplimiento Ley N° 20.584, D.S. N° 41 (15 años)\ny Ley N° 21.719 (Protección Datos Sensibles)",
@@ -297,14 +323,14 @@ n_minsal = add_concept_node(s3, Inches(8.8), Inches(4.7), Inches(3.7), Inches(1.
 
 # Rama 3: Abajo Centro (Pacientes y Especialistas)
 p_atiende = add_link_pill(s3, Inches(5.0), Inches(3.1), Inches(3.3), Inches(0.36),
-                          "--- ofrece atención multidisciplinaria a --->", C_PERLA, C_PETROLEO)
+                          "ofrece atención multidisciplinaria a", C_PERLA, C_PETROLEO)
 n_pacientes = add_concept_node(s3, Inches(4.5), Inches(3.7), Inches(4.3), Inches(0.95),
                                "Pacientes y Consultantes",
                                "Catálogo 9 profesionales, validación RUT y reserva in-page",
                                C_BLANCO, C_PETROLEO, C_NOCHE)
 
 p_portal = add_link_pill(s3, Inches(5.0), Inches(4.9), Inches(3.3), Inches(0.36),
-                         "--- provee entorno privado de gestión a --->", C_PERLA, C_PETROLEO)
+                         "provee entorno privado de gestión a", C_PERLA, C_PETROLEO)
 n_portal = add_concept_node(s3, Inches(4.2), Inches(5.5), Inches(4.9), Inches(1.1),
                             "Portal Profesional (cabalsalud.cl)",
                             "Edición de perfil, arancel, tiempo de sesión (30 a 90 min),\nFichas Clínicas en Bóveda Gentia y datos de transferencia",
@@ -456,6 +482,25 @@ s7 = prs.slides.add_slide(blank_layout)
 set_slide_background(s7, C_PERLA)
 add_header(s7, "Mapa Conceptual 2: Fichas Clínicas, Epicrisis y Blindaje ante Auditorías")
 
+# LÍNEAS CONECTORAS
+# Rama Izquierda (Parámetros y Epicrisis)
+add_connector_line(s7, Inches(4.5), Inches(2.18), Inches(4.2), Inches(2.18), C_PETROLEO, 2.0)
+add_connector_line(s7, Inches(2.55), Inches(2.36), Inches(2.55), Inches(2.6), C_PETROLEO, 2.0)
+add_connector_line(s7, Inches(2.55), Inches(3.7), Inches(2.55), Inches(4.0), C_PETROLEO, 2.0)
+add_connector_line(s7, Inches(2.55), Inches(4.36), Inches(2.55), Inches(4.7), C_GRANATE, 2.0)
+
+# Rama Derecha (Bóveda Cifrada Gentia y Leyes)
+add_connector_line(s7, Inches(8.8), Inches(2.18), Inches(9.1), Inches(2.18), C_ESMERALDA, 2.0)
+add_connector_line(s7, Inches(10.75), Inches(2.36), Inches(10.75), Inches(2.6), C_ESMERALDA, 2.0)
+add_connector_line(s7, Inches(10.75), Inches(3.7), Inches(10.75), Inches(4.0), C_ESMERALDA, 2.0)
+add_connector_line(s7, Inches(10.75), Inches(4.36), Inches(10.75), Inches(4.7), C_ESMERALDA, 2.0)
+
+# Rama Central (Consultante y Liquidación)
+add_connector_line(s7, Inches(6.65), Inches(2.9), Inches(6.65), Inches(3.2), C_PETROLEO, 2.0)
+add_connector_line(s7, Inches(6.65), Inches(3.56), Inches(6.65), Inches(3.8), C_PETROLEO, 2.0)
+add_connector_line(s7, Inches(6.65), Inches(4.8), Inches(6.65), Inches(5.0), C_NOCHE, 2.0)
+add_connector_line(s7, Inches(6.65), Inches(5.36), Inches(6.65), Inches(5.6), C_NOCHE, 2.0)
+
 # Nodo Central: Terapeuta en Portal Profesional
 n_terapeuta = add_concept_node(s7, Inches(4.5), Inches(1.8), Inches(4.3), Inches(1.1),
                                "Especialista (Psicólogo / Terapeuta)",
@@ -464,14 +509,14 @@ n_terapeuta = add_concept_node(s7, Inches(4.5), Inches(1.8), Inches(4.3), Inches
 
 # Rama Izquierda: Autonomía de Ficha y Parámetros
 p_config = add_link_pill(s7, Inches(1.0), Inches(2.0), Inches(3.2), Inches(0.36),
-                         "--- configura de forma autónoma --->", C_PERLA, C_PETROLEO)
+                         "configura de forma autónoma", C_PERLA, C_PETROLEO)
 n_parametros = add_concept_node(s7, Inches(0.8), Inches(2.6), Inches(3.5), Inches(1.1),
                                 "Arancel y Tiempo de Sesión",
                                 "Duración modificable (30, 45, 50, 60, 75 o 90 min)\ny valor de consulta en CLP sin intervención externa",
                                 C_BLANCO, C_PETROLEO, C_NOCHE)
 
 p_redacta = add_link_pill(s7, Inches(1.0), Inches(4.0), Inches(3.2), Inches(0.36),
-                          "--- redacta notas de atención y --->", C_PERLA, C_PETROLEO)
+                          "redacta notas de atención y", C_PERLA, C_PETROLEO)
 n_epicrisis = add_concept_node(s7, Inches(0.8), Inches(4.7), Inches(3.5), Inches(1.2),
                                "Epicrisis Oficial / Alta Médica",
                                "Resumen psicoterapéutico, diagnóstico CIE-11/DSM-5\ne informe de avance clínico para Isapres",
@@ -479,14 +524,14 @@ n_epicrisis = add_concept_node(s7, Inches(0.8), Inches(4.7), Inches(3.5), Inches
 
 # Rama Derecha: Conexión con Gentia y Blindaje Legal ante Auditorías
 p_boveda = add_link_pill(s7, Inches(9.1), Inches(2.0), Inches(3.3), Inches(0.36),
-                         "--- sincroniza datos sensibles con --->", C_PERLA, C_ESMERALDA)
+                         "sincroniza datos sensibles con", C_PERLA, C_ESMERALDA)
 n_vault = add_concept_node(s7, Inches(9.0), Inches(2.6), Inches(3.5), Inches(1.1),
                            "Bóveda Cifrada Gentia (EHR Vault)",
                            "Encriptación AES-256 en reposo y tránsito\nFirma inmutable por sesión con hash de auditoría",
                            C_LIGHT_EMERALD, C_ESMERALDA, C_NOCHE)
 
 p_leyes = add_link_pill(s7, Inches(9.1), Inches(4.0), Inches(3.3), Inches(0.36),
-                        "--- blinda legalmente a Cabal Salud ante --->", C_PERLA, C_ESMERALDA)
+                        "blinda legalmente a Cabal Salud ante", C_PERLA, C_ESMERALDA)
 n_leyes = add_concept_node(s7, Inches(9.0), Inches(4.7), Inches(3.5), Inches(1.2),
                            "Auditorías Sanitarias y de Datos",
                            "Ley N° 20.584 (Derechos del Paciente)\nD.S. N° 41 (Custodia 15 años) y Ley N° 21.719\nCabal Salud acredita custodia delegada",
@@ -494,14 +539,14 @@ n_leyes = add_concept_node(s7, Inches(9.0), Inches(4.7), Inches(3.5), Inches(1.2
 
 # Centro Abajo: El Consultante
 p_atencion = add_link_pill(s7, Inches(5.0), Inches(3.2), Inches(3.3), Inches(0.36),
-                           "--- atiende mediante sala segura a --->", C_PERLA, C_PETROLEO)
+                           "atiende mediante sala segura a", C_PERLA, C_PETROLEO)
 n_consul = add_concept_node(s7, Inches(4.5), Inches(3.8), Inches(4.3), Inches(1.0),
                             "Consultante con Consentimiento Firmado",
                             "Atención por videoconsulta WebRTC de Gentia\ncon consentimiento informado legalmente registrado",
                             C_BLANCO, C_PETROLEO, C_NOCHE)
 
 p_pago = add_link_pill(s7, Inches(5.0), Inches(5.0), Inches(3.3), Inches(0.36),
-                       "--- reporta honorarios atendidos a --->", C_PERLA, C_NOCHE)
+                       "reporta honorarios atendidos a", C_PERLA, C_NOCHE)
 n_liq = add_concept_node(s7, Inches(4.5), Inches(5.6), Inches(4.3), Inches(1.0),
                          "Liquidación Mensual (Pamela y Lilians)",
                          "Datos bancarios para transferencia directa de honorarios",
@@ -607,19 +652,97 @@ if os.path.exists(img_path_6):
     cap_p.alignment = PP_ALIGN.CENTER
 
 # ==============================================================================
-# SLIDE 10: SCREENSHOT PANEL DE ADMINISTRACIÓN (PAMELA Y LILIANS EN GENTIA)
+# SLIDE 10: NUEVO MÓDULO DE ADMINISTRACIÓN Y ASIGNACIÓN (PAMELA Y LILIANS)
 # ==============================================================================
 s10 = prs.slides.add_slide(blank_layout)
 set_slide_background(s10, C_PERLA)
-add_header(s10, "Dashboard de Administración y Liquidaciones (Pamela y Lilians)")
+add_header(s10, "Módulo Central de Administración: Registro y Asignación de Pacientes", "ADMINISTRACIÓN CENTRAL · PAMELA QUIJADA & LILIANS CORTÉS")
 
-c_info10 = add_card(s10, Inches(0.8), Inches(1.8), Inches(4.8), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
-tf10 = c_info10.text_frame
-tf10.word_wrap = True
-tf10.margin_left = tf10.margin_right = Inches(0.3)
-tf10.margin_top = Inches(0.25)
+c_adm_izq = add_card(s10, Inches(0.8), Inches(1.8), Inches(5.7), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
+tf_adm_izq = c_adm_izq.text_frame
+tf_adm_izq.word_wrap = True
+tf_adm_izq.margin_left = tf_adm_izq.margin_right = Inches(0.35)
+tf_adm_izq.margin_top = Inches(0.25)
 
-p = tf10.paragraphs[0]
+p = tf_adm_izq.paragraphs[0]
+p.text = "👑 Ingreso de Paciente & Asignación en Cascada (2 Pasos)"
+p.font.name = "Georgia"
+p.font.size = Pt(14.5)
+p.font.bold = True
+p.font.color.rgb = C_GRANATE
+p.space_after = Pt(8)
+
+p = tf_adm_izq.add_paragraph()
+p.text = (
+    "• Perfil Administrador Central (Dra. Pamela Quijada & Lilians Cortés):\n"
+    "  Acceso directo en el Portal Profesional (cabalsalud.cl) con el botón destacado "
+    "'[ 👑 Asignar Paciente (Admin) ]' y la pestaña dedicada 'Administración & Asignación'.\n\n"
+    "• Modalidad Dual: Paciente Nuevo vs. Existente:\n"
+    "  - Paciente Nuevo: Registro ágil de Nombre, RUT (validado con Módulo 11 para boleta de reembolso), "
+    "Email, WhatsApp, Previsión (FONASA, Isapre, Particular) y Dirección física (para atenciones a terreno).\n"
+    "  - Paciente Existente: Selector rápido con búsqueda y autocompletado instantáneo de datos.\n\n"
+    "• Filtro en Cascada Inteligente (2 Pasos):\n"
+    "  1. Paso 1: Selección de Disciplina de la Salud (Psicología, Nutrición, Psiquiatría, Fonoaudiología, "
+    "Terapia Ocupacional, Trabajo Social, Mediación Familiar).\n"
+    "  2. Paso 2: El selector de especialistas se filtra reactivamente mostrando solo los profesionales "
+    "de esa área con su arancel referencial.\n\n"
+    "• Parámetros de Atención:\n"
+    "  Definición precisa de Fecha, Horario, Modalidad (Videoconsulta Online o Terreno) y Arancel en CLP."
+)
+p.font.name = "Calibri"
+p.font.size = Pt(10.5)
+p.font.color.rgb = C_NOCHE
+
+c_adm_der = add_card(s10, Inches(6.8), Inches(1.8), Inches(5.7), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
+tf_adm_der = c_adm_der.text_frame
+tf_adm_der.word_wrap = True
+tf_adm_der.margin_left = tf_adm_der.margin_right = Inches(0.35)
+tf_adm_der.margin_top = Inches(0.25)
+
+p = tf_adm_der.paragraphs[0]
+p.text = "📹 Sincronización Automática, WebRTC & Correos Duales"
+p.font.name = "Georgia"
+p.font.size = Pt(14.5)
+p.font.bold = True
+p.font.color.rgb = C_PETROLEO
+p.space_after = Pt(8)
+
+p = tf_adm_der.add_paragraph()
+p.text = (
+    "• Generación de Código de Sesión Unívoco:\n"
+    "  El motor asigna un código oficial trazable 'CBL-SES-2026-XXX' vinculado directamente "
+    "a la ficha clínica del paciente y a la agenda del terapeuta.\n\n"
+    "• Salas de Videollamada WebRTC P2P con Roles Diferenciados:\n"
+    "  - Enlace Especialista: gentia.cl/clinica-sala-espera.html?sala=CBL-SES-...&role=profesional\n"
+    "  - Enlace Consultante: gentia.cl/clinica-sala-espera.html?sala=CBL-SES-...&role=paciente\n"
+    "  Botones de copia con un solo clic en el modal de confirmación.\n\n"
+    "• Inyección Automática en Agenda del Profesional:\n"
+    "  La cita aparece de inmediato en la pestaña 'Próximas Sesiones' del especialista, "
+    "con acceso directo a la videollamada y a su Ficha Clínica.\n\n"
+    "• Doble Notificación Automática por Correo HTML Corporativo:\n"
+    "  1. Al Especialista: Con datos completos del paciente, previsión, motivo, horario y link WebRTC.\n"
+    "  2. Al Paciente: Confirmación oficial de Cabal Salud con datos del terapeuta, fecha y sala.\n\n"
+    "• Previsualización en Vivo de Correos:\n"
+    "  Pestañas interactivas en pantalla para auditar el diseño HTML antes de enviar o cerrar."
+)
+p.font.name = "Calibri"
+p.font.size = Pt(10.5)
+p.font.color.rgb = C_NOCHE
+
+# ==============================================================================
+# SLIDE 11: SCREENSHOT PANEL DE ADMINISTRACIÓN (PAMELA Y LILIANS EN GENTIA)
+# ==============================================================================
+s11 = prs.slides.add_slide(blank_layout)
+set_slide_background(s11, C_PERLA)
+add_header(s11, "Dashboard de Administración y Liquidaciones (Pamela y Lilians)")
+
+c_info11 = add_card(s11, Inches(0.8), Inches(1.8), Inches(4.8), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
+tf11 = c_info11.text_frame
+tf11.word_wrap = True
+tf11.margin_left = tf11.margin_right = Inches(0.3)
+tf11.margin_top = Inches(0.25)
+
+p = tf11.paragraphs[0]
 p.text = "Ajustes Clave para Clínica Online"
 p.font.name = "Georgia"
 p.font.size = Pt(16)
@@ -627,7 +750,7 @@ p.font.bold = True
 p.font.color.rgb = C_NOCHE
 p.space_after = Pt(8)
 
-p = tf10.add_paragraph()
+p = tf11.add_paragraph()
 p.text = (
     "• Sesión con Paciente (Actualizado):\n"
     "  Se renombró 'Cita' por 'Sesión con Paciente / Consultante'.\n\n"
@@ -645,9 +768,9 @@ p.font.size = Pt(11)
 
 img_path_5 = os.path.join(os.getcwd(), "presentation_assets", "05_gentia_dashboard.png")
 if os.path.exists(img_path_5):
-    frame = add_card(s10, Inches(5.85), Inches(1.8), Inches(6.65), Inches(5.1), C_BLANCO, C_NOCHE)
-    s10.shapes.add_picture(img_path_5, Inches(5.95), Inches(1.9), width=Inches(6.45), height=Inches(4.6))
-    cap_box = s10.shapes.add_textbox(Inches(5.95), Inches(6.55), Inches(6.45), Inches(0.3))
+    frame = add_card(s11, Inches(5.85), Inches(1.8), Inches(6.65), Inches(5.1), C_BLANCO, C_NOCHE)
+    s11.shapes.add_picture(img_path_5, Inches(5.95), Inches(1.9), width=Inches(6.45), height=Inches(4.6))
+    cap_box = s11.shapes.add_textbox(Inches(5.95), Inches(6.55), Inches(6.45), Inches(0.3))
     cap_tf = cap_box.text_frame
     cap_p = cap_tf.paragraphs[0]
     cap_p.text = "Acceso en vivo: https://gentia.cl/clinica-dashboard.html?id=cabalsalud"
@@ -656,55 +779,72 @@ if os.path.exists(img_path_5):
     cap_p.alignment = PP_ALIGN.CENTER
 
 # ==============================================================================
-# SLIDE 11: MAPA CONCEPTUAL 3 — SEGURIDAD CRIPTOGRÁFICA Y WEBHOOKS HMAC
+# SLIDE 12: MAPA CONCEPTUAL 3 — SEGURIDAD CRIPTOGRÁFICA Y WEBHOOKS HMAC
+# (MAPA CONCEPTUAL REAL CON LÍNEAS CONECTORAS, NODOS Y VERBOS DE ENLACE)
 # ==============================================================================
-s11 = prs.slides.add_slide(blank_layout)
-set_slide_background(s11, C_PERLA)
-add_header(s11, "Mapa Conceptual 3: Seguridad Criptográfica y Sincronización HMAC")
+s12 = prs.slides.add_slide(blank_layout)
+set_slide_background(s12, C_PERLA)
+add_header(s12, "Mapa Conceptual 3: Seguridad Criptográfica y Sincronización HMAC")
+
+# LÍNEAS CONECTORAS
+# Horizontal Superior: Emisor -> Firma -> Receptor
+add_connector_line(s12, Inches(4.4), Inches(2.7), Inches(4.7), Inches(2.7), C_PETROLEO, 2.0)
+add_connector_line(s12, Inches(8.6), Inches(2.7), Inches(8.9), Inches(2.7), C_PETROLEO, 2.0)
+
+# Vertical Central: Firma -> Secreto Compartido
+add_connector_line(s12, Inches(6.65), Inches(2.9), Inches(6.65), Inches(3.6), C_GRANATE, 2.0)
+
+# Vertical Izquierda: Emisor -> Telemetría
+add_connector_line(s12, Inches(2.6), Inches(3.4), Inches(2.6), Inches(3.8), C_PETROLEO, 2.0)
+add_connector_line(s12, Inches(2.6), Inches(4.16), Inches(2.6), Inches(4.5), C_PETROLEO, 2.0)
+
+# Vertical Derecha: Receptor -> WebRTC y Liquidación
+add_connector_line(s12, Inches(10.7), Inches(3.4), Inches(10.7), Inches(3.8), C_ESMERALDA, 2.0)
+add_connector_line(s12, Inches(10.7), Inches(4.16), Inches(10.7), Inches(4.5), C_ESMERALDA, 2.0)
 
 # Nodo Emisor: Cabal Salud API
-n_emisor = add_concept_node(s11, Inches(0.8), Inches(2.2), Inches(3.6), Inches(1.2),
+n_emisor = add_concept_node(s12, Inches(0.8), Inches(2.2), Inches(3.6), Inches(1.2),
                             "Servidor Cabal Salud (Emisor)",
                             "Recibe confirmación Transbank/MP\ny construye cadena canónica de pago:\n'cabalsalud:citaId:buyOrder:monto:authCode'",
                             C_BLANCO, C_PETROLEO, C_NOCHE)
 
-p_firma = add_link_pill(s11, Inches(4.7), Inches(2.3), Inches(3.9), Inches(0.4),
-                        "--- firma con Secreto Compartido HMAC-SHA256 --->", C_PERLA, C_PETROLEO)
+p_firma = add_link_pill(s12, Inches(4.7), Inches(2.5), Inches(3.9), Inches(0.4),
+                        "firma con Secreto Compartido HMAC-SHA256", C_PERLA, C_PETROLEO)
 
 # Nodo Receptor: Gentia Engine
-n_receptor = add_concept_node(s11, Inches(8.9), Inches(2.2), Inches(3.6), Inches(1.2),
+n_receptor = add_concept_node(s12, Inches(8.9), Inches(2.2), Inches(3.6), Inches(1.2),
                               "Motor Gentia (Receptor Seguro)",
                               "Valida firma en /clinica/confirmarPagoExterno.\nSi el hash coincide al 100%, activa la cita.\nSi no coincide, bloquea (401 Unauthorized)",
                               C_LIGHT_EMERALD, C_ESMERALDA, C_NOCHE)
 
 # Nodo Abajo Izquierda: Telemetría Antifallos
-p_tele = add_link_pill(s11, Inches(1.0), Inches(3.8), Inches(3.2), Inches(0.36),
-                       "--- activa canal de notificación con --->", C_PERLA, C_PETROLEO)
-n_tele = add_concept_node(s11, Inches(0.8), Inches(4.5), Inches(3.6), Inches(1.3),
+p_tele = add_link_pill(s12, Inches(1.0), Inches(3.8), Inches(3.2), Inches(0.36),
+                       "activa canal de notificación con", C_PERLA, C_PETROLEO)
+n_tele = add_concept_node(s12, Inches(0.8), Inches(4.5), Inches(3.6), Inches(1.3),
                           "Telemetría de Notificaciones",
                           "Prioriza WhatsApp Business.\nSi excede cuota o falla webhook externo,\nconmuta de forma automática a Email\npara evitar citas silenciosas.",
                           C_BLANCO, C_PETROLEO, C_NOCHE)
 
 # Nodo Abajo Derecha: Sala WebRTC y Liquidación
-p_activa = add_link_pill(s11, Inches(9.1), Inches(3.8), Inches(3.2), Inches(0.36),
-                         "--- crea sesión y suma honorario a --->", C_PERLA, C_ESMERALDA)
-n_activa = add_concept_node(s11, Inches(8.9), Inches(4.5), Inches(3.6), Inches(1.3),
+p_activa = add_link_pill(s12, Inches(9.1), Inches(3.8), Inches(3.2), Inches(0.36),
+                         "crea sesión y suma honorario a", C_PERLA, C_ESMERALDA)
+n_activa = add_concept_node(s12, Inches(8.9), Inches(4.5), Inches(3.6), Inches(1.3),
                             "Sala WebRTC y Liquidación",
                             "Genera sala de teleconsulta cifrada y suma\nla sesión al informe mensual de honorarios\npara la transferencia de Pamela y Lilians.",
                             C_BLANCO, C_NOCHE, C_NOCHE)
 
 # Nodo Central: Secreto Compartido
-n_secret = add_concept_node(s11, Inches(4.9), Inches(3.6), Inches(3.5), Inches(1.0),
+n_secret = add_concept_node(s12, Inches(4.9), Inches(3.6), Inches(3.5), Inches(1.0),
                             "GENTIA_WEBHOOK_HMAC_SECRET",
                             "Llave simétrica privada inyectada en variables\nde entorno de Vercel (nunca expuesta al público)",
                             C_PERLA_CARD, C_GRANATE, C_GRANATE)
 
 # ==============================================================================
-# SLIDE 12: OPORTUNIDADES ESTRATÉGICAS Y RETORNO DE INVERSIÓN (ROI)
+# SLIDE 13: OPORTUNIDADES ESTRATÉGICAS Y RETORNO DE INVERSIÓN (ROI)
 # ==============================================================================
-s12 = prs.slides.add_slide(blank_layout)
-set_slide_background(s12, C_PERLA)
-add_header(s12, "Oportunidades Estratégicas y Hoja de Ruta de Crecimiento")
+s13 = prs.slides.add_slide(blank_layout)
+set_slide_background(s13, C_PERLA)
+add_header(s13, "Oportunidades Estratégicas y Hoja de Ruta de Crecimiento")
 
 opps = [
     ("📱 Recordatorios WhatsApp", "Costo Meta: ~$40 CLP/msg (~$4.500/mes). Reduce el no-show de 18% a menos de 4%, rescatando +$350.000 CLP mensuales en consultas que antes se perdían por inasistencia.", C_ESMERALDA),
@@ -719,7 +859,7 @@ for idx, (op_title, op_desc, op_color) in enumerate(opps):
     left_x = Inches(0.8 + col * 6.0)
     top_y = Inches(1.9 + row * 2.6)
     
-    card = add_card(s12, left_x, top_y, Inches(5.7), Inches(2.35), C_BLANCO, op_color)
+    card = add_card(s13, left_x, top_y, Inches(5.7), Inches(2.35), C_BLANCO, op_color)
     ctf = card.text_frame
     ctf.word_wrap = True
     ctf.margin_left = ctf.margin_right = Inches(0.3)
@@ -740,13 +880,13 @@ for idx, (op_title, op_desc, op_color) in enumerate(opps):
     p.font.color.rgb = C_NOCHE
 
 # ==============================================================================
-# SLIDE 13: CONCLUSIONES Y ARGUMENTARIO ANTE AUDITORÍAS
+# SLIDE 14: CONCLUSIONES Y ARGUMENTARIO ANTE AUDITORÍAS
 # ==============================================================================
-s13 = prs.slides.add_slide(blank_layout)
-set_slide_background(s13, C_NOCHE)
-add_header(s13, "Argumentario de Defensa ante Auditorías y Enlaces Productivos", "BLINDAJE COMPLETO · CABAL SALUD")
+s14 = prs.slides.add_slide(blank_layout)
+set_slide_background(s14, C_NOCHE)
+add_header(s14, "Argumentario de Defensa ante Auditorías y Enlaces Productivos", "BLINDAJE COMPLETO · CABAL SALUD")
 
-c_fin = add_card(s13, Inches(0.8), Inches(1.8), Inches(11.7), Inches(5.1), RGBColor(22, 48, 75), C_PETROLEO)
+c_fin = add_card(s14, Inches(0.8), Inches(1.8), Inches(11.7), Inches(5.1), RGBColor(22, 48, 75), C_PETROLEO)
 tf_fin = c_fin.text_frame
 tf_fin.word_wrap = True
 tf_fin.margin_left = tf_fin.margin_right = Inches(0.4)

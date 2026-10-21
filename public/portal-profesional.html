@@ -199,6 +199,16 @@
 
         <button
           type="button"
+          onclick="window.abrirModalAsignarPacienteAdmin()"
+          class="btn-granate py-2 px-3.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm hover:opacity-90 transition"
+          title="Módulo de Asignación y Recepción Administrativa de Pacientes"
+        >
+          <i data-lucide="calendar-plus" class="w-4 h-4 text-emerald-300"></i>
+          <span>Asignar Paciente (Admin)</span>
+        </button>
+
+        <button
+          type="button"
           onclick="window.abrirModalVistaPrevia()"
           class="btn-noche-outline py-2 px-3.5 rounded-xl text-xs font-semibold flex items-center gap-1.5"
           title="Ver cómo ven tu tarjeta los pacientes en cabalsalud.cl"
@@ -273,6 +283,16 @@
       >
         <i data-lucide="credit-card" class="w-4 h-4"></i>
         <span>Datos de Transferencia y Honorarios</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="window.cambiarPestana('admin')"
+        id="tabBtn-admin"
+        class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-granate/30 bg-granate/5 text-granate hover:bg-granate/10 transition flex items-center gap-2"
+      >
+        <i data-lucide="crown" class="w-4 h-4 text-granate"></i>
+        <span>Administración & Asignación</span>
       </button>
     </div>
 
@@ -725,6 +745,75 @@
         </div>
       </div>
     </section>
+
+    <!-- ====================================================================
+         PESTAÑA 5: ADMINISTRACIÓN CENTRAL & ASIGNACIÓN DE CONSULTANTES
+         ==================================================================== -->
+    <section id="sectionTab-admin" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <div class="border-b border-noche/10 pb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-granate text-white text-[11px] font-bold mb-1">
+            <span>Dirección Clínica & Coordinación Médica</span>
+          </div>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-noche">
+            Panel de Recepción, Asignación y Gestión de Sesiones
+          </h3>
+          <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+            Módulo exclusivo para <strong>Pamela Quijada y Lilians Cortés</strong>: Registra consultantes, asígnalos al especialista correspondiente según disciplina, agenda la fecha/hora y despacha notificaciones automáticas con los enlaces de videollamada.
+          </p>
+        </div>
+        <button
+          type="button"
+          onclick="window.abrirModalAsignarPacienteAdmin()"
+          class="btn-petroleo py-2.5 px-5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shrink-0 shadow-md"
+        >
+          <i data-lucide="user-plus" class="w-4 h-4 text-emerald-300"></i>
+          <span>+ Registrar y Asignar Paciente</span>
+        </button>
+      </div>
+
+      <!-- Resumen Estadístico Rápido -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 space-y-1">
+          <span class="text-xs text-noche/60 font-semibold block">Especialistas en Red</span>
+          <span class="font-serif text-2xl font-bold text-noche" id="adminTotalEspecialistas">9</span>
+          <span class="text-[11px] text-petroleo font-medium block">8 disciplinas clínicas activas</span>
+        </div>
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 space-y-1">
+          <span class="text-xs text-noche/60 font-semibold block">Consultantes Registrados</span>
+          <span class="font-serif text-2xl font-bold text-petroleo" id="adminTotalPacientes">6</span>
+          <span class="text-[11px] text-noche/60 block">Bóveda Cifrada Gentia</span>
+        </div>
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 space-y-1">
+          <span class="text-xs text-noche/60 font-semibold block">Sesiones Asignadas</span>
+          <span class="font-serif text-2xl font-bold text-granate" id="adminTotalSesiones">2</span>
+          <span class="text-[11px] text-noche/60 block">Con sala WebRTC generada</span>
+        </div>
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 space-y-1">
+          <span class="text-xs text-noche/60 font-semibold block">Estado Notificaciones</span>
+          <span class="font-serif text-sm font-bold text-emerald-800 flex items-center gap-1.5 pt-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Email Automático Activo</span>
+          </span>
+          <span class="text-[11px] text-noche/60 block">Especialista & Paciente</span>
+        </div>
+      </div>
+
+      <!-- Tabla / Lista de Sesiones Asignadas -->
+      <div class="space-y-3 pt-2">
+        <div class="flex items-center justify-between">
+          <h4 class="font-serif text-base font-bold text-noche flex items-center gap-2">
+            <i data-lucide="calendar" class="w-4 h-4 text-petroleo"></i>
+            <span>Historial de Sesiones Asignadas en la Red</span>
+          </h4>
+          <span class="text-xs text-noche/60">Actualizado en tiempo real</span>
+        </div>
+
+        <div id="containerAdminListaSesiones" class="space-y-3">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ========================================================================
@@ -1067,6 +1156,273 @@
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: ADMINISTRACIÓN CABAL SALUD — REGISTRAR Y ASIGNAR CONSULTANTE
+       ======================================================================== -->
+  <div id="modalAsignarPacienteAdmin" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-granate text-white flex items-center justify-center font-bold shadow-sm">
+            <i data-lucide="calendar-plus" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">Asignación Administrativa de Consultante</h3>
+            <span class="text-[11px] text-noche/60">Dirección Clínica · Pamela Quijada & Lilians Cortés</span>
+          </div>
+        </div>
+        <button type="button" onclick="window.cerrarModalAsignarPacienteAdmin()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <form id="formAsignarPacienteAdmin" onsubmit="window.ejecutarAsignacionPacienteAdmin(event)" class="space-y-5">
+        <!-- Selector Modo: Nuevo o Existente -->
+        <div class="bg-perla p-1 rounded-xl flex items-center gap-1 border border-noche/10 text-xs font-semibold">
+          <button
+            type="button"
+            id="btnModoNuevoPac"
+            onclick="window.setModoAsignacionAdmin('NUEVO')"
+            class="flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition"
+          >
+            <i data-lucide="user-plus" class="w-3.5 h-3.5 text-petroleo"></i>
+            <span>Nuevo Consultante</span>
+          </button>
+          <button
+            type="button"
+            id="btnModoExistentePac"
+            onclick="window.setModoAsignacionAdmin('EXISTENTE')"
+            class="flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition"
+          >
+            <i data-lucide="search" class="w-3.5 h-3.5 text-noche/60"></i>
+            <span>Consultante Existente en Bóveda</span>
+          </button>
+        </div>
+
+        <!-- Selector de Paciente Existente (Condicional) -->
+        <div id="wrapperSelectorExistenteAdmin" class="hidden bg-perla/60 p-4 rounded-2xl border border-noche/10 space-y-1.5">
+          <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+            Buscar Consultante Registrado en Gentia Vault
+          </label>
+          <select id="adminSelectPacienteExistente" onchange="window.autocompletarPacienteAdmin(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+            <!-- Injected dynamically -->
+          </select>
+        </div>
+
+        <!-- 1. Datos Demográficos del Consultante -->
+        <div class="space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-petroleo block">1. Datos del Consultante</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Nombre Completo *</label>
+              <input type="text" id="adminAsignarNombre" required placeholder="Ej. Mariana Soto Valenzuela" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">RUT *</label>
+              <input type="text" id="adminAsignarRut" required placeholder="Ej. 17.482.910-3" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Correo Electrónico *</label>
+              <input type="email" id="adminAsignarEmail" required placeholder="mariana.soto@gmail.com" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Teléfono / WhatsApp *</label>
+              <input type="tel" id="adminAsignarTelefono" required placeholder="+56 9 8123 4567" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Previsión de Salud</label>
+              <select id="adminAsignarPrevision" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+                <option value="Particular">Particular</option>
+                <option value="Reembolso Isapres">Reembolso Isapres</option>
+                <option value="FONASA Tramo B">FONASA Tramo B</option>
+                <option value="FONASA Tramo C">FONASA Tramo C</option>
+                <option value="FONASA Tramo D">FONASA Tramo D</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Motivo de Consulta Inicial</label>
+              <input type="text" id="adminAsignarMotivo" placeholder="Ej. Ansiedad, evaluación nutricional, mediación..." class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Asignación Profesional en Cascada -->
+        <div class="bg-petroleo/5 p-4 sm:p-5 rounded-2xl border border-petroleo/20 space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-petroleo block flex items-center gap-1.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span>2. Selección de Especialista (Filtro en Cascada)</span>
+          </span>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-noche/80 mb-1">Paso 1: Tipo de Profesional de la Salud *</label>
+              <select id="adminAsignarDisciplina" onchange="window.actualizarSelectProfesionalesAdmin(this.value)" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-petroleo/30 text-xs sm:text-sm font-bold text-petroleo focus:outline-none focus:border-petroleo cursor-pointer shadow-xs">
+                <option value="psicologia">Psicología Clínica y del Deporte / Perinatal</option>
+                <option value="nutricion">Nutrición y Dietética</option>
+                <option value="matroneria">Matronería y Salud Sexual</option>
+                <option value="terapia_ocupacional">Terapia Ocupacional</option>
+                <option value="fonoaudiologia">Fonoaudiología</option>
+                <option value="trabajo_social">Trabajo Social</option>
+                <option value="medicina_psiquiatria">Medicina General / Psiquiatría</option>
+                <option value="abogacia_mediacion">Abogacía de Familia y Mediación</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-noche/80 mb-1">Paso 2: Profesional Específico de Cabal Salud *</label>
+              <select id="adminAsignarProfesionalSelect" required class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/20 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer shadow-xs">
+                <!-- Dynamically populated according to selected discipline -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Fecha, Horario y Modalidad -->
+        <div class="space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-petroleo block">3. Agenda, Horario & Modalidad</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Fecha de la Sesión *</label>
+              <input type="date" id="adminAsignarFecha" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Horario de Inicio *</label>
+              <select id="adminAsignarHora" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+                <option value="09:00">09:00 hrs</option>
+                <option value="10:00" selected>10:00 hrs</option>
+                <option value="11:30">11:30 hrs</option>
+                <option value="12:30">12:30 hrs</option>
+                <option value="15:00">15:00 hrs</option>
+                <option value="16:30">16:30 hrs</option>
+                <option value="18:00">18:00 hrs</option>
+                <option value="19:00">19:00 hrs</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-noche/80 mb-1">Modalidad de Atención</label>
+              <select id="adminAsignarModalidad" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+                <option value="Online (Sala WebRTC Gentia)">Online (Videoconsulta WebRTC Gentia)</option>
+                <option value="Visita a Terreno / Domicilio">Visita a Terreno / Domicilio</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Nota Interna de Coordinación (Opcional)</label>
+            <input type="text" id="adminAsignarNota" placeholder="Ej. Paciente derivado por convenio o contacto telefónico preliminar..." class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <!-- 4. Notificaciones Automáticas por Correo -->
+        <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200 space-y-2">
+          <span class="text-xs font-bold text-emerald-950 block">4. Notificaciones Automáticas por Correo</span>
+          <div class="space-y-1.5 text-xs text-emerald-900">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="adminCheckEmailProf" checked class="accent-emerald-700 w-4 h-4 rounded" />
+              <span><strong>Despachar correo al Especialista:</strong> Notifica la nueva sesión con los datos del paciente, motivo y link de videollamada profesional.</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="adminCheckEmailPac" checked class="accent-emerald-700 w-4 h-4 rounded" />
+              <span><strong>Despachar correo al Consultante:</strong> Bienvenida, confirmación de cita, indicaciones técnicas y enlace de ingreso para el paciente.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-noche/10">
+          <button type="button" onclick="window.cerrarModalAsignarPacienteAdmin()" class="px-4 py-2.5 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
+            Cancelar
+          </button>
+          <button type="submit" id="btnSubmitAsignarAdmin" class="btn-petroleo px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-md">
+            <i data-lucide="send" class="w-4 h-4 text-emerald-300"></i>
+            <span>Asignar Sesión y Despachar Correos</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: CONFIRMACIÓN Y VISTA PREVIA DE CORREOS DESPACHADOS
+       ======================================================================== -->
+  <div id="modalConfirmacionAsignacionAdmin" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold shadow-sm">
+            <i data-lucide="check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">¡Sesión Asignada Exitosamente!</h3>
+            <span class="text-[11px] text-noche/60">Calendario sincronizado y correos despachados</span>
+          </div>
+        </div>
+        <button type="button" onclick="window.cerrarModalConfirmacionAdmin()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Resumen de Cita -->
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-petroleo font-bold text-xs" id="confCitaId">CBL-SES-2026-003</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">Agendada en Calendario</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-noche/80">
+            <div>Consultante: <strong class="text-noche" id="confPacNombre">Mariana Soto</strong></div>
+            <div>Especialista: <strong class="text-noche" id="confProfNombre">Ps. Camila Valdés</strong></div>
+            <div>Fecha: <strong class="text-noche" id="confFechaHora">23 Oct · 10:00 hrs</strong></div>
+            <div>Modalidad: <strong class="text-noche" id="confModalidad">Online</strong></div>
+          </div>
+        </div>
+
+        <!-- Enlaces WebRTC de Teleconsulta -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+            Enlaces de la Sala WebRTC Generada
+          </label>
+          <div class="bg-white p-3 rounded-xl border border-noche/15 flex items-center justify-between gap-2 text-xs">
+            <div class="truncate">
+              <span class="font-bold text-petroleo block text-[11px]">Enlace para el Profesional:</span>
+              <span class="font-mono text-[11px] text-noche/70 truncate block" id="confLinkProf">https://gentia.cl/...</span>
+            </div>
+            <button type="button" onclick="window.copiarAlPortapapeles('confLinkProf')" class="btn-noche-outline py-1 px-3 rounded-lg text-[11px] font-semibold shrink-0">
+              Copiar
+            </button>
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/15 flex items-center justify-between gap-2 text-xs">
+            <div class="truncate">
+              <span class="font-bold text-emerald-700 block text-[11px]">Enlace para el Consultante:</span>
+              <span class="font-mono text-[11px] text-noche/70 truncate block" id="confLinkPac">https://gentia.cl/...</span>
+            </div>
+            <button type="button" onclick="window.copiarAlPortapapeles('confLinkPac')" class="btn-noche-outline py-1 px-3 rounded-lg text-[11px] font-semibold shrink-0">
+              Copiar
+            </button>
+          </div>
+        </div>
+
+        <!-- Vista Previa de Correos Enviados -->
+        <div class="space-y-2 pt-2 border-t border-noche/10">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-noche/80">Vista Previa de Correos Despachados</span>
+            <div class="flex items-center gap-1 text-[11px]">
+              <button type="button" id="tabEmailProfBtn" onclick="window.verEmailPreview('PROF')" class="px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold">Al Profesional</button>
+              <button type="button" id="tabEmailPacBtn" onclick="window.verEmailPreview('PAC')" class="px-2.5 py-1 rounded-lg bg-perla text-noche/70 hover:bg-white font-semibold">Al Consultante</button>
+            </div>
+          </div>
+
+          <div id="emailPreviewContainer" class="p-4 bg-perla/50 rounded-2xl border border-noche/10 max-h-56 overflow-y-auto text-xs font-sans">
+            <!-- Email preview html rendered dynamically -->
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end pt-3 border-t border-noche/10">
+          <button type="button" onclick="window.cerrarModalConfirmacionAdmin()" class="btn-petroleo px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-md">
+            Entendido y Volver al Portal
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -2454,6 +2454,329 @@ app.post("/api/profesionales/pacientes/eliminar", async (req, res) => {
   }
 });
 
+// ==============================================================================
+// 9. MÓDULO ADMINISTRATIVO DE CABAL SALUD: ASIGNACIÓN Y GESTIÓN DE SESIONES
+// ==============================================================================
+export const SESIONES_CABAL_MEMORIA: Map<string, any> = new Map([
+  [
+    "CBL-SES-2026-001",
+    {
+      citaId: "CBL-SES-2026-001",
+      pacienteId: "cbl_pac_01",
+      pacienteNombre: "Constanza Morales Henríquez",
+      pacienteRut: "18.392.104-5",
+      pacienteEmail: "constanza.morales@gmail.com",
+      pacienteTelefono: "+56 9 7812 3456",
+      prevision: "Reembolso Isapres (Colmena)",
+      profesionalUid: "cabal_psico_deportiva_01",
+      profesionalNombre: "Ps. Camila Valdés Araneda",
+      disciplinaId: "psicologia",
+      disciplinaNombre: "Psicología Clínica y del Deporte",
+      fecha: "2026-10-22",
+      fechaTexto: "Mañana, Jueves 22 Octubre",
+      hora: "10:00",
+      modalidad: "Online (Sala WebRTC Gentia)",
+      motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva, pensamientos anticipatorios catastróficos y bruxismo matutino intenso antes de carreras de triatlón.",
+      salaWebRTCProfesional: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-001&pacienteId=cbl_pac_01&role=profesional",
+      salaWebRTCPaciente: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-001&pacienteId=cbl_pac_01&role=paciente",
+      arancelCLP: 35000,
+      estadoPago: "Aprobado Webpay Plus Directo",
+      creadoPor: "Administración Cabal Salud",
+      createdAt: "2026-10-15T10:00:00Z"
+    }
+  ],
+  [
+    "CBL-SES-2026-002",
+    {
+      citaId: "CBL-SES-2026-002",
+      pacienteId: "cbl_pac_02",
+      pacienteNombre: "Felipe Arancibia Castro",
+      pacienteRut: "15.820.491-K",
+      pacienteEmail: "felipe.arancibia@gmail.com",
+      pacienteTelefono: "+56 9 8456 1234",
+      prevision: "Particular",
+      profesionalUid: "cabal_psico_deportiva_01",
+      profesionalNombre: "Ps. Camila Valdés Araneda",
+      disciplinaId: "psicologia",
+      disciplinaNombre: "Psicología Clínica y del Deporte",
+      fecha: "2026-10-23",
+      fechaTexto: "Viernes 23 Octubre",
+      hora: "16:30",
+      modalidad: "Online (Sala WebRTC Gentia)",
+      motivoConsulta: "Acompañamiento psicológico en proceso de rehabilitación de lesión deportiva. Kinesiofobia y frustración por lentitud de progresión en cargas.",
+      salaWebRTCProfesional: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-002&pacienteId=cbl_pac_02&role=profesional",
+      salaWebRTCPaciente: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-002&pacienteId=cbl_pac_02&role=paciente",
+      arancelCLP: 35000,
+      estadoPago: "Aprobado Webpay Plus Directo",
+      creadoPor: "Administración Cabal Salud",
+      createdAt: "2026-10-16T14:30:00Z"
+    }
+  ]
+]);
+
+// 9.1. Listar Sesiones asignadas a un Profesional
+app.post("/api/profesionales/sesiones/lista", (req, res) => {
+  const { profesionalUid } = req.body || {};
+  let sesiones = Array.from(SESIONES_CABAL_MEMORIA.values());
+  if (profesionalUid) {
+    sesiones = sesiones.filter(s => s.profesionalUid === profesionalUid);
+  }
+  res.json({
+    success: true,
+    total: sesiones.length,
+    sesiones
+  });
+});
+
+// 9.2. Listar todas las Sesiones para la Administración Central
+app.get("/api/admin/sesiones/lista", (_req, res) => {
+  const sesiones = Array.from(SESIONES_CABAL_MEMORIA.values()).reverse();
+  res.json({
+    success: true,
+    total: sesiones.length,
+    sesiones
+  });
+});
+
+// 9.3. Endpoint de Asignación Administrativa con Despacho de Correos
+app.post("/api/admin/asignar-sesion", async (req, res) => {
+  try {
+    const {
+      esPacienteNuevo,
+      pacienteId,
+      nombre,
+      rut,
+      email,
+      telefono,
+      prevision,
+      motivoConsulta,
+      disciplinaId,
+      disciplinaNombre,
+      profesionalUid,
+      profesionalNombre,
+      fecha,
+      hora,
+      modalidad,
+      arancelCLP,
+      notaRecepcion,
+      notificarEmailProfesional,
+      notificarEmailPaciente
+    } = req.body || {};
+
+    if (!profesionalUid || !fecha || !hora) {
+      return res.status(400).json({
+        success: false,
+        error: "Debes seleccionar un profesional, fecha y horario para la sesión."
+      });
+    }
+
+    let pacienteObj: PacienteCabalClinico | null = null;
+
+    if (esPacienteNuevo || !pacienteId) {
+      if (!nombre) {
+        return res.status(400).json({ success: false, error: "El nombre del paciente es obligatorio." });
+      }
+      const nuevoId = `cbl_pac_${Date.now()}`;
+      pacienteObj = {
+        id: nuevoId,
+        nombre: nombre.trim(),
+        rut: (rut || "S/RUT").trim(),
+        email: (email || "").trim().toLowerCase(),
+        telefono: (telefono || "").trim(),
+        genero: "No especificado",
+        prevision: prevision || "Particular",
+        ocupacion: "",
+        direccion: "",
+        contactoEmergenciaNombre: "",
+        contactoEmergenciaParentesco: "",
+        contactoEmergenciaTelefono: "",
+        antecedentesMedicos: "",
+        antecedentesPsiquiatricos: "",
+        medicacionActual: "",
+        alergias: "",
+        flagSui: false,
+        flagVIF: false,
+        flagAbuso: false,
+        alertaCritica: false,
+        motivoConsulta: (motivoConsulta || "Asignación administrativa de primera consulta").trim(),
+        diagnosticoCIE: "Z71.9 Consulta o Asesoramiento Clínico",
+        objetivosTerapeuticos: "Evaluación inicial y plan de acompañamiento integral.",
+        historial: [],
+        psicologoAsignadoUid: profesionalUid,
+        psicologoAsignadoNombre: profesionalNombre,
+        deudaTotal: 0,
+        totalCitas: 1,
+        ultimaCita: fecha,
+        createdAt: new Date().toISOString()
+      };
+      PACIENTES_CABAL_MEMORIA.set(nuevoId, pacienteObj);
+    } else {
+      pacienteObj = PACIENTES_CABAL_MEMORIA.get(pacienteId) || null;
+      if (pacienteObj) {
+        pacienteObj.psicologoAsignadoUid = profesionalUid;
+        pacienteObj.psicologoAsignadoNombre = profesionalNombre;
+        pacienteObj.ultimaCita = fecha;
+        pacienteObj.totalCitas = (pacienteObj.totalCitas || 0) + 1;
+        if (motivoConsulta && !pacienteObj.motivoConsulta) {
+          pacienteObj.motivoConsulta = motivoConsulta;
+        }
+      }
+    }
+
+    const targetPacNombre = pacienteObj ? pacienteObj.nombre : (nombre || "Consultante");
+    const targetPacRut = pacienteObj ? pacienteObj.rut : (rut || "S/RUT");
+    const targetPacEmail = pacienteObj ? pacienteObj.email : (email || "paciente@cabalsalud.cl");
+    const targetPacTel = pacienteObj ? pacienteObj.telefono : (telefono || "+56 9 ...");
+    const targetPacPrevision = pacienteObj ? pacienteObj.prevision : (prevision || "Particular");
+    const targetPacId = pacienteObj ? pacienteObj.id : (pacienteId || `cbl_pac_${Date.now()}`);
+
+    const citaNum = Math.floor(100 + Math.random() * 900);
+    const citaId = `CBL-SES-2026-${citaNum}`;
+    const salaWebRTCProfesional = `https://gentia.cl/sala-sesion.html?id=${citaId}&pacienteId=${targetPacId}&role=profesional`;
+    const salaWebRTCPaciente = `https://gentia.cl/sala-sesion.html?id=${citaId}&pacienteId=${targetPacId}&role=paciente`;
+
+    const nuevaSesion = {
+      citaId,
+      pacienteId: targetPacId,
+      pacienteNombre: targetPacNombre,
+      pacienteRut: targetPacRut,
+      pacienteEmail: targetPacEmail,
+      pacienteTelefono: targetPacTel,
+      prevision: targetPacPrevision,
+      profesionalUid,
+      profesionalNombre: profesionalNombre || "Especialista Cabal Salud",
+      disciplinaId: disciplinaId || "psicologia",
+      disciplinaNombre: disciplinaNombre || "Salud Mental",
+      fecha,
+      fechaTexto: `${fecha} a las ${hora} hrs`,
+      hora,
+      modalidad: modalidad || "Online (Sala WebRTC Gentia)",
+      motivoConsulta: motivoConsulta || (pacienteObj ? pacienteObj.motivoConsulta : "Consulta clínica integral"),
+      notaRecepcion: notaRecepcion || "",
+      salaWebRTCProfesional,
+      salaWebRTCPaciente,
+      arancelCLP: Number(arancelCLP || 35000),
+      estadoPago: "Asignado por Administración",
+      creadoPor: "Dirección Clínica Pamela Quijada & Lilians Cortés",
+      createdAt: new Date().toISOString()
+    };
+
+    SESIONES_CABAL_MEMORIA.set(citaId, nuevaSesion);
+
+    // Generar formato de correo para el Profesional
+    const emailProfesional = {
+      destinatario: targetPacEmail.includes("@") ? `${profesionalUid}@cabalsalud.cl` : "especialista@cabalsalud.cl",
+      asunto: `[Cabal Salud] Nueva Sesión Asignada: ${targetPacNombre} · ${fecha} a las ${hora} hrs`,
+      timestamp: new Date().toISOString(),
+      enviado: Boolean(notificarEmailProfesional !== false),
+      contenidoHtml: `
+        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;color:#10263C;">
+          <div style="background:#10263C;padding:24px 28px;color:#F7F4ED;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#10B981;text-transform:uppercase;">Clínica Cabal Salud · Notificación de Asignación</div>
+            <h2 style="margin:6px 0 0;font-size:20px;font-weight:700;color:#FFFFFF;">Nueva Sesión Asignada en tu Agenda</h2>
+          </div>
+          <div style="padding:28px;">
+            <p style="font-size:14px;line-height:1.6;margin-top:0;">Estimada/o <strong>${profesionalNombre}</strong>,</p>
+            <p style="font-size:13px;line-height:1.6;color:#334155;">La administración de Clínica Cabal Salud (Pamela Quijada & Lilians Cortés) te ha asignado un nuevo consultante en tu agenda:</p>
+            
+            <div style="background:#FFFFFF;border-radius:14px;padding:18px;margin:20px 0;border:1px solid #cbd5e1;">
+              <table style="width:100%;font-size:13px;border-collapse:collapse;">
+                <tr><td style="padding:4px 0;color:#64748b;width:140px;">Consultante:</td><td style="padding:4px 0;font-weight:700;color:#10263C;">${targetPacNombre}</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;">RUT:</td><td style="padding:4px 0;font-mono;font-weight:600;">${targetPacRut}</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;">Previsión:</td><td style="padding:4px 0;font-weight:600;">${targetPacPrevision}</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;">Fecha & Hora:</td><td style="padding:4px 0;font-weight:700;color:#174B4D;">${fecha} · ${hora} hrs</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;">Modalidad:</td><td style="padding:4px 0;">${modalidad || "Online (Sala WebRTC Gentia)"}</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;">Teléfono / WhatsApp:</td><td style="padding:4px 0;">${targetPacTel}</td></tr>
+                <tr><td style="padding:4px 0;color:#64748b;vertical-align:top;">Motivo informado:</td><td style="padding:4px 0;color:#10263C;font-style:italic;">"${nuevaSesion.motivoConsulta}"</td></tr>
+                ${notaRecepcion ? `<tr><td style="padding:4px 0;color:#64748b;vertical-align:top;">Nota interna:</td><td style="padding:4px 0;color:#772F3B;font-weight:600;">${notaRecepcion}</td></tr>` : ""}
+              </table>
+            </div>
+
+            <div style="text-align:center;margin:28px 0;">
+              <a href="${salaWebRTCProfesional}" target="_blank" style="display:inline-block;background:#174B4D;color:#FFFFFF;text-decoration:none;padding:13px 26px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(23,75,77,0.25);">
+                🎥 Ingresar a la Sala WebRTC Profesional
+              </a>
+            </div>
+
+            <p style="font-size:12px;color:#64748b;line-height:1.5;">La ficha clínica y el expediente del consultante ya están disponibles en tu <strong>Portal Profesional</strong> bajo resguardo cifrado de Gentia Vault (Ley N° 20.584).</p>
+          </div>
+          <div style="background:#F1F5F9;padding:14px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;text-align:center;">
+            Clínica Cabal Salud SpA · Dirección Médica & Administración · cabalsalud.cl
+          </div>
+        </div>
+      `
+    };
+
+    // Generar formato de correo para el Paciente
+    const emailPaciente = {
+      destinatario: targetPacEmail,
+      asunto: `Confirmación de Tu Sesión en Clínica Cabal Salud — ${profesionalNombre}`,
+      timestamp: new Date().toISOString(),
+      enviado: Boolean(notificarEmailPaciente !== false),
+      contenidoHtml: `
+        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;color:#10263C;">
+          <div style="background:#174B4D;padding:24px 28px;color:#F7F4ED;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#A7F3D0;text-transform:uppercase;">Clínica Cabal Salud · Cuidado Integral y Humano</div>
+            <h2 style="margin:6px 0 0;font-size:20px;font-weight:700;color:#FFFFFF;">Confirmación de Tu Atención</h2>
+          </div>
+          <div style="padding:28px;">
+            <p style="font-size:14px;line-height:1.6;margin-top:0;">Hola <strong>${targetPacNombre.split(" ")[0]}</strong>,</p>
+            <p style="font-size:13px;line-height:1.6;color:#334155;">Te confirmamos que la administración de Clínica Cabal Salud ha agendado con éxito tu sesión de <strong>${disciplinaNombre || "Salud"}</strong>:</p>
+            
+            <div style="background:#FFFFFF;border-radius:14px;padding:20px;margin:20px 0;border:1px solid #cbd5e1;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+              <table style="width:100%;font-size:13px;border-collapse:collapse;">
+                <tr><td style="padding:5px 0;color:#64748b;width:130px;">Especialista:</td><td style="padding:5px 0;font-weight:700;color:#174B4D;">${profesionalNombre}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;">Disciplina:</td><td style="padding:5px 0;font-weight:600;">${disciplinaNombre}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;">Fecha:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${fecha}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;">Horario:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${hora} hrs</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;">Modalidad:</td><td style="padding:5px 0;">Videoconsulta confidencial online</td></tr>
+                <tr><td style="padding:5px 0;color:#64748b;">Código Cita:</td><td style="padding:5px 0;font-mono;font-weight:600;color:#772F3B;">${citaId}</td></tr>
+              </table>
+            </div>
+
+            <div style="text-align:center;margin:28px 0;">
+              <a href="${salaWebRTCPaciente}" target="_blank" style="display:inline-block;background:#10263C;color:#FFFFFF;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 14px rgba(16,38,60,0.25);">
+                👉 Conectarme a mi Videoconsulta el día de la cita
+              </a>
+            </div>
+
+            <div style="background:#ECFDF5;border-radius:12px;padding:14px;border:1px solid #A7F3D0;margin-top:16px;">
+              <strong style="font-size:12px;color:#065F46;display:block;margin-bottom:4px;">💡 Recomendaciones para tu atención:</strong>
+              <ul style="font-size:11.5px;color:#047857;margin:0;padding-left:18px;line-height:1.5;">
+                <li>Busca un lugar tranquilo y con privacidad.</li>
+                <li>Conéctate 5 minutos antes con buena conexión a internet.</li>
+                <li>Si tienes exámenes o informes previos, podrás compartirlos en la sesión.</li>
+              </ul>
+            </div>
+
+            <p style="font-size:12px;color:#64748b;line-height:1.5;margin-top:20px;">Si necesitas reagendar o tienes dudas, puedes escribirnos directamente a nuestro WhatsApp oficial: <strong>+56 9 8583 5203</strong>.</p>
+          </div>
+          <div style="background:#F1F5F9;padding:14px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;text-align:center;">
+            Clínica Cabal Salud SpA · Providencia, Santiago de Chile · cabalsalud.cl
+          </div>
+        </div>
+      `
+    };
+
+    console.log(`[Cabal Salud Admin] Sesión ${citaId} asignada a ${profesionalNombre} para el consultante ${targetPacNombre}. Correos despachados: Especialista=${notificarEmailProfesional !== false}, Paciente=${notificarEmailPaciente !== false}`);
+
+    res.json({
+      success: true,
+      mensaje: "Sesión asignada con éxito al calendario del profesional y correos notificados.",
+      citaId,
+      paciente: pacienteObj,
+      sesion: nuevaSesion,
+      salaWebRTCProfesional,
+      salaWebRTCPaciente,
+      emailProfesional,
+      emailPaciente
+    });
+  } catch (err: any) {
+    console.error("[Cabal Salud Admin] Error en asignar-sesion:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Servir archivos estáticos de /public en desarrollo local
 const publicDir = path.join(__dirname, "../public");
 app.use(express.static(publicDir));

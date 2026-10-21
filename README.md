@@ -38,6 +38,54 @@ Repositorio oficial e independiente de **Clínica Cabal Salud (`cabalsalud.cl`)*
 | `ALL` | `/api/pagos/mercadopago/retorno` | Procesa el retorno desde Mercado Pago, notifica a Gentia vía HMAC-SHA256 y redirige a `/confirmacion-reserva.html`. |
 | `POST` | `/api/pagos/mercadopago/webhook` | Recibe notificaciones IPN/Webhook de Mercado Pago, verifica el pago contra la API de MP de Cabal Salud y confirma la cita en Gentia. |
 | `GET` | `/api/agenda/ics` | Genera y descarga el archivo de calendario `.ics` con el enlace a la sala de teleconsulta WebRTC. |
+| `POST` | `/api/pacientes/lista` | Consulta el directorio de pacientes asignados al profesional o a la administración de Cabal Salud. |
+| `POST` | `/api/pacientes/guardar` | Registra o actualiza la ficha clínica ad-hoc de un paciente con cifrado delegado en Gentia Vault. |
+| `POST` | `/api/pacientes/evolucion` | Registra notas de evolución DAP con sliders de severidad (0-10) y sellado inmutable SHA-256. |
+| `POST` | `/api/pacientes/epicrisis` | Emite y sella la epicrisis oficial de alta médica para presentación y reembolso en Isapres/Fonasa. |
+| `POST` | `/api/profesionales/sesiones/lista` | Lista las sesiones agendadas y confirmadas de un profesional específico. |
+| `GET` | `/api/admin/sesiones/lista` | Obtiene el consolidado general de sesiones asignadas para la administración (Pamela & Lilians). |
+| `POST` | `/api/admin/asignar-sesion` | Registra paciente (nuevo o existente), asigna terapeuta mediante filtro en cascada (Disciplina -> Profesional), genera código `CBL-SES-2026-XXX`, crea salas WebRTC y despacha correos HTML al profesional y al consultante. |
+
+---
+
+## 👩‍⚕️ Portal Profesional & Fichas Clínicas Ad-Hoc (`portal-profesional.html`)
+
+El portal opera de forma privada y autónoma bajo el dominio de Cabal Salud (`/portal-profesional.html`), manteniendo los colores y diseño institucional:
+
+* **Acceso Independiente de Google OAuth**: Modalidad demo de un clic para cualquiera de los 9 profesionales y acceso por credenciales clínicas.
+* **Autonomía Operativa**: Cada terapeuta configura su biografía, especialidades, arancel en CLP, tiempo de sesión flexible (30, 45, 50, 60, 75 o 90 minutos) y disponibilidad semanal (incluyendo días domingo).
+* **Fichas Clínicas Ad-Hoc por Disciplina**:
+  * **Psicología**: Motivo de consulta manifiesto y latente, anamnesis vincular, antecedentes psiquiátricos y banderas rojas (Riesgo Suicida, VIF, Abuso).
+  * **Nutrición**: Antropometría, metas calóricas, comorbilidades metabólicas y plan alimentario.
+  * **Psiquiatría**: Examen mental formal, esquema psicofarmacológico y control de efectos adversos.
+  * **Terapia Ocupacional**: Desempeño ocupacional, integración sensorial y autonomía funcional.
+  * **Fonoaudiología**: Habla, lenguaje, voz y deglución.
+  * **Trabajo Social**: Red sociofamiliar, vulnerabilidad y redes institucionales.
+  * **Mediación Familiar / Legal**: Materia en litigio, acuerdos parentales y régimen comunicacional.
+* **Evoluciones DAP con Sliders Sintomáticos**: Registro estructurado (Datos, Análisis, Plan) con sliders 0-10 para Ansiedad, Depresión y Estrés, sellados de forma inmutable con SHA-256.
+* **Epicrisis Oficial de Alta**: Emisión de resumen clínico con diagnósticos CIE-11/DSM-5 formateado para reembolso médico en Isapres/Fonasa.
+
+---
+
+## 👑 Módulo Central de Administración y Asignación (Pamela & Lilians)
+
+Diseñado para la dirección clínica de Pamela Quijada y Lilians Cortés, permite gestionar pacientes espontáneos y derivaciones internas:
+
+1. **Acceso Inmediato**: Botón destacado `[ 👑 Asignar Paciente (Admin) ]` en la barra superior y pestaña `Administración & Asignación`.
+2. **Modo Dual de Paciente**:
+   * **Paciente Nuevo**: Formulario con validación de RUT chileno (Módulo 11), email, WhatsApp, previsión de salud y dirección para atención domiciliaria.
+   * **Paciente Existente**: Selector rápido con autocompletado en un solo clic.
+3. **Filtro en Cascada en 2 Pasos**:
+   * **Paso 1**: Selección de la Disciplina de la Salud (Psicología, Nutrición, Psiquiatría, Fonoaudiología, etc.).
+   * **Paso 2**: El selector de profesionales se actualiza de manera reactiva mostrando únicamente a los profesionales de dicha área.
+4. **Sincronización Total con Salas WebRTC**:
+   * Generación de código unívoco `CBL-SES-2026-XXX`.
+   * Enlaces directos a sala de teleconsulta P2P con roles: `https://gentia.cl/clinica-sala-espera.html?sala=CBL-SES-2026-XXX&role=profesional` (para el terapeuta) y `&role=paciente` (para el consultante).
+   * Inyección en la agenda y próximas sesiones del especialista seleccionado.
+5. **Doble Despacho de Correo HTML Corporativo**:
+   * Correo al especialista con ficha de antecedentes y link de sala.
+   * Correo al paciente con confirmación de cita y acceso virtual.
+   * Previsualización interactiva por pestañas dentro del modal administrativo.
 
 ---
 

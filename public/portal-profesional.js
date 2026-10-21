@@ -10,6 +10,33 @@
 
   const CATALOGO_LOCAL = [
     {
+      uid: "cabal_admin_central",
+      nombre: "Dra. Pamela Quijada & Lilians Cortés",
+      profesion: "Dirección Médica & Administración Central",
+      disciplinaId: "administracion",
+      disciplinaNombre: "Dirección Médica & Administración",
+      rnpi: "Dirección Médica Cabal Salud",
+      universidad: "Clínica Cabal Salud SpA",
+      especialidades: [
+        "Recepción y Asignación de Consultantes",
+        "Supervisión Multidisciplinaria en Red",
+        "Gestión de Bóveda Clínica Gentia Vault"
+      ],
+      subespecialidadIds: ["infanto_geriatria", "deporte", "neurodivergencia", "perinatal"],
+      subespecialidadesDestacadas: ["Infanto-Juvenil y Geriatría", "Neurodivergencia Integral"],
+      modalidades: ["Online"],
+      previsiones: ["Particular", "Reembolso Isapres", "FONASA"],
+      precioCLP: 35000,
+      duracionMinutos: 50,
+      fotoUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+      enfoqueResumen: "Administración central y coordinación clínica de la red interdisciplinaria Cabal Salud.",
+      experienciaDetalle: "Dirección y supervisión médica y psicológica.",
+      formacionAcademica: [
+        "Dirección Médica — Clínica Cabal Salud SpA",
+        "Coordinación Clínica — Red Gentia"
+      ]
+    },
+    {
       uid: "cabal_psico_deportiva_01",
       nombre: "Ps. Camila Valdés Araneda",
       profesion: "Psicóloga Clínica y del Deporte",
@@ -1059,7 +1086,7 @@
   let subPestanaClinicaActiva = "ficha"; // 'ficha' | 'examen' | 'evoluciones' | 'epicrisis' | 'archivos'
 
   window.cambiarPestana = function (pestanaId) {
-    ["perfil", "sesiones", "fichas", "horarios", "banco"].forEach(id => {
+    ["perfil", "sesiones", "fichas", "horarios", "banco", "admin"].forEach(id => {
       const section = document.getElementById(`sectionTab-${id}`);
       const btn = document.getElementById(`tabBtn-${id}`);
       if (section && btn) {
@@ -1068,6 +1095,8 @@
           btn.className = "tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-transparent transition flex items-center gap-2";
           if (id === "fichas") {
             window.cargarDirectorioPacientes();
+          } else if (id === "admin") {
+            window.cargarDashboardAdmin();
           }
         } else {
           section.classList.add("hidden");
@@ -1077,6 +1106,37 @@
     });
     refreshIcons();
   };
+
+  function renderizarChipPacienteHTML(p, isSelected) {
+    const tieneAlertas = p.flagSui || p.flagVIF || p.flagAbuso || p.alertaCritica;
+    if (isSelected) {
+      return `
+        <button
+          type="button"
+          onclick="window.cargarFichaClinicaPaciente('${p.id}')"
+          class="shrink-0 px-4 py-2 rounded-2xl text-xs font-bold flex items-center gap-2.5 transition-all duration-200 bg-petroleo text-white shadow-lg ring-2 ring-emerald-400 ring-offset-2 scale-[1.03] active:scale-95 cursor-pointer"
+          title="Consultante seleccionado · Expediente abierto"
+        >
+          <span class="w-5 h-5 rounded-full bg-emerald-400 text-petroleo flex items-center justify-center font-black text-xs shadow-sm shrink-0">✓</span>
+          <span class="truncate max-w-[170px] text-white tracking-wide font-serif text-sm">${p.nombre}</span>
+          <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-white/20 text-emerald-100 font-mono">${p.prevision ? p.prevision.split(" ")[0] : "Part."}</span>
+          ${tieneAlertas ? `<span class="w-2.5 h-2.5 rounded-full bg-red-400 animate-pulse ml-1" title="Alerta clínica activa"></span>` : ""}
+        </button>
+      `;
+    }
+    return `
+      <button
+        type="button"
+        onclick="window.cargarFichaClinicaPaciente('${p.id}')"
+        class="shrink-0 px-3.5 py-1.5 rounded-2xl text-xs font-medium flex items-center gap-2 transition-all duration-200 bg-white text-noche/80 border border-noche/15 hover:border-petroleo/60 hover:bg-petroleo/5 hover:text-petroleo hover:shadow-sm active:scale-95 cursor-pointer"
+        title="Clic para abrir expediente de ${p.nombre}"
+      >
+        <span class="w-2.5 h-2.5 rounded-full ${tieneAlertas ? "bg-red-500 animate-pulse" : "bg-noche/25"} shrink-0"></span>
+        <span class="truncate max-w-[150px] font-semibold">${p.nombre}</span>
+        <span class="text-[10px] text-noche/50 font-mono">${p.prevision ? p.prevision.split(" ")[0] : "Part."}</span>
+      </button>
+    `;
+  }
 
   // 1. Cargar Directorio de Pacientes desde Gentia Vault
   window.cargarDirectorioPacientes = async function (searchQuery = "") {
@@ -1138,22 +1198,7 @@
       } else {
         chipsContainer.innerHTML = listaParaMostrar.map(p => {
           const isSelected = pacienteActivo && pacienteActivo.id === p.id;
-          const tieneAlertas = p.flagSui || p.flagVIF || p.flagAbuso || p.alertaCritica;
-          return `
-            <button
-              type="button"
-              onclick="window.cargarFichaClinicaPaciente('${p.id}')"
-              class="shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition border ${
-                isSelected
-                  ? "bg-petroleo text-white border-petroleo shadow-sm"
-                  : "bg-white text-noche/80 border-noche/15 hover:bg-perla hover:border-noche/30"
-              }"
-            >
-              <span class="w-2 h-2 rounded-full ${tieneAlertas ? "bg-red-500" : isSelected ? "bg-emerald-300" : "bg-petroleo"}"></span>
-              <span class="truncate max-w-[150px]">${p.nombre}</span>
-              <span class="text-[10px] opacity-75 font-mono">${p.prevision ? p.prevision.split(" ")[0] : "Part."}</span>
-            </button>
-          `;
+          return renderizarChipPacienteHTML(p, isSelected);
         }).join("");
       }
     }
@@ -1191,21 +1236,7 @@
     if (chipsContainer) {
       chipsContainer.innerHTML = filtrados.map(p => {
         const isSelected = pacienteActivo && pacienteActivo.id === p.id;
-        const tieneAlertas = p.flagSui || p.flagVIF || p.flagAbuso;
-        return `
-          <button
-            type="button"
-            onclick="window.cargarFichaClinicaPaciente('${p.id}')"
-            class="shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition border ${
-              isSelected
-                ? "bg-petroleo text-white border-petroleo shadow-sm"
-                : "bg-white text-noche/80 border-noche/15 hover:bg-perla"
-            }"
-          >
-            <span class="w-2 h-2 rounded-full ${tieneAlertas ? "bg-red-500" : isSelected ? "bg-emerald-300" : "bg-petroleo"}"></span>
-            <span class="truncate max-w-[150px]">${p.nombre}</span>
-          </button>
-        `;
+        return renderizarChipPacienteHTML(p, isSelected);
       }).join("");
     }
 
@@ -1259,6 +1290,14 @@
     // Actualizar selector si difiere
     const sel = document.getElementById("selectFichaPaciente");
     if (sel && sel.value !== pac.id) sel.value = pac.id;
+
+    // Actualizar visualmente los chips con estado activo instantáneo
+    const chipsContainer = document.getElementById("chipsDirectorioPacientes");
+    if (chipsContainer) {
+      chipsContainer.innerHTML = listaPacientesDirectorio.map(itemP => {
+        return renderizarChipPacienteHTML(itemP, itemP.id === pac.id);
+      }).join("");
+    }
 
     renderizarVistaExpedienteClinico();
   };
@@ -2471,7 +2510,7 @@
             <div class="flex items-center justify-end gap-3 pt-2">
               <button type="submit" id="btnGuardarNotaEvolucion" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
-                <span>Firmar y Registrar en Gentia Vault (SHA-256)</span>
+                <span>Registrar</span>
               </button>
             </div>
           </form>
@@ -2543,7 +2582,7 @@
           </div>
           <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
             <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
-            <span>Guardar y Sellar Epicrisis en Gentia Vault</span>
+            <span>Guardar</span>
           </button>
         </div>
       </form>
@@ -3374,6 +3413,401 @@
       modal.classList.add("hidden");
       modal.classList.remove("flex");
     }
+  };
+
+  // ==============================================================================
+  // MÓDULO DE ADMINISTRACIÓN CABAL SALUD: RECEPCIÓN Y ASIGNACIÓN DE CONSULTANTES
+  // ==============================================================================
+  let modoAsignacionActual = "NUEVO";
+  let respuestaUltimaAsignacion = null;
+  let sesionesAdminList = [
+    {
+      citaId: "CBL-SES-2026-001",
+      pacienteId: "cbl_pac_01",
+      pacienteNombre: "Constanza Morales Henríquez",
+      pacienteRut: "18.392.104-5",
+      pacienteEmail: "constanza.morales@gmail.com",
+      pacienteTelefono: "+56 9 7812 3456",
+      prevision: "Reembolso Isapres (Colmena)",
+      profesionalUid: "cabal_psico_deportiva_01",
+      profesionalNombre: "Ps. Camila Valdés Araneda",
+      disciplinaNombre: "Psicología Clínica y del Deporte",
+      fecha: "2026-10-22",
+      hora: "10:00",
+      modalidad: "Online (Sala WebRTC Gentia)",
+      motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva.",
+      salaWebRTCProfesional: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-001&pacienteId=cbl_pac_01&role=profesional",
+      salaWebRTCPaciente: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-001&pacienteId=cbl_pac_01&role=paciente",
+      arancelCLP: 35000,
+      estadoPago: "Aprobado Webpay Plus Directo",
+      creadoPor: "Administración Cabal Salud"
+    },
+    {
+      citaId: "CBL-SES-2026-002",
+      pacienteId: "cbl_pac_02",
+      pacienteNombre: "Felipe Arancibia Castro",
+      pacienteRut: "15.820.491-K",
+      pacienteEmail: "felipe.arancibia@gmail.com",
+      pacienteTelefono: "+56 9 8456 1234",
+      prevision: "Particular",
+      profesionalUid: "cabal_psico_deportiva_01",
+      profesionalNombre: "Ps. Camila Valdés Araneda",
+      disciplinaNombre: "Psicología Clínica y del Deporte",
+      fecha: "2026-10-23",
+      hora: "16:30",
+      modalidad: "Online (Sala WebRTC Gentia)",
+      motivoConsulta: "Acompañamiento psicológico en rehabilitación deportiva.",
+      salaWebRTCProfesional: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-002&pacienteId=cbl_pac_02&role=profesional",
+      salaWebRTCPaciente: "https://gentia.cl/sala-sesion.html?id=CBL-SES-2026-002&pacienteId=cbl_pac_02&role=paciente",
+      arancelCLP: 35000,
+      estadoPago: "Aprobado Webpay Plus Directo",
+      creadoPor: "Administración Cabal Salud"
+    }
+  ];
+
+  window.cargarDashboardAdmin = async function () {
+    try {
+      const res = await fetch("/api/admin/sesiones/lista");
+      const data = await res.json();
+      if (data && data.success && Array.isArray(data.sesiones)) {
+        sesionesAdminList = data.sesiones;
+      }
+    } catch (_e) {}
+
+    // Actualizar contadores
+    const countEsp = document.getElementById("adminTotalEspecialistas");
+    if (countEsp) countEsp.textContent = catalogoProfesionales.filter(p => p.uid !== "cabal_admin_central").length;
+
+    const countPac = document.getElementById("adminTotalPacientes");
+    if (countPac) countPac.textContent = listaPacientesDirectorio.length;
+
+    const countSes = document.getElementById("adminTotalSesiones");
+    if (countSes) countSes.textContent = sesionesAdminList.length;
+
+    const container = document.getElementById("containerAdminListaSesiones");
+    if (!container) return;
+
+    if (sesionesAdminList.length === 0) {
+      container.innerHTML = `
+        <div class="bg-perla/60 rounded-2xl p-8 border border-dashed border-noche/15 text-center text-noche/60 text-xs sm:text-sm">
+          No hay sesiones asignadas actualmente. Utiliza el botón "+ Registrar y Asignar Paciente" para comenzar.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = sesionesAdminList.map((s, idx) => {
+      const telLimpio = (s.pacienteTelefono || "").replace(/[^0-9]/g, "");
+      return `
+        <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="space-y-1.5 flex-1 text-xs">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-petroleo/10 text-petroleo">
+                ${s.disciplinaNombre || "Especialidad"}
+              </span>
+              <span class="font-mono text-noche/60">${s.citaId}</span>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                ${s.estadoPago || "Confirmada"}
+              </span>
+            </div>
+            <h4 class="font-serif text-base font-bold text-noche">${s.pacienteNombre} <span class="font-sans font-normal text-xs text-noche/60">(RUT: ${s.pacienteRut || "S/RUT"})</span></h4>
+            <div class="text-noche/75 flex flex-wrap gap-x-4 gap-y-1">
+              <span>👨‍⚕️ Especialista: <strong>${s.profesionalNombre}</strong></span>
+              <span>📅 <strong>${s.fecha} a las ${s.hora} hrs</strong></span>
+              <span>📍 ${s.modalidad || "Online"}</span>
+            </div>
+            <p class="text-noche/70 italic mt-0.5">"${s.motivoConsulta || "Sin motivo registrado"}"</p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0 w-full md:w-auto">
+            <a
+              href="${s.salaWebRTCProfesional || `https://gentia.cl/sala-sesion.html?id=${s.citaId}&role=profesional`}"
+              target="_blank"
+              rel="noopener"
+              class="btn-petroleo py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xs"
+              title="Ingresar como profesional o supervisión médica"
+            >
+              <i data-lucide="video" class="w-3.5 h-3.5"></i>
+              <span>Sala WebRTC</span>
+            </a>
+            <button
+              type="button"
+              onclick="window.abrirFichaClinicaPaciente('${s.pacienteId}')"
+              class="py-2 px-3 rounded-xl border border-noche/15 bg-white hover:bg-perla text-xs font-semibold text-noche flex items-center justify-center gap-1.5 transition"
+              title="Abrir ficha clínica del consultante"
+            >
+              <i data-lucide="clipboard-list" class="w-3.5 h-3.5 text-petroleo"></i>
+              <span>Ficha Clínica</span>
+            </button>
+            ${telLimpio ? `
+              <a
+                href="https://wa.me/${telLimpio}?text=Hola%20${encodeURIComponent(s.pacienteNombre)}%2C%20te%20escribe%20la%20administraci%C3%B3n%20de%20Cl%C3%ADnica%20Cabal%20Salud%20respecto%20a%20tu%20sesi%C3%B3n%20con%20${encodeURIComponent(s.profesionalNombre)}."
+                target="_blank"
+                rel="noopener"
+                class="btn-noche-outline py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5"
+                title="Contactar al paciente por WhatsApp"
+              >
+                <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>WhatsApp</span>
+              </a>
+            ` : ""}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    refreshIcons();
+  };
+
+  window.abrirModalAsignarPacienteAdmin = function () {
+    const modal = document.getElementById("modalAsignarPacienteAdmin");
+    if (!modal) return;
+
+    // Reset form
+    document.getElementById("formAsignarPacienteAdmin")?.reset();
+    window.setModoAsignacionAdmin("NUEVO");
+
+    // Fecha predeterminada: Mañana
+    const manana = new Date();
+    manana.setDate(manana.getDate() + 1);
+    const fechaInput = document.getElementById("adminAsignarFecha");
+    if (fechaInput) {
+      fechaInput.value = manana.toISOString().split("T")[0];
+      fechaInput.min = new Date().toISOString().split("T")[0];
+    }
+
+    // Poblar selector de disciplina y profesional
+    const discSelect = document.getElementById("adminAsignarDisciplina");
+    if (discSelect) {
+      discSelect.value = "psicologia";
+      window.actualizarSelectProfesionalesAdmin("psicologia");
+    }
+
+    // Poblar selector de pacientes existentes
+    const pacSelect = document.getElementById("adminSelectPacienteExistente");
+    if (pacSelect) {
+      pacSelect.innerHTML = `<option value="">-- Selecciona un consultante de la lista --</option>` +
+        listaPacientesDirectorio.map(p => `
+          <option value="${p.id}">${p.nombre} (RUT ${p.rut || "S/RUT"}) — ${p.prevision || "Particular"}</option>
+        `).join("");
+    }
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    refreshIcons();
+  };
+
+  window.cerrarModalAsignarPacienteAdmin = function () {
+    const modal = document.getElementById("modalAsignarPacienteAdmin");
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+  };
+
+  window.setModoAsignacionAdmin = function (modo) {
+    modoAsignacionActual = modo;
+    const btnNuevo = document.getElementById("btnModoNuevoPac");
+    const btnExistente = document.getElementById("btnModoExistentePac");
+    const wrapperExistente = document.getElementById("wrapperSelectorExistenteAdmin");
+
+    if (modo === "EXISTENTE") {
+      if (btnNuevo) btnNuevo.className = "flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition";
+      if (btnExistente) btnExistente.className = "flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition font-bold";
+      if (wrapperExistente) wrapperExistente.classList.remove("hidden");
+    } else {
+      if (btnNuevo) btnNuevo.className = "flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition font-bold";
+      if (btnExistente) btnExistente.className = "flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition";
+      if (wrapperExistente) wrapperExistente.classList.add("hidden");
+    }
+  };
+
+  window.autocompletarPacienteAdmin = function (pacienteId) {
+    if (!pacienteId) return;
+    const p = listaPacientesDirectorio.find(item => item.id === pacienteId);
+    if (!p) return;
+    document.getElementById("adminAsignarNombre").value = p.nombre || "";
+    document.getElementById("adminAsignarRut").value = p.rut || "";
+    document.getElementById("adminAsignarEmail").value = p.email || "";
+    document.getElementById("adminAsignarTelefono").value = p.telefono || "";
+    if (p.prevision) {
+      const prevSelect = document.getElementById("adminAsignarPrevision");
+      if (prevSelect) prevSelect.value = p.prevision;
+    }
+    document.getElementById("adminAsignarMotivo").value = p.motivoConsulta || "";
+  };
+
+  window.actualizarSelectProfesionalesAdmin = function (disciplinaId) {
+    const selectProf = document.getElementById("adminAsignarProfesionalSelect");
+    if (!selectProf) return;
+
+    // Filtrar catálogo por disciplina
+    const filtrados = catalogoProfesionales.filter(p =>
+      p.disciplinaId === disciplinaId ||
+      (disciplinaId === "psicologia" && p.disciplinaId === "psicologia")
+    );
+
+    if (filtrados.length === 0) {
+      selectProf.innerHTML = catalogoProfesionales
+        .filter(p => p.uid !== "cabal_admin_central")
+        .map(p => `<option value="${p.uid}" data-precio="${p.precioCLP}">${p.nombre} — ${p.disciplinaNombre}</option>`)
+        .join("");
+    } else {
+      selectProf.innerHTML = filtrados.map(p => `
+        <option value="${p.uid}" data-precio="${p.precioCLP}">
+          ${p.nombre} (${p.rnpi || "RNPI Vigente"}) — $${Number(p.precioCLP || 35000).toLocaleString("es-CL")} CLP
+        </option>
+      `).join("");
+    }
+  };
+
+  window.ejecutarAsignacionPacienteAdmin = async function (e) {
+    if (e) e.preventDefault();
+    const btn = document.getElementById("btnSubmitAsignarAdmin");
+    if (btn) btn.disabled = true;
+
+    const selectProf = document.getElementById("adminAsignarProfesionalSelect");
+    const profUid = selectProf?.value;
+    const profEncontrado = catalogoProfesionales.find(p => p.uid === profUid);
+    const disciplinaId = document.getElementById("adminAsignarDisciplina")?.value || "psicologia";
+    const disciplinaText = document.getElementById("adminAsignarDisciplina")?.selectedOptions[0]?.textContent || "Especialidad";
+
+    const payload = {
+      esPacienteNuevo: modoAsignacionActual === "NUEVO",
+      pacienteId: modoAsignacionActual === "EXISTENTE" ? document.getElementById("adminSelectPacienteExistente")?.value : undefined,
+      nombre: document.getElementById("adminAsignarNombre")?.value || "",
+      rut: document.getElementById("adminAsignarRut")?.value || "",
+      email: document.getElementById("adminAsignarEmail")?.value || "",
+      telefono: document.getElementById("adminAsignarTelefono")?.value || "",
+      prevision: document.getElementById("adminAsignarPrevision")?.value || "Particular",
+      motivoConsulta: document.getElementById("adminAsignarMotivo")?.value || "",
+      disciplinaId,
+      disciplinaNombre: disciplinaText,
+      profesionalUid: profUid,
+      profesionalNombre: profEncontrado ? profEncontrado.nombre : "Especialista Cabal Salud",
+      fecha: document.getElementById("adminAsignarFecha")?.value || new Date().toISOString().split("T")[0],
+      hora: document.getElementById("adminAsignarHora")?.value || "10:00",
+      modalidad: document.getElementById("adminAsignarModalidad")?.value || "Online (Sala WebRTC Gentia)",
+      arancelCLP: profEncontrado ? profEncontrado.precioCLP : 35000,
+      notaRecepcion: document.getElementById("adminAsignarNota")?.value || "",
+      notificarEmailProfesional: Boolean(document.getElementById("adminCheckEmailProf")?.checked),
+      notificarEmailPaciente: Boolean(document.getElementById("adminCheckEmailPac")?.checked)
+    };
+
+    try {
+      const res = await fetch("/api/admin/asignar-sesion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data && data.success && data.sesion) {
+        respuestaUltimaAsignacion = data;
+
+        // Agregar paciente si era nuevo
+        if (data.paciente && !listaPacientesDirectorio.some(p => p.id === data.paciente.id)) {
+          listaPacientesDirectorio.unshift(data.paciente);
+        } else if (data.paciente) {
+          const idx = listaPacientesDirectorio.findIndex(p => p.id === data.paciente.id);
+          if (idx !== -1) listaPacientesDirectorio[idx] = data.paciente;
+        }
+
+        // Agregar sesión a la lista administrativa
+        sesionesAdminList.unshift(data.sesion);
+
+        window.cerrarModalAsignarPacienteAdmin();
+
+        // Si el profesional asignado es el profesional activo en pantalla, actualizar sus sesiones
+        if (profesionalActivo && profesionalActivo.uid === profUid) {
+          renderizarSesiones(profesionalActivo);
+        }
+
+        renderizarSelectoresYChipsPacientes();
+
+        // Abrir modal de confirmación con vista previa
+        window.abrirModalConfirmacionAdmin(data);
+      } else {
+        alert(data.error || "Error al asignar la sesión.");
+      }
+    } catch (_err) {
+      alert("Error de comunicación con el servidor de Cabal Salud.");
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  };
+
+  window.abrirModalConfirmacionAdmin = function (data) {
+    const modal = document.getElementById("modalConfirmacionAsignacionAdmin");
+    if (!modal || !data) return;
+
+    const s = data.sesion || {};
+    document.getElementById("confCitaId").textContent = s.citaId || "CBL-SES-2026";
+    document.getElementById("confPacNombre").textContent = s.pacienteNombre || "";
+    document.getElementById("confProfNombre").textContent = s.profesionalNombre || "";
+    document.getElementById("confFechaHora").textContent = `${s.fecha} · ${s.hora} hrs`;
+    document.getElementById("confModalidad").textContent = s.modalidad || "Online";
+
+    document.getElementById("confLinkProf").textContent = data.salaWebRTCProfesional || s.salaWebRTCProfesional || "https://gentia.cl/...";
+    document.getElementById("confLinkPac").textContent = data.salaWebRTCPaciente || s.salaWebRTCPaciente || "https://gentia.cl/...";
+
+    window.verEmailPreview("PROF");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    refreshIcons();
+  };
+
+  window.verEmailPreview = function (tipo) {
+    const container = document.getElementById("emailPreviewContainer");
+    const btnProf = document.getElementById("tabEmailProfBtn");
+    const btnPac = document.getElementById("tabEmailPacBtn");
+    if (!container || !respuestaUltimaAsignacion) return;
+
+    if (tipo === "PROF") {
+      if (btnProf) btnProf.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold";
+      if (btnPac) btnPac.className = "px-2.5 py-1 rounded-lg bg-perla text-noche/70 hover:bg-white font-semibold";
+      const e = respuestaUltimaAsignacion.emailProfesional || {};
+      container.innerHTML = `
+        <div class="space-y-1.5 pb-2 mb-2 border-b border-noche/10">
+          <div>Para: <strong class="font-mono text-petroleo">${e.destinatario || "especialista@cabalsalud.cl"}</strong></div>
+          <div>Asunto: <strong class="text-noche">${e.asunto || "Nueva Sesión Asignada"}</strong></div>
+          <div class="text-[10px] text-noche/50">Estado: <span class="text-emerald-700 font-bold">✓ Despachado por servidor</span> · ${e.timestamp || ""}</div>
+        </div>
+        <div>${e.contenidoHtml || "<p>Sin vista previa de correo</p>"}</div>
+      `;
+    } else {
+      if (btnProf) btnProf.className = "px-2.5 py-1 rounded-lg bg-perla text-noche/70 hover:bg-white font-semibold";
+      if (btnPac) btnPac.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold";
+      const e = respuestaUltimaAsignacion.emailPaciente || {};
+      container.innerHTML = `
+        <div class="space-y-1.5 pb-2 mb-2 border-b border-noche/10">
+          <div>Para: <strong class="font-mono text-petroleo">${e.destinatario || "paciente@cabalsalud.cl"}</strong></div>
+          <div>Asunto: <strong class="text-noche">${e.asunto || "Confirmación de Tu Sesión"}</strong></div>
+          <div class="text-[10px] text-noche/50">Estado: <span class="text-emerald-700 font-bold">✓ Despachado por servidor</span> · ${e.timestamp || ""}</div>
+        </div>
+        <div>${e.contenidoHtml || "<p>Sin vista previa de correo</p>"}</div>
+      `;
+    }
+  };
+
+  window.copiarAlPortapapeles = function (elementId) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const text = el.textContent || "";
+    navigator.clipboard.writeText(text).then(() => {
+      mostrarAlertaPortal("✓ Enlace de videollamada copiado al portapapeles.", "success");
+    }).catch(() => {
+      prompt("Copia este enlace de videollamada:", text);
+    });
+  };
+
+  window.cerrarModalConfirmacionAdmin = function () {
+    const modal = document.getElementById("modalConfirmacionAsignacionAdmin");
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+    window.cargarDashboardAdmin();
   };
 
   document.addEventListener("DOMContentLoaded", inicializarPortal);
