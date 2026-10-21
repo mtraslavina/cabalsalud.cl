@@ -314,11 +314,28 @@
 
     poblarSelectoresProfesionales();
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramProf = urlParams.get("prof");
+    const paramTab = urlParams.get("tab");
+
+    if (paramProf) {
+      const encontrado = catalogoProfesionales.find(p => p.uid === paramProf) || CATALOGO_LOCAL.find(p => p.uid === paramProf) || CATALOGO_LOCAL[0];
+      sessionStorage.setItem("cabal_prof_active", encontrado.uid);
+      cargarPerfilEnPortal(encontrado);
+      if (paramTab) {
+        setTimeout(() => window.cambiarPestana(paramTab), 100);
+      }
+      return;
+    }
+
     const storedUid = sessionStorage.getItem("cabal_prof_active");
     if (storedUid) {
       const encontrado = catalogoProfesionales.find(p => p.uid === storedUid) || CATALOGO_LOCAL.find(p => p.uid === storedUid);
       if (encontrado) {
         cargarPerfilEnPortal(encontrado);
+        if (paramTab) {
+          setTimeout(() => window.cambiarPestana(paramTab), 100);
+        }
         return;
       }
     }
