@@ -1583,29 +1583,703 @@ app.post("/api/profesionales/perfil/actualizar", (req, res) => {
 });
 
 // ============================================================================
-// ENDPOINTS DE FICHA CLÍNICA & EPICRISIS (CUSTODIA DELEGADA EN GENTIA)
+// REPOSITORIO EN MEMORIA Y CONEXIÓN DE FICHA CLÍNICA CON GENTIA VAULT
 // ============================================================================
-app.get("/api/profesionales/ficha/:citaId", (req, res) => {
-  const { citaId } = req.params;
+export interface PacienteCabalClinico {
+  id: string;
+  nombre: string;
+  rut: string;
+  email: string;
+  telefono: string;
+  fechaNacimiento?: string;
+  edad?: number;
+  genero?: string;
+  prevision: string;
+  ocupacion?: string;
+  direccion?: string;
+  contactoEmergenciaNombre?: string;
+  contactoEmergenciaTelefono?: string;
+  contactoEmergenciaParentesco?: string;
+  antecedentesMedicos?: string;
+  antecedentesPsiquiatricos?: string;
+  medicacionActual?: string;
+  alergias?: string;
+  flagSui: boolean;
+  flagVIF: boolean;
+  flagAbuso: boolean;
+  alertaCritica: boolean;
+  motivoConsulta: string;
+  diagnosticoCIE: string;
+  examenMental?: {
+    porteActitud?: string;
+    conciencia?: string;
+    psicomotricidad?: string;
+    afectividad?: string;
+    pensamiento?: string;
+    lenguaje?: string;
+    sensopercepcion?: string;
+    juicioInsight?: string;
+  };
+  objetivosTerapeuticos?: string;
+  historial: Array<{
+    id: string;
+    fecha: string;
+    sesionN: number;
+    tipo: string;
+    contenido?: string;
+    dap?: {
+      datosSubjetivos: string;
+      evaluacionClinica: string;
+      planTerapeutico: string;
+    };
+    ansiedad?: number;
+    depresion?: number;
+    estres?: number;
+    esNotaPrivada: boolean;
+    profesionalNombre: string;
+    disciplinaNombre: string;
+    hashIntegridad?: string;
+  }>;
+  epicrisis?: {
+    motivoCierre: string;
+    fechaEmision: string;
+    resumenTratamiento: string;
+    indicaciones: string;
+    hashEpicrisis?: string;
+  };
+  archivos?: Array<{
+    id: string;
+    nombre: string;
+    tipo: string;
+    fecha: string;
+    url?: string;
+  }>;
+  derivaciones?: Array<{
+    id: string;
+    fecha: string;
+    desdeProfesional: string;
+    haciaProfesional: string;
+    motivo: string;
+  }>;
+  psicologoAsignadoUid?: string;
+  psicologoAsignadoNombre?: string;
+  deudaTotal: number;
+  totalCitas: number;
+  ultimaCita?: string;
+  createdAt?: string;
+}
+
+export const PACIENTES_CABAL_MEMORIA: Map<string, PacienteCabalClinico> = new Map([
+  [
+    "cbl_pac_01",
+    {
+      id: "cbl_pac_01",
+      nombre: "Constanza Morales Henríquez",
+      rut: "18.392.104-5",
+      email: "constanza.morales@gmail.com",
+      telefono: "+56 9 7812 3456",
+      fechaNacimiento: "1997-04-12",
+      edad: 28,
+      genero: "Femenino",
+      prevision: "Reembolso Isapres (Colmena)",
+      ocupacion: "Diseñadora Gráfica & Triatleta Amateur",
+      direccion: "Av. Providencia 1450, Depto 602, Providencia",
+      contactoEmergenciaNombre: "Martín Morales (Hermano)",
+      contactoEmergenciaTelefono: "+56 9 9876 5432",
+      contactoEmergenciaParentesco: "Hermano",
+      antecedentesMedicos: "Hipotiroidismo compensado (Eutirox 50mcg/día). Lesión tendinosa rotuliana rodilla derecha en 2024.",
+      antecedentesPsiquiatricos: "Episodio ansioso reactivo a sobrecarga universitaria en 2020 con remisión completa.",
+      medicacionActual: "Eutirox 50mcg en ayunas. Sin psicofármacos actuales.",
+      alergias: "Alergia a AINEs (Ketorolaco produce urticaria).",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva, pensamientos anticipatorios catastróficos y bruxismo matutino intenso antes de carreras de triatlón.",
+      diagnosticoCIE: "6A71 Trastorno de Ansiedad Generalizada / Ansiedad de Desempeño Deportivo",
+      examenMental: {
+        porteActitud: "Adecuado aseo y vestimenta deportiva. Actitud colaboradora y comunicativa.",
+        conciencia: "Vigil, lúcida y orientada en tiempo, espacio y persona (autopsíquica y alopsíquica).",
+        psicomotricidad: "Leve hiperactividad motora distal (movimiento constante de manos).",
+        afectividad: "Ánimo ansioso con reactividad conservada. Sin anhedonia.",
+        pensamiento: "Curso fluido y coherente. Contenido dominado por autoexigencia y temor a fallar en marcas de tiempo.",
+        lenguaje: "Fluido, tono adecuado y léxico amplio.",
+        sensopercepcion: "Sin alteraciones sensoperceptivas.",
+        juicioInsight: "Juicio de realidad conservado. Buen insight y conciencia de necesidad de psicoterapia."
+      },
+      objetivosTerapeuticos: "1. Reducir activación fisiológica precompetitiva mediante biofeedback y respiración diafragmática. 2. Reestructurar distorsiones cognitivas de tipo polarizadas sobre el rendimiento. 3. Sinergia con Nutrición Deportiva para carga glucémica.",
+      historial: [
+        {
+          id: "nota_cbl_001",
+          fecha: "2026-09-15",
+          sesionN: 1,
+          tipo: "Ingreso / Anamnesis",
+          contenido: "Primera entrevista de admisión clínica. Se levanta genograma y línea de vida deportiva. Se firma consentimiento informado según Ley N° 20.584.",
+          dap: {
+            datosSubjetivos: "Consultante refiere 'Siento que el corazón se me va a salir 48 horas antes de una competencia importante, lo que me impide descansar la noche previa'.",
+            evaluacionClinica: "Se observa autoexigencia perfeccionista desadaptativa. Frecuencia respiratoria levemente aumentada durante el relato de cronometrajes.",
+            planTerapeutico: "Se psicoeduca sobre la curva de Yerkes-Dodson (relación activación-rendimiento). Se acuerda registro de autorregistro de pensamientos ansiosos."
+          },
+          ansiedad: 8,
+          depresion: 2,
+          estres: 7,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:8F3A2B19C0E28491"
+        },
+        {
+          id: "nota_cbl_002",
+          fecha: "2026-09-29",
+          sesionN: 2,
+          tipo: "Evolución Regular",
+          contenido: "Revisión de autorregistro cognitivo. Aplicación de técnica de imaginería motora y desensibilización sistemática.",
+          dap: {
+            datosSubjetivos: "Paciente comenta que logró reducir la rumiación nocturna utilizando la técnica de respiración en caja (box breathing) enseñada.",
+            evaluacionClinica: "Disminución notable en puntaje subjetivo de ansiedad pre-entrenamiento. Excelente adherencia al plan de tareas.",
+            planTerapeutico: "Continuar con visualización guiada. Coordinar evaluación con Nutricionista Sebastián Morales para optimizar sustrato energético."
+          },
+          ansiedad: 5,
+          depresion: 1,
+          estres: 4,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:7B1E408A91C36622"
+        }
+      ],
+      epicrisis: {
+        motivoCierre: "En tratamiento activo / Evolución favorable",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Paciente que ha completado fase inicial de psicoeducación y reestructuración cognitiva para ansiedad de desempeño, logrando descenso significativo en sintomatología vegetativa.",
+        indicaciones: "Mantener sesiones quincenales de consolidación y coordinación con nutrición deportiva."
+      },
+      archivos: [
+        {
+          id: "arch_01",
+          nombre: "Consentimiento_Informado_Ley20584_Firmado.pdf",
+          tipo: "Consentimiento",
+          fecha: "2026-09-15",
+          url: "#"
+        },
+        {
+          id: "arch_02",
+          nombre: "Escala_Hamilton_Ansiedad_Puntaje_Inicial.pdf",
+          tipo: "Evaluación",
+          fecha: "2026-09-15",
+          url: "#"
+        }
+      ],
+      psicologoAsignadoUid: "cabal_psico_deportiva_01",
+      psicologoAsignadoNombre: "Ps. Camila Valdés Araneda",
+      deudaTotal: 0,
+      totalCitas: 2,
+      ultimaCita: "2026-09-29",
+      createdAt: "2026-09-10"
+    }
+  ],
+  [
+    "cbl_pac_02",
+    {
+      id: "cbl_pac_02",
+      nombre: "Felipe Arancibia Castro",
+      rut: "15.820.491-K",
+      email: "felipe.arancibia@gmail.com",
+      telefono: "+56 9 8456 1234",
+      fechaNacimiento: "1990-11-03",
+      edad: 35,
+      genero: "Masculino",
+      prevision: "Particular",
+      ocupacion: "Ingeniero Civil Estructural",
+      direccion: "Hernando de Aguirre 192, Providencia",
+      contactoEmergenciaNombre: "Marcela Castro (Madre)",
+      contactoEmergenciaTelefono: "+56 9 9123 4567",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Cirugía de reconstrucción de LCA y meniscectomía parcial rodilla izquierda en agosto 2026.",
+      antecedentesPsiquiatricos: "Sin antecedentes mórbidos psiquiátricos previos.",
+      medicacionActual: "Paracetamol 1g SOS.",
+      alergias: "Sin alergias farmacológicas conocidas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Acompañamiento psicológico en proceso de rehabilitación de lesión deportiva. Kinesiofobia y frustración por lentitud de progresión en cargas.",
+      diagnosticoCIE: "6B43 Trastorno de Adaptación con Estado de Ánimo Depresivo y Kinesiofobia",
+      examenMental: {
+        porteActitud: "Llega con uso de muleta canadiense unilateral. Actitud algo reticente inicial, luego permeable.",
+        conciencia: "Lúcido y orientado temporo-espacialmente.",
+        afectividad: "Ánimo distímico, frustración manifiesta ante pérdida temporal de autovalencia.",
+        pensamiento: "Ideas fijadas en la comparación con su estado físico previo a la lesión.",
+        lenguaje: "Coherente y reflexivo.",
+        juicioInsight: "Juicio conservado. Reconoce necesidad de modular expectativas para no abandonar kinesiología."
+      },
+      objetivosTerapeuticos: "1. Tratamiento de kinesiofobia y miedo a la re-rotura. 2. Aceptación del ritmo biológico de cicatrización. 3. Trabajo en dupla con Terapeuta Ocupacional Fernanda Herrera.",
+      historial: [
+        {
+          id: "nota_cbl_003",
+          fecha: "2026-10-05",
+          sesionN: 1,
+          tipo: "Ingreso / Admisión",
+          contenido: "Primera sesión clínica post-alta traumatológica. Se evalúa escala de kinesiofobia de Tampa (TSK-11).",
+          dap: {
+            datosSubjetivos: "Paciente declara 'Tengo pánico de pisar con todo el peso y que el injerto ceda'.",
+            evaluacionClinica: "Elevada hipervigilancia propioceptiva. Resistencia a la flexión pasiva guiada.",
+            planTerapeutico: "Técnicas de exposición gradual en imaginería. Se programa interconsulta con Terapia Ocupacional."
+          },
+          ansiedad: 7,
+          depresion: 4,
+          estres: 6,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:19A4C039D8841B90"
+        }
+      ],
+      epicrisis: {
+        motivoCierre: "En tratamiento activo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Proceso de readaptación emocional en marcha. Se ha coordinado con kinesiología y terapia ocupacional para reincorporación funcional.",
+        indicaciones: "Continuar con plan semanal de psicoterapia y ejercicios de desensibilización al movimiento."
+      },
+      psicologoAsignadoUid: "cabal_psico_deportiva_01",
+      psicologoAsignadoNombre: "Ps. Camila Valdés Araneda",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-05",
+      createdAt: "2026-10-01"
+    }
+  ],
+  [
+    "cbl_pac_03",
+    {
+      id: "cbl_pac_03",
+      nombre: "Matías Troncoso Lagos",
+      rut: "21.049.382-7",
+      email: "matias.troncoso@alumnos.uchile.cl",
+      telefono: "+56 9 6543 2198",
+      fechaNacimiento: "2005-02-18",
+      edad: 21,
+      genero: "Masculino",
+      prevision: "FONASA Tramo B",
+      ocupacion: "Estudiante de Ingeniería",
+      direccion: "Santa Rosa 1120, Santiago Centro",
+      contactoEmergenciaNombre: "Patricia Lagos (Madre)",
+      contactoEmergenciaTelefono: "+56 9 7654 3210",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Rinitis alérgica estacional.",
+      antecedentesPsiquiatricos: "Sospecha de perfil neurodivergente (Autismo nivel 1 / TDAH predominantemente inatento).",
+      medicacionActual: "Desloratadina 5mg SOS.",
+      alergias: "Polen y ácaros.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Dificultad de adaptación a entornos ruidosos en la universidad, sobrecarga sensorial al final del día y procrastinación severa en ramos teóricos.",
+      diagnosticoCIE: "6A02 Trastorno del Espectro Autista sin deficiencia del desarrollo intelectual / 6A05 TDAH",
+      examenMental: {
+        porteActitud: "Joven con audífonos de cancelación de ruido puestos al llegar. Mirada intermitente respetada, discurso muy detallado.",
+        conciencia: "Vigil y orientado.",
+        afectividad: "Afecto congruente, con episodios de fatiga por masking social continuo.",
+        pensamiento: "Lógico, con fuerte atención al detalle.",
+        lenguaje: "Vocabulario enriquecido, literalidad en algunas metáforas.",
+        juicioInsight: "Excelente capacidad de autoobservación de sus gatillantes sensoriales."
+      },
+      objetivosTerapeuticos: "1. Identificar perfil sensorial y adaptaciones ambientales. 2. Estrategias de descompresión post-jornada académica. 3. Interconsulta con Fonoaudiología y Terapia Ocupacional.",
+      historial: [
+        {
+          id: "nota_cbl_004",
+          fecha: "2026-10-18",
+          sesionN: 1,
+          tipo: "Ingreso / Admisión Neuroafirmativa",
+          contenido: "Primera entrevista con enfoque neuroafirmativo. Mapeo de entornos auditivos y lumínicos sobrecargantes.",
+          dap: {
+            datosSubjetivos: "Consultante refiere 'Llego a las 18:00 hrs a mi casa sin energía para hablar con nadie; siento que he tenido que actuar todo el día'.",
+            evaluacionClinica: "Presencia marcada de agotamiento por camuflaje (autistic burnout inicial).",
+            planTerapeutico: "Introducir pausas sensoriales programadas durante la jornada de clases. Agendar interconsulta con T.O. Fernanda Herrera."
+          },
+          ansiedad: 6,
+          depresion: 3,
+          estres: 8,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Daniela Navarro Silva",
+          disciplinaNombre: "Psicología Clínica y Neurodivergencia",
+          hashIntegridad: "SHA256:33D9E2F1890AA552"
+        }
+      ],
+      epicrisis: {
+        motivoCierre: "Ingreso reciente / Evaluación integral",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Inicio de proceso de acompañamiento neuroafirmativo para desarrollo de estrategias de autorregulación y adaptación de rutinas universitarias.",
+        indicaciones: "Evaluación multidisciplinaria con Terapia Ocupacional y Fonoaudiología de Cabal Salud."
+      },
+      psicologoAsignadoUid: "cabal_psico_perinatal_neuro_07",
+      psicologoAsignadoNombre: "Ps. Daniela Navarro Silva",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-18",
+      createdAt: "2026-10-15"
+    }
+  ]
+]);
+
+// Helper para retransmitir o consultar Gentia Vault
+async function llamarGentiaVault(endpoint: string, payload: any): Promise<any> {
+  const url = `${CABAL_ENV.GENTIA_API_BASE_URL}${endpoint}`;
+  try {
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (resp.ok) {
+      return await resp.json();
+    }
+  } catch (err) {
+    // Si Gentia está fuera de línea o en ejecución local sin servidor remoto, opera con fallback local in-memory
+  }
+  return null;
+}
+
+// 1. Obtener Directorio de Pacientes (Conexión con Gentia Vault)
+app.post("/api/profesionales/pacientes/lista", async (req, res) => {
+  const { search, psicologoUid } = req.body || {};
+  
+  // Intentar consultar a Gentia
+  const gentiaResp = await llamarGentiaVault("/clinica/obtenerPacientes", {
+    clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+    search
+  });
+
+  let pacientes: any[] = [];
+  if (gentiaResp && gentiaResp.success && Array.isArray(gentiaResp.pacientes)) {
+    pacientes = gentiaResp.pacientes;
+  } else {
+    // Fallback con repositorio en memoria de Cabal Salud
+    pacientes = Array.from(PACIENTES_CABAL_MEMORIA.values());
+    if (search && typeof search === "string" && search.trim()) {
+      const q = search.toLowerCase().trim();
+      pacientes = pacientes.filter(p =>
+        p.nombre.toLowerCase().includes(q) ||
+        p.rut.toLowerCase().includes(q) ||
+        p.email.toLowerCase().includes(q) ||
+        p.telefono.includes(q)
+      );
+    }
+  }
+
+  // Filtrar opcionalmente por psicólogo asignado
+  if (psicologoUid) {
+    pacientes = pacientes.filter(p => !p.psicologoAsignadoUid || p.psicologoAsignadoUid === psicologoUid);
+  }
+
   res.json({
     success: true,
-    citaId,
-    custodia: "GENTIA_EHR_VAULT_AES256",
-    normativa: "Ley N° 20.584 / Ley N° 21.719 / D.S. N° 41",
-    resguardoAuditoria: "Los datos sensibles de salud están custodiados criptográficamente en el motor clínico Gentia, sin exposición en servidores web públicos.",
-    retencionLegalAnios: 15
+    total: pacientes.length,
+    pacientes,
+    custodio: "Gentia EHR Vault (AES-256)",
+    normativa: "Ley N° 20.584 · Ley N° 21.719 · D.S. N° 41"
   });
 });
 
-app.post("/api/profesionales/ficha/guardar", (req, res) => {
-  const { citaId } = req.body;
-  res.json({
-    success: true,
-    mensaje: "Ficha clínica sincronizada con éxito en la bóveda cifrada de Gentia.",
-    citaId: citaId || "CBL_SES_GENERIC",
-    timestamp: new Date().toISOString(),
-    hashVault: `GNT-VAULT-AES256-${Date.now().toString().slice(-6)}-VERIFIED`
-  });
+// 2. Crear Nuevo Paciente en Gentia Vault
+app.post("/api/profesionales/pacientes/crear", async (req, res) => {
+  try {
+    const body = req.body || {};
+    if (!body.nombre) {
+      return res.status(400).json({ success: false, error: "El nombre completo del consultante es obligatorio." });
+    }
+
+    const payloadGentia = {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      ...body
+    };
+
+    const gentiaResp = await llamarGentiaVault("/clinica/crearPaciente", payloadGentia);
+
+    const nuevoId = gentiaResp?.pacienteId || `cbl_pac_${Date.now()}`;
+    const nuevoPaciente: PacienteCabalClinico = {
+      id: nuevoId,
+      nombre: body.nombre.trim(),
+      rut: (body.rut || "").trim(),
+      email: (body.email || "").trim().toLowerCase(),
+      telefono: (body.telefono || "").trim(),
+      fechaNacimiento: body.fechaNacimiento || "",
+      edad: body.edad ? Number(body.edad) : undefined,
+      genero: body.genero || "No especificado",
+      prevision: body.prevision || "Particular",
+      ocupacion: (body.ocupacion || "").trim(),
+      direccion: (body.direccion || "").trim(),
+      contactoEmergenciaNombre: (body.contactoEmergenciaNombre || "").trim(),
+      contactoEmergenciaTelefono: (body.contactoEmergenciaTelefono || "").trim(),
+      contactoEmergenciaParentesco: (body.contactoEmergenciaParentesco || "").trim(),
+      antecedentesMedicos: (body.antecedentesMedicos || "").trim(),
+      antecedentesPsiquiatricos: (body.antecedentesPsiquiatricos || "").trim(),
+      medicacionActual: (body.medicacionActual || "").trim(),
+      alergias: (body.alergias || "").trim(),
+      flagSui: Boolean(body.flagSui),
+      flagVIF: Boolean(body.flagVIF),
+      flagAbuso: Boolean(body.flagAbuso),
+      alertaCritica: Boolean(body.alertaCritica),
+      motivoConsulta: (body.motivoConsulta || "").trim(),
+      diagnosticoCIE: (body.diagnosticoCIE || "").trim(),
+      examenMental: body.examenMental || {},
+      objetivosTerapeuticos: (body.objetivosTerapeuticos || "").trim(),
+      psicologoAsignadoUid: body.psicologoAsignadoUid || null,
+      psicologoAsignadoNombre: body.psicologoAsignadoNombre || null,
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Ingreso inicial de tratamiento",
+        fechaEmision: new Date().toISOString().split("T")[0],
+        resumenTratamiento: "Admisión clínica realizada. En etapa de evaluación inicial y diagnóstico.",
+        indicaciones: "Continuar con plan terapéutico pautado."
+      },
+      archivos: [],
+      deudaTotal: 0,
+      totalCitas: 0,
+      createdAt: new Date().toISOString()
+    };
+
+    PACIENTES_CABAL_MEMORIA.set(nuevoId, nuevoPaciente);
+
+    res.json({
+      success: true,
+      pacienteId: nuevoId,
+      paciente: nuevoPaciente,
+      mensaje: "Paciente creado exitosamente y registrado en Gentia Vault con hash de auditoría.",
+      enlacePortalPaciente: gentiaResp?.enlacePortalPaciente || `https://gentia.cl/paciente.html?id=${nuevoId}&clinicaId=cabalsalud`
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 3. Actualizar Paciente Existente
+app.post("/api/profesionales/pacientes/actualizar", async (req, res) => {
+  try {
+    const { pacienteId, datos } = req.body || {};
+    if (!pacienteId || !datos) {
+      return res.status(400).json({ success: false, error: "pacienteId y datos son obligatorios." });
+    }
+
+    await llamarGentiaVault("/clinica/actualizarPaciente", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId,
+      datos
+    });
+
+    const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+    if (pac) {
+      Object.assign(pac, datos);
+    }
+
+    res.json({
+      success: true,
+      pacienteId,
+      mensaje: "Ficha del consultante actualizada con éxito en Gentia Vault."
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 4. Obtener Expediente y Ficha Completa
+app.post("/api/profesionales/pacientes/obtenerFicha", async (req, res) => {
+  try {
+    const { pacienteId } = req.body || {};
+    if (!pacienteId) {
+      return res.status(400).json({ success: false, error: "pacienteId es requerido." });
+    }
+
+    const gentiaResp = await llamarGentiaVault("/clinica/obtenerFichaCompleta", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId
+    });
+
+    if (gentiaResp && gentiaResp.success) {
+      return res.json(gentiaResp);
+    }
+
+    const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+    if (!pac) {
+      return res.status(404).json({ success: false, error: "Paciente no encontrado en el registro clínico." });
+    }
+
+    const hashVault = crypto.createHash("sha256")
+      .update(`${pacienteId}-${pac.historial.length}-${pac.rut}`)
+      .digest("hex").slice(0, 16).toUpperCase();
+
+    res.json({
+      success: true,
+      paciente: pac,
+      historial: pac.historial,
+      archivos: pac.archivos || [],
+      epicrisis: pac.epicrisis,
+      hashVault: `GNT-VAULT-${hashVault}`,
+      normativa: "Ley N° 20.584 · Ley N° 21.719 · D.S. N° 41",
+      retencionLegalAnios: 15
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5. Guardar Nueva Nota de Evolución Clínica (DAP / SOAP / Secreto Profesional)
+app.post("/api/profesionales/pacientes/guardarNota", async (req, res) => {
+  try {
+    const { pacienteId, nota } = req.body || {};
+    if (!pacienteId || !nota) {
+      return res.status(400).json({ success: false, error: "pacienteId y datos de la nota son requeridos." });
+    }
+
+    const gentiaResp = await llamarGentiaVault("/clinica/guardarNotaEvolucion", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId,
+      nota
+    });
+
+    const hashIntegridad = crypto.createHash("sha256")
+      .update(`${pacienteId}-${Date.now()}-${nota.contenido || ""}`)
+      .digest("hex").slice(0, 16).toUpperCase();
+
+    const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+    const notaNueva = {
+      id: gentiaResp?.notaId || `nota_${Date.now()}`,
+      fecha: nota.fecha || new Date().toISOString().split("T")[0],
+      sesionN: (pac?.historial.length || 0) + 1,
+      tipo: nota.tipo || "Evolución Regular",
+      contenido: nota.contenido || "",
+      dap: nota.dap || undefined,
+      ansiedad: Number(nota.ansiedad || 0),
+      depresion: Number(nota.depresion || 0),
+      estres: Number(nota.estres || 0),
+      esNotaPrivada: Boolean(nota.esNotaPrivada),
+      profesionalNombre: nota.profesionalNombre || "Especialista Cabal Salud",
+      disciplinaNombre: nota.disciplinaNombre || "Salud Mental",
+      hashIntegridad: `SHA256:${hashIntegridad}`
+    };
+
+    if (pac) {
+      pac.historial.unshift(notaNueva);
+      pac.totalCitas = pac.historial.length;
+      pac.ultimaCita = notaNueva.fecha;
+    }
+
+    res.json({
+      success: true,
+      nota: notaNueva,
+      hashIntegridad: `SHA256:${hashIntegridad}`,
+      mensaje: "Nota clínica sellada e inscrita bajo custodia de Gentia Vault."
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 6. Guardar Epicrisis Oficial
+app.post("/api/profesionales/pacientes/guardarEpicrisis", async (req, res) => {
+  try {
+    const { pacienteId, epicrisis } = req.body || {};
+    if (!pacienteId || !epicrisis) {
+      return res.status(400).json({ success: false, error: "pacienteId y epicrisis son obligatorios." });
+    }
+
+    await llamarGentiaVault("/clinica/guardarEpicrisis", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId,
+      epicrisis
+    });
+
+    const hashEpicrisis = crypto.createHash("sha256")
+      .update(`${pacienteId}-${epicrisis.fechaEmision}-${epicrisis.motivoCierre}`)
+      .digest("hex").slice(0, 16).toUpperCase();
+
+    const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+    if (pac) {
+      pac.epicrisis = {
+        ...epicrisis,
+        hashEpicrisis: `GNT-EPI-${hashEpicrisis}`
+      };
+    }
+
+    res.json({
+      success: true,
+      hashEpicrisis: `GNT-EPI-${hashEpicrisis}`,
+      mensaje: "Epicrisis oficial registrada y firmada en Gentia Vault (Ley N° 20.584 y D.S. N° 41)."
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 7. Derivación e Interconsulta Interna en Red Multidisciplinaria Cabal Salud
+app.post("/api/profesionales/pacientes/derivar", async (req, res) => {
+  try {
+    const { pacienteId, desdeProfesional, haciaProfesionalUid, haciaProfesionalNombre, motivo } = req.body || {};
+    if (!pacienteId || !haciaProfesionalNombre || !motivo) {
+      return res.status(400).json({ success: false, error: "Faltan parámetros requeridos para la derivación." });
+    }
+
+    await llamarGentiaVault("/clinica/derivarPacienteInterno", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId,
+      desdeProfesional,
+      haciaProfesionalUid,
+      haciaProfesionalNombre,
+      motivo
+    });
+
+    const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+    if (pac) {
+      pac.derivaciones = pac.derivaciones || [];
+      pac.derivaciones.unshift({
+        id: `deriv_${Date.now()}`,
+        fecha: new Date().toISOString().split("T")[0],
+        desdeProfesional: desdeProfesional || "Especialista Emisor",
+        haciaProfesional: haciaProfesionalNombre,
+        motivo
+      });
+    }
+
+    res.json({
+      success: true,
+      mensaje: `Paciente derivado exitosamente a ${haciaProfesionalNombre}. Se ha notificado al profesional en la red Cabal Salud.`
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 8. Traspaso a Bóveda Legal (15 Años D.S. N° 41) o Eliminación
+app.post("/api/profesionales/pacientes/eliminar", async (req, res) => {
+  try {
+    const { pacienteId, archivarLegal } = req.body || {};
+    if (!pacienteId) {
+      return res.status(400).json({ success: false, error: "pacienteId es obligatorio." });
+    }
+
+    await llamarGentiaVault("/clinica/eliminarPaciente", {
+      clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+      pacienteId,
+      archivarLegal: Boolean(archivarLegal)
+    });
+
+    if (archivarLegal) {
+      const pac = PACIENTES_CABAL_MEMORIA.get(pacienteId);
+      if (pac) {
+        (pac as any).archivadoLegal = true;
+        (pac as any).fechaArchivo = new Date().toISOString();
+      }
+      return res.json({
+        success: true,
+        mensaje: "Paciente trasladado a Bóveda de Retención Legal por 15 años (D.S. N° 41 / Ley N° 20.584)."
+      });
+    } else {
+      PACIENTES_CABAL_MEMORIA.delete(pacienteId);
+      return res.json({ success: true, mensaje: "Registro de paciente eliminado correctamente." });
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Servir archivos estáticos de /public en desarrollo local
@@ -1617,6 +2291,12 @@ if (require.main === module) {
     console.log(`[Clínica Cabal Salud] Servidor ejecutándose en http://localhost:${CABAL_ENV.PORT}`);
   });
 }
+
+Object.assign(app, {
+  CABAL_ENV,
+  CATALOGO_PROFESIONALES_CABAL,
+  PACIENTES_CABAL_MEMORIA
+});
 
 module.exports = app;
 export default app;

@@ -483,11 +483,101 @@
     </section>
 
     <!-- ====================================================================
-         PESTAÑA 3: GESTIÓN DE FICHA CLÍNICA & EPICRISIS (GENTIA VAULT)
+         PESTAÑA 3: GESTIÓN DE PACIENTES, FICHA CLÍNICA & EPICRISIS (GENTIA VAULT)
          ==================================================================== -->
     <section id="sectionTab-fichas" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
-      <!-- Banner de Blindaje Legal y Auditoría Sanitaria -->
-      <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <!-- Encabezado Operativo Superior con Buscador y Creación de Pacientes -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-noche/10 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-petroleo/10 text-petroleo text-xs font-bold mb-1">
+            <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+            <span>Módulo Clínico Conectado a Gentia EMR</span>
+          </div>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-noche">
+            Directorio Clínico y Fichas de Consultantes
+          </h3>
+          <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+            Crea pacientes, edita antecedentes médicos, registra evoluciones DAP con métricas de síntomas y emite epicrisis con custodia en la bóveda de Gentia.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button
+            type="button"
+            onclick="window.abrirModalCrearPaciente()"
+            class="btn-petroleo py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow-sm"
+          >
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+            <span>+ Crear Paciente</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="window.filtrarBovedaLegal15A()"
+            id="btnBoveda15A"
+            class="py-2.5 px-3.5 rounded-xl border border-red-200 text-red-800 bg-red-50 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition"
+            title="Ver expedientes en Bóveda Legal por 15 Años (D.S. N° 41)"
+          >
+            <i data-lucide="archive" class="w-3.5 h-3.5 text-red-600"></i>
+            <span>Bóveda 15A</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Filtros, Búsqueda y Selector Rápido -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-perla p-4 rounded-2xl border border-noche/10 items-center">
+        <div class="md:col-span-5 relative">
+          <i data-lucide="search" class="w-4 h-4 text-noche/40 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input
+            type="text"
+            id="inputBuscarPacientes"
+            oninput="window.filtrarPacientesDirectorio()"
+            placeholder="Buscar por nombre, RUT chileno, email o teléfono..."
+            class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo"
+          />
+        </div>
+
+        <div class="md:col-span-3">
+          <select
+            id="filtroPrevisionPacientes"
+            onchange="window.filtrarPacientesDirectorio()"
+            class="w-full px-3 py-2.5 rounded-xl bg-white border border-noche/15 text-xs font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer"
+          >
+            <option value="">Todas las Previsiones</option>
+            <option value="Colmena">Colmena</option>
+            <option value="Cruz Blanca">Cruz Blanca</option>
+            <option value="Banmédica">Banmédica</option>
+            <option value="FONASA">FONASA</option>
+            <option value="Particular">Particular</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-4 flex items-center justify-between md:justify-end gap-2 text-xs">
+          <span class="text-noche/60">Total consultantes: <strong id="totalPacientesCount" class="text-noche font-bold">3</strong></span>
+          <select
+            id="selectFichaPaciente"
+            onchange="window.cargarFichaClinicaPaciente(this.value)"
+            class="px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs font-bold text-petroleo focus:outline-none focus:border-petroleo cursor-pointer max-w-[200px] truncate"
+          >
+            <!-- Injected dynamically -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Chips interactivos de Pacientes para cambio en 1 clic -->
+      <div id="chipsDirectorioPacientes" class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- Contenedor del Expediente Clínico Activo -->
+      <div id="fichaClinicaActivaContainer" class="space-y-6">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+
+      <!-- ================================================================
+           BANNER DE BLINDAJE LEGAL Y AUDITORÍA SANITARIA (MÁS ABAJO)
+           ================================================================ -->
+      <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mt-8">
         <div class="flex items-start gap-3.5">
           <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
             <i data-lucide="shield-check" class="w-6 h-6"></i>
@@ -502,7 +592,7 @@
               </span>
             </div>
             <p class="text-xs text-emerald-900/80 leading-relaxed max-w-3xl">
-              <strong>Protección ante Auditorías:</strong> Los datos médicos y psicológicos sensibles no se almacenan en el servidor público de <em>cabalsalud.cl</em>. Toda anamnesis, nota de evolución y epicrisis es encriptada en reposo (AES-256) en el motor clínico de <strong>Gentia</strong>, resguardando a Pamela Quijada y Lilians Cortés ante cualquier requerimiento de la Superintendencia de Salud o del Consejo de Protección de Datos Personales.
+              <strong>Protección ante Auditorías:</strong> Los datos médicos y psicológicos sensibles no se almacenan en el servidor público de <em>cabalsalud.cl</em>. Toda anamnesis, nota de evolución y epicrisis es encriptada en reposo (AES-256) en el motor clínico de <strong>Gentia</strong>, resguardando a Cabal Salud ante cualquier requerimiento de la Superintendencia de Salud o del Consejo de Protección de Datos Personales.
             </p>
           </div>
         </div>
@@ -512,26 +602,6 @@
             AES-256 Vault OK
           </span>
         </div>
-      </div>
-
-      <!-- Selector de Paciente Consultante -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-perla p-4 rounded-2xl border border-noche/10">
-        <div class="flex items-center gap-3">
-          <label for="selectFichaPaciente" class="text-xs font-bold uppercase tracking-wider text-noche/75">
-            Seleccionar Consultante:
-          </label>
-          <select id="selectFichaPaciente" onchange="window.cargarFichaClinicaPaciente(this.value)" class="px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
-            <!-- Injected dynamically -->
-          </select>
-        </div>
-        <span class="text-xs text-noche/60">
-          Retención legal obligatoria de registros: <strong>15 años (D.S. N° 41)</strong>
-        </span>
-      </div>
-
-      <!-- Contenedor de la Ficha Clínica Activa -->
-      <div id="fichaClinicaActivaContainer" class="space-y-6">
-        <!-- Injected dynamically via JavaScript -->
       </div>
     </section>
 
@@ -658,26 +728,332 @@
   </main>
 
   <!-- ========================================================================
-       MODAL DE VISTA PREVIA: CÓMO TE VEN LOS PACIENTES
+       MODAL: CREAR NUEVO PACIENTE EN GENTIA VAULT
        ======================================================================== -->
-  <div id="modalVistaPrevia" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+  <div id="modalCrearPaciente" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-petroleo/10 text-petroleo flex items-center justify-center font-bold">
+            <i data-lucide="user-plus" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">Registrar Nuevo Consultante</h3>
+            <span class="text-[11px] text-noche/60">Custodia criptográfica en Gentia Vault · Ley 20.584</span>
+          </div>
+        </div>
+        <button type="button" onclick="window.cerrarModalCrearPaciente()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
+      </div>
+
+      <form id="formCrearPaciente" onsubmit="window.guardarNuevoPaciente(event)" class="space-y-4">
+        <!-- 1. Datos Personales y Demográficos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Nombre Completo *</label>
+            <input type="text" id="crearPacNombre" required placeholder="Ej. Camila Andrea Rojas Mora" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">RUT Chileno *</label>
+            <input type="text" id="crearPacRut" required placeholder="Ej. 19.482.019-3" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Correo Electrónico *</label>
+            <input type="email" id="crearPacEmail" required placeholder="consultante@gmail.com" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Teléfono / WhatsApp *</label>
+            <input type="tel" id="crearPacTelefono" required placeholder="+56 9 8123 4567" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Fecha de Nacimiento</label>
+            <input type="date" id="crearPacFechaNac" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Género</label>
+            <select id="crearPacGenero" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs font-medium text-noche focus:outline-none focus:border-petroleo">
+              <option value="Femenino">Femenino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="No binario">No binario</option>
+              <option value="Otro">Otro / Prefiere no decir</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Previsión de Salud *</label>
+            <select id="crearPacPrevision" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs font-medium text-noche focus:outline-none focus:border-petroleo">
+              <option value="Particular">Particular</option>
+              <option value="FONASA">FONASA</option>
+              <option value="Reembolso Isapres (Colmena)">Colmena</option>
+              <option value="Reembolso Isapres (Cruz Blanca)">Cruz Blanca</option>
+              <option value="Reembolso Isapres (Banmédica)">Banmédica</option>
+              <option value="Reembolso Isapres (Consalud)">Consalud</option>
+              <option value="Reembolso Isapres (Nueva Masvida)">Nueva Masvida</option>
+              <option value="Reembolso Isapres (Vida Tres)">Vida Tres</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Ocupación / Profesión</label>
+            <input type="text" id="crearPacOcupacion" placeholder="Ej. Estudiante, Diseñadora, Ingeniero" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Dirección (Comuna / Ciudad)</label>
+            <input type="text" id="crearPacDireccion" placeholder="Ej. Providencia, Santiago" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <!-- Contacto de Emergencia -->
+        <div class="bg-perla/60 p-3.5 rounded-2xl border border-noche/10 space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-noche/80 block">Contacto de Emergencia (Ley 20.584)</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <input type="text" id="crearPacEmergenciaNombre" placeholder="Nombre contacto" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+            <input type="text" id="crearPacEmergenciaParentesco" placeholder="Parentesco (ej. Madre)" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+            <input type="tel" id="crearPacEmergenciaTelefono" placeholder="+56 9 1234 5678" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+          </div>
+        </div>
+
+        <!-- 2. Motivo de Consulta y Diagnóstico Inicial -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Motivo de Consulta Principal</label>
+            <textarea id="crearPacMotivo" rows="2" placeholder="Describa el motivo de consulta..." class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Diagnóstico Inicial (CIE-11 / DSM-5)</label>
+            <textarea id="crearPacDiagnostico" rows="2" placeholder="Ej. 6A71 Trastorno de Ansiedad Generalizada" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo"></textarea>
+          </div>
+        </div>
+
+        <!-- 3. Antecedentes Mórbidos y Medicación -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div>
+            <label class="block text-[11px] font-semibold text-noche/80 mb-0.5">Antecedentes Médicos</label>
+            <input type="text" id="crearPacAntMedicos" placeholder="Ej. Hipotiroidismo" class="w-full px-3 py-1.5 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-noche/80 mb-0.5">Medicación Actual</label>
+            <input type="text" id="crearPacMedicacion" placeholder="Ej. Sertralina 50mg" class="w-full px-3 py-1.5 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-noche/80 mb-0.5">Alergias</label>
+            <input type="text" id="crearPacAlergias" placeholder="Ej. Penicilina" class="w-full px-3 py-1.5 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche" />
+          </div>
+        </div>
+
+        <!-- 4. Banderas de Riesgo Clínico -->
+        <div class="bg-red-50/50 p-3 rounded-2xl border border-red-200/60 space-y-1.5">
+          <span class="text-xs font-bold text-red-900 block">Banderas de Riesgo Clínico (Gentia Red Flags)</span>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-noche/80">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="crearPacFlagSui" class="accent-red-600 rounded" />
+              <span>Riesgo Suicida Activo</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="crearPacFlagVIF" class="accent-red-600 rounded" />
+              <span>Violencia Intrafamiliar (VIF)</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="crearPacFlagAbuso" class="accent-red-600 rounded" />
+              <span>Vulneración / Abuso</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Botones Acción -->
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-noche/10">
+          <button type="button" onclick="window.cerrarModalCrearPaciente()" class="px-4 py-2.5 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
+            Cancelar
+          </button>
+          <button type="submit" id="btnSubmitCrearPaciente" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Registrar Paciente en Gentia Vault</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: EDITAR DATOS DEL PACIENTE EN GENTIA VAULT
+       ======================================================================== -->
+  <div id="modalEditarPaciente" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+            <i data-lucide="edit" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">Editar Datos del Consultante</h3>
+            <span class="text-[11px] text-noche/60">Actualización con trazabilidad en Gentia Vault</span>
+          </div>
+        </div>
+        <button type="button" onclick="window.cerrarModalEditarPaciente()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
+      </div>
+
+      <form id="formEditarPaciente" onsubmit="window.guardarEdicionPaciente(event)" class="space-y-4">
+        <input type="hidden" id="editPacId" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Nombre Completo *</label>
+            <input type="text" id="editPacNombre" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">RUT Chileno *</label>
+            <input type="text" id="editPacRut" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Correo Electrónico *</label>
+            <input type="email" id="editPacEmail" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Teléfono / WhatsApp *</label>
+            <input type="tel" id="editPacTelefono" required class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Fecha Nacimiento</label>
+            <input type="date" id="editPacFechaNac" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Género</label>
+            <select id="editPacGenero" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs font-medium text-noche">
+              <option value="Femenino">Femenino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="No binario">No binario</option>
+              <option value="Otro">Otro / Prefiere no decir</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Previsión *</label>
+            <select id="editPacPrevision" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs font-medium text-noche">
+              <option value="Particular">Particular</option>
+              <option value="FONASA">FONASA</option>
+              <option value="Reembolso Isapres (Colmena)">Colmena</option>
+              <option value="Reembolso Isapres (Cruz Blanca)">Cruz Blanca</option>
+              <option value="Reembolso Isapres (Banmédica)">Banmédica</option>
+              <option value="Reembolso Isapres (Consalud)">Consalud</option>
+              <option value="Reembolso Isapres (Nueva Masvida)">Nueva Masvida</option>
+              <option value="Reembolso Isapres (Vida Tres)">Vida Tres</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Ocupación</label>
+            <input type="text" id="editPacOcupacion" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Dirección</label>
+            <input type="text" id="editPacDireccion" class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche" />
+          </div>
+        </div>
+
+        <!-- Contacto de Emergencia -->
+        <div class="bg-perla/60 p-3.5 rounded-2xl border border-noche/10 space-y-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-noche/80 block">Contacto de Emergencia</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <input type="text" id="editPacEmergenciaNombre" placeholder="Nombre" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+            <input type="text" id="editPacEmergenciaParentesco" placeholder="Parentesco" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+            <input type="tel" id="editPacEmergenciaTelefono" placeholder="Teléfono" class="px-3 py-1.5 rounded-xl bg-white border border-noche/15 text-xs text-noche" />
+          </div>
+        </div>
+
+        <!-- Banderas de Riesgo -->
+        <div class="bg-red-50/50 p-3 rounded-2xl border border-red-200/60 space-y-1.5">
+          <span class="text-xs font-bold text-red-900 block">Banderas de Riesgo Clínico</span>
+          <div class="flex flex-wrap items-center gap-4 text-xs text-noche/80">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="editPacFlagSui" class="accent-red-600 rounded" />
+              <span>Riesgo Suicida Activo</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="editPacFlagVIF" class="accent-red-600 rounded" />
+              <span>Violencia Intrafamiliar (VIF)</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="editPacFlagAbuso" class="accent-red-600 rounded" />
+              <span>Vulneración / Abuso</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-noche/10">
+          <button type="button" onclick="window.cerrarModalEditarPaciente()" class="px-4 py-2.5 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
+            Cancelar
+          </button>
+          <button type="submit" id="btnSubmitEditarPaciente" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Guardar Cambios en Gentia</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: INTERCONSULTA / DERIVACIÓN INTERNA MULTIDISCIPLINARIA
+       ======================================================================== -->
+  <div id="modalDerivarPaciente" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8">
       <div class="flex items-center justify-between border-b border-noche/10 pb-3">
-        <div class="text-xs font-bold uppercase tracking-wider text-petroleo">
-          Previsualización en cabalsalud.cl
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-petroleo/10 text-petroleo flex items-center justify-center font-bold">
+            <i data-lucide="repeat" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg font-bold text-noche">Derivación / Interconsulta Interna</h3>
+            <span class="text-[11px] text-noche/60">Red Multidisciplinaria Cabal Salud</span>
+          </div>
         </div>
-        <button type="button" onclick="window.cerrarModalVistaPrevia()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
+        <button type="button" onclick="window.cerrarModalDerivarPaciente()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
       </div>
 
-      <div id="previewCardContent" class="space-y-4">
-        <!-- Injected dynamically -->
-      </div>
+      <form id="formDerivarPaciente" onsubmit="window.ejecutarDerivacionInterna(event)" class="space-y-4">
+        <input type="hidden" id="derivarPacId" />
 
-      <div class="pt-2 text-right">
-        <button type="button" onclick="window.cerrarModalVistaPrevia()" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs font-semibold">
-          Entendido
-        </button>
-      </div>
+        <div class="bg-perla/70 p-3.5 rounded-2xl border border-noche/10 text-xs space-y-1">
+          <div class="text-noche/60">Consultante a derivar:</div>
+          <div id="derivarPacNombreLabel" class="font-serif text-sm font-bold text-noche">Constanza Morales</div>
+          <div id="derivarPacRutLabel" class="font-mono text-[11px] text-noche/75">RUT: 18.392.104-5</div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Especialista Destino de Cabal Salud *</label>
+          <select id="derivarProfesionalSelect" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+            <!-- Injected dynamically with the 9 specialists -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Motivo de Interconsulta y Pregunta Clínica *</label>
+          <textarea id="derivarMotivoTexto" rows="3" required placeholder="Ej. Se solicita evaluación nutricional deportiva para complementar psicoterapia de ansiedad precompetitiva..." class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-noche/10">
+          <button type="button" onclick="window.cerrarModalDerivarPaciente()" class="px-4 py-2.5 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
+            Cancelar
+          </button>
+          <button type="submit" id="btnSubmitDerivar" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="send" class="w-4 h-4 text-emerald-300"></i>
+            <span>Confirmar Interconsulta</span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
