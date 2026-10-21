@@ -1609,7 +1609,9 @@ export interface PacienteCabalClinico {
   flagAbuso: boolean;
   alertaCritica: boolean;
   motivoConsulta: string;
+  motivoConsultaLatente?: string;
   diagnosticoCIE: string;
+  datosAdHoc?: Record<string, any>;
   examenMental?: {
     porteActitud?: string;
     conciencia?: string;
@@ -1696,6 +1698,7 @@ export const PACIENTES_CABAL_MEMORIA: Map<string, PacienteCabalClinico> = new Ma
       flagAbuso: false,
       alertaCritica: false,
       motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva, pensamientos anticipatorios catastróficos y bruxismo matutino intenso antes de carreras de triatlón.",
+      motivoConsultaLatente: "Temor inconsciente a defraudar expectativas familiares introyectadas de éxito incondicional. Necesidad de hipercontrol corporal y sobreexigencia como defensa maníaca contra la vulnerabilidad afectiva y el temor al abandono.",
       diagnosticoCIE: "6A71 Trastorno de Ansiedad Generalizada / Ansiedad de Desempeño Deportivo",
       examenMental: {
         porteActitud: "Adecuado aseo y vestimenta deportiva. Actitud colaboradora y comunicativa.",
@@ -1804,6 +1807,7 @@ export const PACIENTES_CABAL_MEMORIA: Map<string, PacienteCabalClinico> = new Ma
       flagAbuso: false,
       alertaCritica: false,
       motivoConsulta: "Acompañamiento psicológico en proceso de rehabilitación de lesión deportiva. Kinesiofobia y frustración por lentitud de progresión en cargas.",
+      motivoConsultaLatente: "Duelo no elaborado por la pérdida transitoria de la omnipotencia física y el rol de proveedor autosuficiente. Angustia de castración simbólica proyectada en la fragilidad de la articulación intervenida.",
       diagnosticoCIE: "6B43 Trastorno de Adaptación con Estado de Ánimo Depresivo y Kinesiofobia",
       examenMental: {
         porteActitud: "Llega con uso de muleta canadiense unilateral. Actitud algo reticente inicial, luego permeable.",
@@ -1875,6 +1879,7 @@ export const PACIENTES_CABAL_MEMORIA: Map<string, PacienteCabalClinico> = new Ma
       flagAbuso: false,
       alertaCritica: false,
       motivoConsulta: "Dificultad de adaptación a entornos ruidosos en la universidad, sobrecarga sensorial al final del día y procrastinación severa en ramos teóricos.",
+      motivoConsultaLatente: "Profunda vivencia de soledad y desajuste ontológico; anhelo de aceptación de su identidad neurodivergente sin necesidad de camuflaje constante (masking).",
       diagnosticoCIE: "6A02 Trastorno del Espectro Autista sin deficiencia del desarrollo intelectual / 6A05 TDAH",
       examenMental: {
         porteActitud: "Joven con audífonos de cancelación de ruido puestos al llegar. Mirada intermitente respetada, discurso muy detallado.",
@@ -1919,6 +1924,168 @@ export const PACIENTES_CABAL_MEMORIA: Map<string, PacienteCabalClinico> = new Ma
       ultimaCita: "2026-10-18",
       createdAt: "2026-10-15"
     }
+  ],
+  [
+    "cbl_pac_04",
+    {
+      id: "cbl_pac_04",
+      nombre: "Camila San Martín Baeza",
+      rut: "19.231.504-1",
+      email: "camila.sanmartin@gmail.com",
+      telefono: "+56 9 8123 7654",
+      fechaNacimiento: "1998-07-22",
+      edad: 28,
+      genero: "Femenino",
+      prevision: "Reembolso Isapres (Banmédica)",
+      ocupacion: "Ingeniera Comercial & Nadadora Máster",
+      direccion: "Alonso de Córdova 3890, Vitacura",
+      contactoEmergenciaNombre: "Rodrigo San Martín (Padre)",
+      contactoEmergenciaTelefono: "+56 9 9345 6789",
+      contactoEmergenciaParentesco: "Padre",
+      antecedentesMedicos: "Intolerancia a la lactosa, colon irritable compensado.",
+      antecedentesPsiquiatricos: "Sin antecedentes psiquiátricos.",
+      medicacionActual: "Lactasa SOS. Probióticos multiespecie.",
+      alergias: "Sin alergias alimentarias anafilácticas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Recomposición corporal, aumento de masa muscular y optimización de ingesta energética para natación competitiva de fondo.",
+      diagnosticoCIE: "FB40 Evaluación del Estado Nutricional / Asesoramiento Dietético Deportivo",
+      datosAdHoc: {
+        disciplinaId: "nutricion",
+        pesoActual: 58.5,
+        talla: 165,
+        imc: 21.5,
+        porcentajeGrasa: 19.8,
+        masaMuscular: 27.2,
+        perimetroCintura: 67,
+        transitoDigestivo: "Bristol 3-4 (Normal). Alivio tras supresión de lácteos no deslactosados.",
+        anamnesisAlimentaria: "3 comidas principales + 2 colaciones ricas en proteína. Ingesta hídrica adecuada (2.4L/día).",
+        pautaRequerimientos: "GET estimado: 2.250 kcal/día. Proteínas: 1.7 g/kg (100g/día). Carbohidratos de bajo índice glucémico pre-entreno y recuperación glucogénica rápida post-piscina."
+      },
+      objetivosTerapeuticos: "1. Aumentar 1.5 kg de masa magra en 12 semanas. 2. Timing de carbohidratos en doble turno de nado. 3. Suplementación con creatina monohidrato 5g/día.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Tratamiento nutricional activo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Plan nutricional deportivo en ejecución con adecuada adherencia a macros.",
+        indicaciones: "Control antropométrico ISAK II en 4 semanas."
+      },
+      psicologoAsignadoUid: "cabal_nutri_deportiva_geriatria_02",
+      psicologoAsignadoNombre: "Nut. Sebastián Morales Rojas",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-12",
+      createdAt: "2026-10-10"
+    }
+  ],
+  [
+    "cbl_pac_05",
+    {
+      id: "cbl_pac_05",
+      nombre: "Isidora Peñaloza Urzúa",
+      rut: "19.845.210-9",
+      email: "isidora.penaloza@gmail.com",
+      telefono: "+56 9 7234 5678",
+      fechaNacimiento: "1997-03-14",
+      edad: 29,
+      genero: "Femenino",
+      prevision: "Reembolso Isapres (Cruz Blanca)",
+      ocupacion: "Arquitecta",
+      direccion: "Pocuro 2150, Providencia",
+      contactoEmergenciaNombre: "Claudio Peñaloza (Hermano)",
+      contactoEmergenciaTelefono: "+56 9 8765 4321",
+      contactoEmergenciaParentesco: "Hermano",
+      antecedentesMedicos: "Diagnóstico tardío de Autismo (Nivel 1). Hipersensibilidad táctil y corporal.",
+      antecedentesPsiquiatricos: "Acompañamiento psicológico previo por sobrecarga sensorial.",
+      medicacionActual: "Sin fármacos habituales.",
+      alergias: "Sin alergias conocidas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Consejería preconcepcional informada y control ginecológico adaptado a perfil sensorial neurodivergente.",
+      diagnosticoCIE: "QA20 Asesoramiento en Reproducción y Planificación Familiar",
+      datosAdHoc: {
+        disciplinaId: "matroneria",
+        fur: "2026-10-04",
+        ciclos: "29 días / Regular / Dismenorrea leve en día 1",
+        menarquia: 13,
+        formulaObstetrica: "G0 P0 A0 C0 (Nulípara)",
+        metodoAnticonceptivo: "DIU de Cobre (T Cu 380A), normoposicionado por ecografía 2025",
+        tamizajePAP: "PAP vigente al día (Negativo para neoplasia, próximo control nov 2026)",
+        tamizajeMamario: "Examen mamario sin nódulos palpables ni adenopatías axilares",
+        saludSexualSensorial: "Hipersensibilidad al frío y al instrumental metálico. Se utiliza protocolo de instrumental tibio, consentimiento paso a paso y tiempo extendido de adaptación."
+      },
+      objetivosTerapeuticos: "1. Mapeo del ciclo ovulatorio. 2. Preparación preconcepcional con suplementación de Ácido Fólico 1mg/día. 3. Coordinación en dupla con Psicología Perinatal.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Control preconcepcional en curso",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Consejería preconcepcional entregada. Solicitud de exámenes de laboratorio de rutina.",
+        indicaciones: "Iniciar suplementación preconcepcional y control con resultados de hemograma/perfil tiroideo."
+      },
+      psicologoAsignadoUid: "cabal_matrona_perinatal_neuro_03",
+      psicologoAsignadoNombre: "Mat. Valentina Ríos Pizarro",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-14",
+      createdAt: "2026-10-10"
+    }
+  ],
+  [
+    "cbl_pac_10",
+    {
+      id: "cbl_pac_10",
+      nombre: "Francisca Aldunate Echeverría",
+      rut: "16.712.980-3",
+      email: "francisca.aldunate@gmail.com",
+      telefono: "+56 9 9456 7812",
+      fechaNacimiento: "1988-09-15",
+      edad: 38,
+      genero: "Femenino",
+      prevision: "Particular",
+      ocupacion: "Periodista y Gestora Cultural",
+      direccion: "Monjitas 540, Santiago Centro",
+      contactoEmergenciaNombre: "María Luisa Echeverría (Madre)",
+      contactoEmergenciaTelefono: "+56 9 8123 9087",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Sin antecedentes médicos relevantes.",
+      antecedentesPsiquiatricos: "Sin antecedentes mórbidos psiquiátricos.",
+      medicacionActual: "Ninguna.",
+      alergias: "Sin alergias.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Mediación prejudicial colaborativa para acordar Cuidado Personal compartido, régimen de Relación Directa y Regular (visitas) y Pensión de Alimentos para 2 hijos en común.",
+      diagnosticoCIE: "Z63.0 Problemas en la relación entre cónyuges o parejas / Mediación Familiar",
+      datosAdHoc: {
+        disciplinaId: "abogacia_mediacion",
+        materiaJuridica: "Cuidado Personal, Relación Directa y Regular (RDR) y Pensión de Alimentos (Ley N° 19.968)",
+        datosCausa: "Etapa prejudicial obligatoria previa a demanda en Juzgado de Familia",
+        tribunalCompetente: "1° Juzgado de Familia de Santiago",
+        partesInvolucradas: "Solicitante (Cliente): Francisca Aldunate Echeverría · Solicitado: Tomás Errázuriz Vial",
+        nnaInvolucrados: "Emilia (7 años, Colegio San Ignacio) y Gaspar (4 años, Jardín Vitamina).",
+        puntosConflicto: "Fijación de régimen de fines de semana alternados, vacaciones de invierno/verano compartidas al 50%, y reajustabilidad semestral de la pensión alimenticia fijada en UTM.",
+        estrategiaAcuerdo: "Segunda sesión de mediación telemática fijada para revisión de borrador de acuerdo. Cláusulas de corresponsabilidad y derivación preventiva a Psicología Infantil en caso de requerir apoyo emocional en la transición."
+      },
+      objetivosTerapeuticos: "1. Redacción de Acta de Acuerdo de Mediación con valor de sentencia judicial ejecutoriada. 2. Minimizar impacto del conflicto en NNA. 3. Homologación formal en Tribunal de Familia.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Mediación en curso / Borrador de acuerdo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Sesión preliminar completada con ambas partes con excelente voluntad de acuerdo.",
+        indicaciones: "Firma digital de acta de mediación en próxima sesión conjunta."
+      },
+      psicologoAsignadoUid: "cabal_abogacia_mediacion_09",
+      psicologoAsignadoNombre: "Abog. Ignacia Vergara Donoso",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-16",
+      createdAt: "2026-10-12"
+    }
   ]
 ]);
 
@@ -1951,7 +2118,7 @@ app.post("/api/profesionales/pacientes/lista", async (req, res) => {
   });
 
   let pacientes: any[] = [];
-  if (gentiaResp && gentiaResp.success && Array.isArray(gentiaResp.pacientes)) {
+  if (gentiaResp && gentiaResp.success && Array.isArray(gentiaResp.pacientes) && gentiaResp.pacientes.length > 0) {
     pacientes = gentiaResp.pacientes;
   } else {
     // Fallback con repositorio en memoria de Cabal Salud
@@ -1967,9 +2134,12 @@ app.post("/api/profesionales/pacientes/lista", async (req, res) => {
     }
   }
 
-  // Filtrar opcionalmente por psicólogo asignado
+  // Filtrar opcionalmente por profesional asignado
   if (psicologoUid) {
-    pacientes = pacientes.filter(p => !p.psicologoAsignadoUid || p.psicologoAsignadoUid === psicologoUid);
+    const asignados = pacientes.filter(p => p.psicologoAsignadoUid === psicologoUid);
+    if (asignados.length > 0) {
+      pacientes = asignados;
+    }
   }
 
   res.json({
@@ -2021,7 +2191,9 @@ app.post("/api/profesionales/pacientes/crear", async (req, res) => {
       flagAbuso: Boolean(body.flagAbuso),
       alertaCritica: Boolean(body.alertaCritica),
       motivoConsulta: (body.motivoConsulta || "").trim(),
+      motivoConsultaLatente: (body.motivoConsultaLatente || "").trim(),
       diagnosticoCIE: (body.diagnosticoCIE || "").trim(),
+      datosAdHoc: body.datosAdHoc || {},
       examenMental: body.examenMental || {},
       objetivosTerapeuticos: (body.objetivosTerapeuticos || "").trim(),
       psicologoAsignadoUid: body.psicologoAsignadoUid || null,

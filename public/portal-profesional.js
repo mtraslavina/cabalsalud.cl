@@ -234,10 +234,10 @@
       ]
     },
     {
-      uid: "cabal_abogada_mediacion_09",
-      nombre: "Abg. Constanza Baeza Latorre",
-      profesion: "Abogada Especialista en Familia y Mediación",
-      disciplinaId: "derecho_mediacion",
+      uid: "cabal_abogacia_mediacion_09",
+      nombre: "Abog. Ignacia Vergara Donoso",
+      profesion: "Abogada de Familia y Mediadora Familiar",
+      disciplinaId: "abogacia_mediacion",
       disciplinaNombre: "Abogacía / Mediación Familiar",
       rnpi: "Colegio de Abogados N° 23.410",
       universidad: "Pontificia Universidad Católica de Chile",
@@ -263,39 +263,579 @@
     }
   ];
 
-  // Sesiones de demostración vinculadas a la clínica
-  const SESIONES_MOCK = [
+  // ============================================================================
+  // EXPEDIENTES CLÍNICOS Y LEGALES FALLBACK CON CAMPOS AD-HOC POR PROFESIÓN
+  // ============================================================================
+  const PACIENTES_MOCK_FALLBACK = [
     {
-      citaId: "CBL_SES_948201",
-      pacienteNombre: "Constanza Morales Henríquez",
-      pacienteRut: "18.392.104-5",
-      pacienteTelefono: "+56 9 7812 3456",
-      pacienteEmail: "constanza.morales@gmail.com",
-      fecha: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      hora: "11:00",
-      modalidad: "Online (Videoconsulta Segura)",
+      id: "cbl_pac_01",
+      nombre: "Constanza Morales Henríquez",
+      rut: "18.392.104-5",
+      email: "constanza.morales@gmail.com",
+      telefono: "+56 9 7812 3456",
+      fechaNacimiento: "1997-04-12",
+      edad: 28,
+      genero: "Femenino",
       prevision: "Reembolso Isapres (Colmena)",
-      motivo: "Primera consulta por ansiedad precompetitiva y sobrecarga.",
-      monto: 35000,
-      buyOrder: "CBL20261021001",
-      estado: "PAGADA_VERIFICADA"
+      ocupacion: "Diseñadora Gráfica & Triatleta Amateur",
+      direccion: "Av. Providencia 1450, Depto 602, Providencia",
+      contactoEmergenciaNombre: "Martín Morales (Hermano)",
+      contactoEmergenciaTelefono: "+56 9 9876 5432",
+      contactoEmergenciaParentesco: "Hermano",
+      antecedentesMedicos: "Hipotiroidismo compensado (Eutirox 50mcg/día). Lesión tendinosa rotuliana rodilla derecha en 2024.",
+      antecedentesPsiquiatricos: "Episodio ansioso reactivo a sobrecarga universitaria en 2020 con remisión completa.",
+      medicacionActual: "Eutirox 50mcg en ayunas. Sin psicofármacos actuales.",
+      alergias: "Alergia a AINEs (Ketorolaco produce urticaria).",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva, pensamientos anticipatorios catastróficos y bruxismo matutino intenso antes de carreras de triatlón.",
+      motivoConsultaLatente: "Temor inconsciente a defraudar expectativas familiares introyectadas de éxito incondicional. Necesidad de hipercontrol corporal y sobreexigencia como defensa maníaca contra la vulnerabilidad afectiva y el temor al abandono.",
+      diagnosticoCIE: "6A71 Trastorno de Ansiedad Generalizada / Ansiedad de Desempeño Deportivo",
+      examenMental: {
+        porteActitud: "Adecuado aseo y vestimenta deportiva. Actitud colaboradora y comunicativa.",
+        conciencia: "Vigil, lúcida y orientada en tiempo, espacio y persona (autopsíquica y alopsíquica).",
+        psicomotricidad: "Leve hiperactividad motora distal (movimiento constante de manos).",
+        afectividad: "Ánimo ansioso con reactividad conservada. Sin anhedonia.",
+        pensamiento: "Curso fluido y coherente. Contenido dominado por autoexigencia y temor a fallar en marcas de tiempo.",
+        lenguaje: "Fluido, tono adecuado y léxico amplio.",
+        sensopercepcion: "Sin alteraciones sensoperceptivas.",
+        juicioInsight: "Juicio de realidad conservado. Buen insight y conciencia de necesidad de psicoterapia."
+      },
+      objetivosTerapeuticos: "1. Reducir activación fisiológica precompetitiva mediante biofeedback y respiración diafragmática. 2. Reestructurar distorsiones cognitivas de tipo polarizadas sobre el rendimiento. 3. Sinergia con Nutrición Deportiva para carga glucémica.",
+      historial: [
+        {
+          id: "nota_cbl_001",
+          fecha: "2026-09-15",
+          sesionN: 1,
+          tipo: "Ingreso / Anamnesis",
+          contenido: "Primera entrevista de admisión clínica. Se levanta genograma y línea de vida deportiva. Se firma consentimiento informado según Ley N° 20.584.",
+          dap: {
+            datosSubjetivos: "Consultante refiere 'Siento que el corazón se me va a salir 48 horas antes de una competencia importante, lo que me impide descansar la noche previa'.",
+            evaluacionClinica: "Se observa autoexigencia perfeccionista desadaptativa. Frecuencia respiratoria levemente aumentada durante el relato de cronometrajes.",
+            planTerapeutico: "Se psicoeduca sobre la curva de Yerkes-Dodson (relación activación-rendimiento). Se acuerda registro de autorregistro de pensamientos ansiosos."
+          },
+          ansiedad: 8,
+          depresion: 2,
+          estres: 7,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:8F3A2B19C0E28491"
+        },
+        {
+          id: "nota_cbl_002",
+          fecha: "2026-09-29",
+          sesionN: 2,
+          tipo: "Evolución Regular",
+          contenido: "Revisión de autorregistro cognitivo. Aplicación de técnica de imaginería motora y desensibilización sistemática.",
+          dap: {
+            datosSubjetivos: "Paciente comenta que logró reducir la rumiación nocturna utilizando la técnica de respiración en caja (box breathing) enseñada.",
+            evaluacionClinica: "Disminución notable en puntaje subjetivo de ansiedad pre-entrenamiento. Excelente adherencia al plan de tareas.",
+            planTerapeutico: "Continuar con visualización guiada. Coordinar evaluación con Nutricionista Sebastián Morales para optimizar sustrato energético."
+          },
+          ansiedad: 5,
+          depresion: 1,
+          estres: 4,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:7B1E408A91C36622"
+        }
+      ],
+      epicrisis: {
+        motivoCierre: "En tratamiento activo / Evolución favorable",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Paciente que ha completado fase inicial de psicoeducación y reestructuración cognitiva para ansiedad de desempeño, logrando descenso significativo en sintomatología vegetativa.",
+        indicaciones: "Mantener sesiones quincenales de consolidación y coordinación con nutrición deportiva."
+      },
+      archivos: [
+        {
+          id: "arch_01",
+          nombre: "Consentimiento_Informado_Ley20584_Firmado.pdf",
+          tipo: "Consentimiento Informado",
+          fecha: "2026-09-15",
+          url: "#"
+        }
+      ],
+      psicologoAsignadoUid: "cabal_psico_deportiva_01",
+      psicologoAsignadoNombre: "Ps. Camila Valdés Araneda",
+      deudaTotal: 0,
+      totalCitas: 2,
+      ultimaCita: "2026-09-29",
+      createdAt: "2026-09-10"
     },
     {
-      citaId: "CBL_SES_948202",
-      pacienteNombre: "Felipe Arancibia Castro",
-      pacienteRut: "15.820.491-K",
-      pacienteTelefono: "+56 9 8456 1234",
-      pacienteEmail: "felipe.arancibia@gmail.com",
-      fecha: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString().split("T")[0],
-      hora: "16:00",
-      modalidad: "Online (Videoconsulta Segura)",
+      id: "cbl_pac_02",
+      nombre: "Felipe Arancibia Castro",
+      rut: "15.820.491-K",
+      email: "felipe.arancibia@gmail.com",
+      telefono: "+56 9 8456 1234",
+      fechaNacimiento: "1990-11-03",
+      edad: 35,
+      genero: "Masculino",
       prevision: "Particular",
-      motivo: "Seguimiento de rehabilitación emocional post-cirugía.",
-      monto: 35000,
-      buyOrder: "CBL20261021002",
-      estado: "PAGADA_VERIFICADA"
+      ocupacion: "Ingeniero Civil Estructural",
+      direccion: "Hernando de Aguirre 192, Providencia",
+      contactoEmergenciaNombre: "Marcela Castro (Madre)",
+      contactoEmergenciaTelefono: "+56 9 9123 4567",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Cirugía de reconstrucción de LCA y meniscectomía parcial rodilla izquierda en agosto 2026.",
+      antecedentesPsiquiatricos: "Sin antecedentes mórbidos psiquiátricos previos.",
+      medicacionActual: "Paracetamol 1g SOS.",
+      alergias: "Sin alergias farmacológicas conocidas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Acompañamiento psicológico en proceso de rehabilitación de lesión deportiva. Kinesiofobia y frustración por lentitud de progresión en cargas.",
+      motivoConsultaLatente: "Duelo no elaborado por la pérdida transitoria de la omnipotencia física y el rol de proveedor autosuficiente. Angustia de castración simbólica proyectada en la fragilidad de la articulación intervenida.",
+      diagnosticoCIE: "6B43 Trastorno de Adaptación con Estado de Ánimo Depresivo y Kinesiofobia",
+      examenMental: {
+        porteActitud: "Llega con uso de muleta canadiense unilateral. Actitud algo reticente inicial, luego permeable.",
+        conciencia: "Lúcido y orientado temporo-espacialmente.",
+        afectividad: "Ánimo distímico, frustración manifiesta ante pérdida temporal de autovalencia.",
+        pensamiento: "Ideas fijadas en la comparación con su estado físico previo a la lesión.",
+        lenguaje: "Coherente y reflexivo.",
+        juicioInsight: "Juicio conservado. Reconoce necesidad de modular expectativas para no abandonar kinesiología."
+      },
+      objetivosTerapeuticos: "1. Tratamiento de kinesiofobia y miedo a la re-rotura. 2. Aceptación del ritmo biológico de cicatrización. 3. Trabajo en dupla con Terapeuta Ocupacional Fernanda Herrera.",
+      historial: [
+        {
+          id: "nota_cbl_003",
+          fecha: "2026-10-05",
+          sesionN: 1,
+          tipo: "Ingreso / Admisión",
+          contenido: "Primera sesión clínica post-alta traumatológica. Se evalúa escala de kinesiofobia de Tampa (TSK-11).",
+          dap: {
+            datosSubjetivos: "Paciente declara 'Tengo pánico de pisar con todo el peso y que el injerto ceda'.",
+            evaluacionClinica: "Elevada hipervigilancia propioceptiva. Resistencia a la flexión pasiva guiada.",
+            planTerapeutico: "Técnicas de exposición gradual en imaginería. Se programa interconsulta con Terapia Ocupacional."
+          },
+          ansiedad: 7,
+          depresion: 4,
+          estres: 6,
+          esNotaPrivada: false,
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          hashIntegridad: "SHA256:19A4C039D8841B90"
+        }
+      ],
+      epicrisis: {
+        motivoCierre: "En tratamiento activo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Proceso de readaptación emocional en marcha. Se ha coordinado con kinesiología y terapia ocupacional para reincorporación funcional.",
+        indicaciones: "Continuar con plan semanal de psicoterapia y ejercicios de desensibilización al movimiento."
+      },
+      psicologoAsignadoUid: "cabal_psico_deportiva_01",
+      psicologoAsignadoNombre: "Ps. Camila Valdés Araneda",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-05",
+      createdAt: "2026-10-01"
+    },
+    {
+      id: "cbl_pac_03",
+      nombre: "Matías Troncoso Lagos",
+      rut: "21.049.382-7",
+      email: "matias.troncoso@alumnos.uchile.cl",
+      telefono: "+56 9 6543 2198",
+      fechaNacimiento: "2005-02-18",
+      edad: 21,
+      genero: "Masculino",
+      prevision: "FONASA Tramo B",
+      ocupacion: "Estudiante de Ingeniería",
+      direccion: "Santa Rosa 1120, Santiago Centro",
+      contactoEmergenciaNombre: "Patricia Lagos (Madre)",
+      contactoEmergenciaTelefono: "+56 9 7654 3210",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Rinitis alérgica estacional.",
+      antecedentesPsiquiatricos: "Sospecha de perfil neurodivergente (Autismo nivel 1 / TDAH predominantemente inatento).",
+      medicacionActual: "Desloratadina 5mg SOS.",
+      alergias: "Polen y ácaros.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Dificultad de adaptación a entornos ruidosos en la universidad, sobrecarga sensorial al final del día y procrastinación severa en ramos teóricos.",
+      motivoConsultaLatente: "Profunda vivencia de soledad y desajuste ontológico; anhelo de aceptación de su identidad neurodivergente sin necesidad de camuflaje constante (masking).",
+      diagnosticoCIE: "6A02 Trastorno del Espectro Autista sin deficiencia del desarrollo intelectual / 6A05 TDAH",
+      examenMental: {
+        porteActitud: "Joven con audífonos de cancelación de ruido puestos al llegar. Mirada intermitente respetada, discurso muy detallado.",
+        conciencia: "Vigil y orientado.",
+        afectividad: "Afecto congruente, con episodios de fatiga por masking social continuo.",
+        pensamiento: "Lógico, con fuerte atención al detalle.",
+        lenguaje: "Vocabulario enriquecido, literalidad en algunas metáforas.",
+        juicioInsight: "Excelente capacidad de autoobservación de sus gatillantes sensoriales."
+      },
+      objetivosTerapeuticos: "1. Identificar perfil sensorial y adaptaciones ambientales. 2. Estrategias de descompresión post-jornada académica. 3. Interconsulta con Fonoaudiología y Terapia Ocupacional.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Ingreso reciente / Evaluación integral",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Inicio de proceso de acompañamiento neuroafirmativo para desarrollo de estrategias de autorregulación y adaptación de rutinas universitarias.",
+        indicaciones: "Evaluación multidisciplinaria con Terapia Ocupacional y Fonoaudiología de Cabal Salud."
+      },
+      psicologoAsignadoUid: "cabal_psico_perinatal_neuro_07",
+      psicologoAsignadoNombre: "Ps. Daniela Navarro Silva",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-18",
+      createdAt: "2026-10-15"
+    },
+    {
+      id: "cbl_pac_04",
+      nombre: "Camila San Martín Baeza",
+      rut: "19.231.504-1",
+      email: "camila.sanmartin@gmail.com",
+      telefono: "+56 9 8123 7654",
+      fechaNacimiento: "1998-07-22",
+      edad: 28,
+      genero: "Femenino",
+      prevision: "Reembolso Isapres (Banmédica)",
+      ocupacion: "Ingeniera Comercial & Nadadora Máster",
+      direccion: "Alonso de Córdova 3890, Vitacura",
+      contactoEmergenciaNombre: "Rodrigo San Martín (Padre)",
+      contactoEmergenciaTelefono: "+56 9 9345 6789",
+      contactoEmergenciaParentesco: "Padre",
+      antecedentesMedicos: "Intolerancia a la lactosa, colon irritable compensado.",
+      antecedentesPsiquiatricos: "Sin antecedentes psiquiátricos.",
+      medicacionActual: "Lactasa SOS. Probióticos multiespecie.",
+      alergias: "Sin alergias alimentarias anafilácticas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Recomposición corporal, aumento de masa muscular y optimización de ingesta energética para natación competitiva de fondo.",
+      diagnosticoCIE: "FB40 Evaluación del Estado Nutricional / Asesoramiento Dietético Deportivo",
+      datosAdHoc: {
+        disciplinaId: "nutricion",
+        pesoActual: 58.5,
+        talla: 165,
+        imc: 21.5,
+        porcentajeGrasa: 19.8,
+        masaMuscular: 27.2,
+        perimetroCintura: 67,
+        transitoDigestivo: "Bristol 3-4 (Normal). Alivio tras supresión de lácteos no deslactosados.",
+        anamnesisAlimentaria: "3 comidas principales + 2 colaciones ricas en proteína. Ingesta hídrica adecuada (2.4L/día).",
+        pautaRequerimientos: "GET estimado: 2.250 kcal/día. Proteínas: 1.7 g/kg (100g/día). Carbohidratos de bajo índice glucémico pre-entreno y recuperación glucogénica rápida post-piscina."
+      },
+      objetivosTerapeuticos: "1. Aumentar 1.5 kg de masa magra en 12 semanas. 2. Timing de carbohidratos en doble turno de nado. 3. Suplementación con creatina monohidrato 5g/día.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Tratamiento nutricional activo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Plan nutricional deportivo en ejecución con adecuada adherencia a macros.",
+        indicaciones: "Control antropométrico ISAK II en 4 semanas."
+      },
+      psicologoAsignadoUid: "cabal_nutri_deportiva_geriatria_02",
+      psicologoAsignadoNombre: "Nut. Sebastián Morales Rojas",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-12",
+      createdAt: "2026-10-10"
+    },
+    {
+      id: "cbl_pac_05",
+      nombre: "Isidora Peñaloza Urzúa",
+      rut: "19.845.210-9",
+      email: "isidora.penaloza@gmail.com",
+      telefono: "+56 9 7234 5678",
+      fechaNacimiento: "1997-03-14",
+      edad: 29,
+      genero: "Femenino",
+      prevision: "Reembolso Isapres (Cruz Blanca)",
+      ocupacion: "Arquitecta",
+      direccion: "Pocuro 2150, Providencia",
+      contactoEmergenciaNombre: "Claudio Peñaloza (Hermano)",
+      contactoEmergenciaTelefono: "+56 9 8765 4321",
+      contactoEmergenciaParentesco: "Hermano",
+      antecedentesMedicos: "Diagnóstico tardío de Autismo (Nivel 1). Hipersensibilidad táctil y corporal.",
+      antecedentesPsiquiatricos: "Acompañamiento psicológico previo por sobrecarga sensorial.",
+      medicacionActual: "Sin fármacos habituales.",
+      alergias: "Sin alergias conocidas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Consejería preconcepcional informada y control ginecológico adaptado a perfil sensorial neurodivergente.",
+      diagnosticoCIE: "QA20 Asesoramiento en Reproducción y Planificación Familiar",
+      datosAdHoc: {
+        disciplinaId: "matroneria",
+        fur: "2026-10-04",
+        ciclos: "29 días / Regular / Dismenorrea leve en día 1",
+        menarquia: 13,
+        formulaObstetrica: "G0 P0 A0 C0 (Nulípara)",
+        metodoAnticonceptivo: "DIU de Cobre (T Cu 380A), normoposicionado por ecografía 2025",
+        tamizajePAP: "PAP vigente al día (Negativo para neoplasia, próximo control nov 2026)",
+        tamizajeMamario: "Examen mamario sin nódulos palpables ni adenopatías axilares",
+        saludSexualSensorial: "Hipersensibilidad al frío y al instrumental metálico. Se utiliza protocolo de instrumental tibio, consentimiento paso a paso y tiempo extendido de adaptación."
+      },
+      objetivosTerapeuticos: "1. Mapeo del ciclo ovulatorio. 2. Preparación preconcepcional con suplementación de Ácido Fólico 1mg/día. 3. Coordinación en dupla con Psicología Perinatal.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Control preconcepcional en curso",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Consejería preconcepcional entregada. Solicitud de exámenes de laboratorio de rutina.",
+        indicaciones: "Iniciar suplementación preconcepcional y control con resultados de hemograma/perfil tiroideo."
+      },
+      psicologoAsignadoUid: "cabal_matrona_perinatal_neuro_03",
+      psicologoAsignadoNombre: "Mat. Valentina Ríos Pizarro",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-14",
+      createdAt: "2026-10-10"
+    },
+    {
+      id: "cbl_pac_06",
+      nombre: "Lucas Benavides Bravo",
+      rut: "20.194.812-4",
+      email: "lucas.benavides@gmail.com",
+      telefono: "+56 9 8876 5432",
+      fechaNacimiento: "2004-05-19",
+      edad: 22,
+      genero: "Masculino",
+      prevision: "Reembolso Isapres (Colmena)",
+      ocupacion: "Estudiante de Animación Digital",
+      direccion: "Simón Bolívar 4120, Ñuñoa",
+      contactoEmergenciaNombre: "Andrea Bravo (Madre)",
+      contactoEmergenciaTelefono: "+56 9 9123 7890",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Condromalacia rotuliana leve.",
+      antecedentesPsiquiatricos: "TDAH diagnosticado a los 11 años.",
+      medicacionActual: "Metilfenidato 10mg en días de alta carga académica.",
+      alergias: "Sin alergias.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Evaluación de desempeño ocupacional, regulación sensorial en aula de clases y organización de rutinas frente a desbordes de fatiga.",
+      diagnosticoCIE: "6A05 Trastorno por Déficit de Atención e Hiperactividad / Desafío en Desempeño Ocupacional",
+      datosAdHoc: {
+        disciplinaId: "terapia_ocupacional",
+        avdBasicas: "Completamente autovalente en alimentación, aseo y vestido.",
+        avdInstrumentales: "Dificultad marcada en manejo de tiempos de entrega, administración de presupuesto semanal y traslado en metro en horario punta.",
+        perfilSensorial: "Búsqueda propioceptiva continua, hiperreactividad auditiva a ruidos imprevistos (chillidos, alarmas).",
+        balanceOcupacional: "Predominio de hiperfocus nocturno en proyectos de animación con desajuste de higiene del sueño y postergación de comidas.",
+        adaptacionesAmbientales: "Incorporación de cojín propioceptivo con peso en silla de escritorio, temporizadores visuales Pomodoro y auriculares con cancelación de ruido."
+      },
+      objetivosTerapeuticos: "1. Estructuración de mapa de rutinas con anclajes visuales. 2. Protocolo de autorregulación sensorial post-universidad. 3. Adecuación ergonómica de puesto de dibujo digital.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Intervención ocupacional activa",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Mapeo sensorial y de AVD completado con el consultante.",
+        indicaciones: "Revisión quincenal de bitácora de energía y fatiga."
+      },
+      psicologoAsignadoUid: "cabal_to_neuro_deporte_04",
+      psicologoAsignadoNombre: "T.O. Fernanda Herrera Soto",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-15",
+      createdAt: "2026-10-11"
+    },
+    {
+      id: "cbl_pac_07",
+      nombre: "Joaquín Alarcón Rivas",
+      rut: "21.340.591-6",
+      email: "joaquin.alarcon@gmail.com",
+      telefono: "+56 9 7654 1234",
+      fechaNacimiento: "2006-08-30",
+      edad: 20,
+      genero: "Masculino",
+      prevision: "FONASA Tramo B",
+      ocupacion: "Estudiante de Derecho",
+      direccion: "Carmen 890, Santiago Centro",
+      contactoEmergenciaNombre: "Gonzalo Alarcón (Padre)",
+      contactoEmergenciaTelefono: "+56 9 9876 1122",
+      contactoEmergenciaParentesco: "Padre",
+      antecedentesMedicos: "Rinitis crónica.",
+      antecedentesPsiquiatricos: "Sin antecedentes mórbidos psiquiátricos.",
+      medicacionActual: "Ninguna.",
+      alergias: "Alergia al polvo.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Evaluación fonoaudiológica por fatiga vocal tras debates universitarios y acompañamiento en comunicación social pragmática.",
+      diagnosticoCIE: "6A01 Trastorno del Desarrollo del Lenguaje / Fatiga Vocal Funcional",
+      datosAdHoc: {
+        disciplinaId: "fonoaudiologia",
+        nivelesLenguaje: "Léxico culto muy desarrollado, estructuras sintácticas complejas. Dificultad en lectura de entonación irónica y dobles intenciones.",
+        evaluacionVoz: "Escala RASATI: T1 (Tensión cervical leve al hablar en público), F1 (Fatiga vocal vespertina tras 2 horas de alegato). Sin disfonía estructural.",
+        motricidadOrofacial: "Patrón respiratorio mixto (naso-bucal) con compensación en inspiración rápida. Deglución y masticación normales.",
+        apoyosComunicativos: "Ejercicios de tracto vocal semiocluido (tubos de resonancia LaxVox) para calentamiento vocal y guiones de prosodia pragmática."
+      },
+      objetivosTerapeuticos: "1. Eficiencia vocal y dosificación de aire fonatorio. 2. Entrenamiento en modulación de volumen y entonación. 3. Estrategias de comunicación pragmática para defensas orales.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Tratamiento fonoaudiológico en curso",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Se realizan pautas de higiene vocal y ejercicios respiratorios costo-diafragmáticos.",
+        indicaciones: "Mantener sesiones semanales de modulación vocal."
+      },
+      psicologoAsignadoUid: "cabal_fono_neuro_infanto_05",
+      psicologoAsignadoNombre: "Flgo. Diego Contreras Muñoz",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-17",
+      createdAt: "2026-10-13"
+    },
+    {
+      id: "cbl_pac_08",
+      nombre: "María Elena Carrasco V.",
+      rut: "9.412.890-5",
+      email: "familia.carrasco@gmail.com",
+      telefono: "+56 9 6123 4590",
+      fechaNacimiento: "1952-01-14",
+      edad: 74,
+      genero: "Femenino",
+      prevision: "FONASA Tramo A",
+      ocupacion: "Jubilada / Persona Mayor con Dependencia",
+      direccion: "Pasaje Los Sauces 450, Maipú",
+      contactoEmergenciaNombre: "Loreto Carrasco (Hija y Cuidadora)",
+      contactoEmergenciaTelefono: "+56 9 8456 7890",
+      contactoEmergenciaParentesco: "Hija",
+      antecedentesMedicos: "Secuela de ACV isquémico (2023), HTA, Artrosis de caderas bilateral severa.",
+      antecedentesPsiquiatricos: "Trastorno adaptativo depresivo secundario a pérdida de movilidad.",
+      medicacionActual: "Losartán 50mg, Atorvastatina 20mg, Paracetamol 1g.",
+      alergias: "Sin alergias.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Evaluación sociofamiliar integral, tramitación de credencial de discapacidad (RND) ante COMPIN y postulación al Programa Red Local de Apoyos y Cuidados (Chile Cuida).",
+      diagnosticoCIE: "Z63.1 Problemas en la relación con familiares / Dependencia Severa Geriátrica",
+      datosAdHoc: {
+        disciplinaId: "trabajo_social",
+        demandaSocial: "Asesoría para obtención de estipendio de cuidadores, credencial RND y subsidio de dependencia severa.",
+        genogramaFamiliar: "Hogar compuesto por María Elena y su hija Loreto (cuidadora 24/7 con sobrecarga severa en Test de Zarit). Sin red familiar secundaria de apoyo.",
+        registroSocialHogares: "RSH calificado en el 40% de mayor vulnerabilidad socioeconómica del país.",
+        condicionesVivienda: "Casa social pareada de 1 piso, baño sin adaptaciones (presencia de tina de difícil acceso, riesgo alto de caídas).",
+        redesComunitarias: "Inscrita en CESFAM Maipú. Se coordina visita a terreno interdisciplinaria con Terapia Ocupacional para postulación a fondos municipales de adecuación de baño."
+      },
+      objetivosTerapeuticos: "1. Elaborar Informe Social Pericial para COMPIN. 2. Postulación formal a Chile Cuida y SENAMA. 3. Coordinar respiro familiar para la cuidadora principal.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Intervención sociofamiliar activa",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Informe social emitido e ingresado a COMPIN. Visita domiciliaria programada.",
+        indicaciones: "Seguimiento quincenal de trámites municipales y beneficio de cuidadores."
+      },
+      psicologoAsignadoUid: "cabal_ts_geriatria_terreno_06",
+      psicologoAsignadoNombre: "T.S. Carolina Fuentes Lagos",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-18",
+      createdAt: "2026-10-14"
+    },
+    {
+      id: "cbl_pac_09",
+      nombre: "Rodrigo Navarrete Pinto",
+      rut: "14.891.230-8",
+      email: "rodrigo.navarrete@gmail.com",
+      telefono: "+56 9 8234 1199",
+      fechaNacimiento: "1984-06-11",
+      edad: 42,
+      genero: "Masculino",
+      prevision: "Reembolso Isapres (Colmena)",
+      ocupacion: "Contador Auditor",
+      direccion: "Monseñor Edwards 1240, La Reina",
+      contactoEmergenciaNombre: "Claudia Navarrete (Hermana)",
+      contactoEmergenciaTelefono: "+56 9 9123 6677",
+      contactoEmergenciaParentesco: "Hermana",
+      antecedentesMedicos: "Dislipidemia tratada, sobrepeso leve (IMC 26.1).",
+      antecedentesPsiquiatricos: "Episodio depresivo previo en 2018 con buena respuesta a ISRS.",
+      medicacionActual: "Escitalopram 10mg/día, Melatonina 3mg/noche.",
+      alergias: "Sin alergias farmacológicas.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Episodio depresivo moderado reactivo a estrés laboral sostenido, insomnio de conciliación tardío y fatiga matutina. Evaluación psicofarmacológica y coordinación psicoterapéutica.",
+      diagnosticoCIE: "6A70 Trastorno Depresivo Recurrente, Episodio Actual Moderado",
+      datosAdHoc: {
+        disciplinaId: "medicina_psiquiatria",
+        heacronologia: "Cuadro de 4 meses de evolución con caída anímica, pérdida de capacidad de disfrute (anhedonia) y despertar precoz con angustia somática matutina.",
+        esquemaFarmacologico: "Escitalopram 10mg/día en la mañana (buena tolerancia gástrica, sin náuseas). Se asocia Melatonina de liberación prolongada 3mg antes de dormir.",
+        signosSomaticos: "Presión Arterial: 124/80 mmHg. Frecuencia Cardíaca: 70 lpm. Peso: 78 kg. Sin temblor de reposo ni signos extrapiramidales.",
+        paraclinicos: "Hemograma sin alteraciones, Perfil lipídico con colesterol total 210 mg/dl, TSH 2.3 uUI/ml, Vitamina D 18 ng/ml (se prescribe colecalciferol).",
+        justificacionLicencia: "Licencia médica de reposo laboral por 15 días justificada clínicamente. Indicación estricta de continuidad con Ps. Camila Valdés en Cabal Salud."
+      },
+      objetivosTerapeuticos: "1. Remisión total de sintomatología depresiva e insomnio. 2. Titulación controlada de fármaco según respuesta a las 4 semanas. 3. Dupla terapéutica con psicología.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Tratamiento psicofarmacológico activo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Inicio de tratamiento farmacológico bien tolerado. Mejoría incipiente en calidad de sueño.",
+        indicaciones: "Control médico en 3 semanas y mantener psicoterapia semanal."
+      },
+      psicologoAsignadoUid: "cabal_medicina_mental_08",
+      psicologoAsignadoNombre: "Dr. Cristóbal Méndez Alarcón",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-19",
+      createdAt: "2026-10-15"
+    },
+    {
+      id: "cbl_pac_10",
+      nombre: "Francisca Aldunate Echeverría",
+      rut: "16.712.980-3",
+      email: "francisca.aldunate@gmail.com",
+      telefono: "+56 9 9456 7812",
+      fechaNacimiento: "1988-09-15",
+      edad: 38,
+      genero: "Femenino",
+      prevision: "Particular",
+      ocupacion: "Periodista y Gestora Cultural",
+      direccion: "Monjitas 540, Santiago Centro",
+      contactoEmergenciaNombre: "María Luisa Echeverría (Madre)",
+      contactoEmergenciaTelefono: "+56 9 8123 9087",
+      contactoEmergenciaParentesco: "Madre",
+      antecedentesMedicos: "Sin antecedentes médicos relevantes.",
+      antecedentesPsiquiatricos: "Sin antecedentes mórbidos psiquiátricos.",
+      medicacionActual: "Ninguna.",
+      alergias: "Sin alergias.",
+      flagSui: false,
+      flagVIF: false,
+      flagAbuso: false,
+      alertaCritica: false,
+      motivoConsulta: "Mediación prejudicial colaborativa para acordar Cuidado Personal compartido, régimen de Relación Directa y Regular (visitas) y Pensión de Alimentos para 2 hijos en común.",
+      diagnosticoCIE: "Z63.0 Problemas en la relación entre cónyuges o parejas / Mediación Familiar Ley 19.968",
+      datosAdHoc: {
+        disciplinaId: "abogacia_mediacion",
+        materiaJuridica: "Cuidado Personal, Relación Directa y Regular (RDR) y Pensión de Alimentos (Ley N° 19.968)",
+        datosCausa: "Etapa prejudicial obligatoria previa a demanda en Juzgado de Familia",
+        tribunalCompetente: "1° Juzgado de Familia de Santiago",
+        partesInvolucradas: "Solicitante (Cliente): Francisca Aldunate Echeverría · Solicitado: Tomás Errázuriz Vial",
+        nnaInvolucrados: "Emilia (7 años, Colegio San Ignacio) y Gaspar (4 años, Jardín Vitamina).",
+        puntosConflicto: "Fijación de régimen de fines de semana alternados, vacaciones de invierno/verano compartidas al 50%, y reajustabilidad semestral de la pensión alimenticia fijada en UTM.",
+        estrategiaAcuerdo: "Segunda sesión de mediación telemática fijada para revisión de borrador de acuerdo. Cláusulas de corresponsabilidad y derivación preventiva a Psicología Infantil en caso de requerir apoyo emocional en la transición."
+      },
+      objetivosTerapeuticos: "1. Redacción de Acta de Acuerdo de Mediación con valor de sentencia judicial ejecutoriada. 2. Minimizar impacto del conflicto en NNA. 3. Homologación formal en Tribunal de Familia.",
+      historial: [],
+      epicrisis: {
+        motivoCierre: "Mediación en curso / Borrador de acuerdo",
+        fechaEmision: "2026-10-21",
+        resumenTratamiento: "Sesión preliminar completada con ambas partes con excelente voluntad de acuerdo.",
+        indicaciones: "Firma digital de acta de mediación en próxima sesión conjunta."
+      },
+      psicologoAsignadoUid: "cabal_abogacia_mediacion_09",
+      psicologoAsignadoNombre: "Abog. Ignacia Vergara Donoso",
+      deudaTotal: 0,
+      totalCitas: 1,
+      ultimaCita: "2026-10-16",
+      createdAt: "2026-10-12"
     }
   ];
+
+  function obtenerPacientesFallback(profUid) {
+    if (!profUid) return PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === "cabal_psico_deportiva_01");
+    const asignados = PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === profUid);
+    if (asignados.length > 0) return asignados;
+    return PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === "cabal_psico_deportiva_01");
+  }
 
   function refreshIcons() {
     if (window.lucide) window.lucide.createIcons();
@@ -517,7 +1057,6 @@
   let listaPacientesDirectorio = [];
   let pacienteActivo = null;
   let subPestanaClinicaActiva = "ficha"; // 'ficha' | 'examen' | 'evoluciones' | 'epicrisis' | 'archivos'
-  let boveda15AActiva = false;
 
   window.cambiarPestana = function (pestanaId) {
     ["perfil", "sesiones", "fichas", "horarios", "banco"].forEach(id => {
@@ -551,14 +1090,19 @@
         })
       });
       const data = await res.json();
-      if (data && data.success && Array.isArray(data.pacientes)) {
+      if (data && data.success && Array.isArray(data.pacientes) && data.pacientes.length > 0) {
         listaPacientesDirectorio = data.pacientes;
+      } else {
+        listaPacientesDirectorio = obtenerPacientesFallback(profesionalActivo ? profesionalActivo.uid : undefined);
       }
     } catch (_err) {
-      // Fallback
+      listaPacientesDirectorio = obtenerPacientesFallback(profesionalActivo ? profesionalActivo.uid : undefined);
     }
 
     renderizarSelectoresYChipsPacientes();
+    if (profesionalActivo) {
+      renderizarSesiones(profesionalActivo);
+    }
   };
 
   function renderizarSelectoresYChipsPacientes() {
@@ -567,9 +1111,6 @@
     const totalCount = document.getElementById("totalPacientesCount");
 
     let listaParaMostrar = listaPacientesDirectorio;
-    if (boveda15AActiva) {
-      listaParaMostrar = listaPacientesDirectorio.filter(p => p.archivadoLegal);
-    }
 
     if (totalCount) {
       totalCount.textContent = listaParaMostrar.length;
@@ -591,7 +1132,7 @@
       if (listaParaMostrar.length === 0) {
         chipsContainer.innerHTML = `
           <div class="text-xs text-noche/60 italic py-2">
-            No se encontraron consultantes con el filtro aplicado. Utiliza el botón "+ Crear Paciente" para registrar uno nuevo.
+            No se encontraron consultantes con el filtro aplicado. Utiliza el botón "Registrar Paciente" para registrar uno nuevo.
           </div>
         `;
       } else {
@@ -682,19 +1223,7 @@
   };
 
   window.filtrarBovedaLegal15A = function () {
-    boveda15AActiva = !boveda15AActiva;
-    const btn = document.getElementById("btnBoveda15A");
-    if (btn) {
-      if (boveda15AActiva) {
-        btn.className = "py-2.5 px-3.5 rounded-xl border border-red-500 text-white bg-red-700 text-xs font-semibold flex items-center gap-1.5 shadow-sm";
-        btn.innerHTML = `<i data-lucide="archive" class="w-3.5 h-3.5"></i><span>Bóveda 15A (Activa)</span>`;
-      } else {
-        btn.className = "py-2.5 px-3.5 rounded-xl border border-red-200 text-red-800 bg-red-50 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition";
-        btn.innerHTML = `<i data-lucide="archive" class="w-3.5 h-3.5 text-red-600"></i><span>Bóveda 15A</span>`;
-      }
-    }
-    renderizarSelectoresYChipsPacientes();
-    refreshIcons();
+    // Opción exclusiva para administradoras en el panel central de Gentia
   };
 
   // 2. Cargar Expediente Completo de un Paciente
@@ -763,6 +1292,23 @@
       </div>
     ` : "";
 
+    // Configuración dinámica de sub-pestañas según disciplina del profesional
+    const disc = profesionalActivo?.disciplinaId || "psicologia";
+    const confSub2 = (function(d) {
+      switch (d) {
+        case "nutricion": return { label: "Evaluación Antropométrica & Ingesta", icon: "activity" };
+        case "matroneria": return { label: "Evaluación Gineco-Obstétrica & Perinatal", icon: "heart" };
+        case "terapia_ocupacional": return { label: "Perfil Sensorial & AVD", icon: "activity" };
+        case "fonoaudiologia": return { label: "Evaluación de Habla, Voz & Deglución", icon: "message-square" };
+        case "trabajo_social": return { label: "Diagnóstico Sociofamiliar & Genograma", icon: "users" };
+        case "medicina_psiquiatria": return { label: "Examen Somático & Psicofarmacología", icon: "stethoscope" };
+        case "abogacia_mediacion": return { label: "Ficha de Caso Jurídico & Mediación", icon: "scale" };
+        case "psicologia":
+        default: return { label: "Examen Mental V70", icon: "activity" };
+      }
+    })(disc);
+    const labelTab1 = (disc === "abogacia_mediacion") ? "Ficha de Caso & Cliente" : "Ficha & Antecedentes";
+
     // Sub-pestañas del expediente
     const tabsMenuHtml = `
       <div class="flex flex-wrap items-center gap-2 border-b border-noche/10 pb-2">
@@ -776,7 +1322,7 @@
           }"
         >
           <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-          <span>Ficha & Antecedentes</span>
+          <span>${labelTab1}</span>
         </button>
 
         <button
@@ -788,8 +1334,8 @@
               : "bg-perla/80 text-noche/75 hover:bg-perla"
           }"
         >
-          <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-          <span>Examen Mental V70</span>
+          <i data-lucide="${confSub2.icon}" class="w-3.5 h-3.5"></i>
+          <span>${confSub2.label}</span>
         </button>
 
         <button
@@ -841,7 +1387,14 @@
     if (subPestanaClinicaActiva === "ficha") {
       subContentHtml = renderizarSubFichaAntecedentes(p);
     } else if (subPestanaClinicaActiva === "examen") {
-      subContentHtml = renderizarSubExamenMental(p);
+      if (disc === "nutricion") subContentHtml = renderizarSubNutricion(p);
+      else if (disc === "matroneria") subContentHtml = renderizarSubMatroneria(p);
+      else if (disc === "terapia_ocupacional") subContentHtml = renderizarSubTerapiaOcupacional(p);
+      else if (disc === "fonoaudiologia") subContentHtml = renderizarSubFonoaudiologia(p);
+      else if (disc === "trabajo_social") subContentHtml = renderizarSubTrabajoSocial(p);
+      else if (disc === "medicina_psiquiatria") subContentHtml = renderizarSubMedicinaPsiquiatria(p);
+      else if (disc === "abogacia_mediacion") subContentHtml = renderizarSubAbogacia(p);
+      else subContentHtml = renderizarSubExamenMental(p);
     } else if (subPestanaClinicaActiva === "evoluciones") {
       subContentHtml = renderizarSubEvolucionesDAP(p);
     } else if (subPestanaClinicaActiva === "epicrisis") {
@@ -863,7 +1416,6 @@
               <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-petroleo/10 text-petroleo">
                 ${p.prevision || "Particular"}
               </span>
-              ${p.archivadoLegal ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-900">Archivado 15A</span>' : ''}
             </div>
             <div class="text-xs text-noche/75 flex flex-wrap gap-x-4 gap-y-1 font-medium">
               <span>RUT: <strong class="font-mono">${p.rut || "Sin RUT"}</strong></span>
@@ -923,15 +1475,6 @@
             <i data-lucide="printer" class="w-3.5 h-3.5 text-granate"></i>
             <span>Exportar</span>
           </button>
-
-          <button
-            type="button"
-            onclick="window.archivarPacienteBoveda15A('${p.id}')"
-            class="py-2 px-2.5 rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-xs text-red-700 flex items-center gap-1 transition"
-            title="Custodia obligatoria 15 años Ley 20.584 / D.S. 41"
-          >
-            <i data-lucide="archive" class="w-3.5 h-3.5"></i>
-          </button>
         </div>
       </div>
 
@@ -954,82 +1497,495 @@
     renderizarVistaExpedienteClinico();
   };
 
-  // 2.1. Sub-pestaña Ficha & Antecedentes
+  // ============================================================================
+  // 2.1. SUB-PESTAÑA 1: FICHA & ANTECEDENTES AD-HOC SEGÚN DISCIPLINA PROFESIONAL
+  // ============================================================================
   function renderizarSubFichaAntecedentes(p) {
+    const disc = profesionalActivo?.disciplinaId || "psicologia";
+    const adhoc = p.datosAdHoc || {};
+
+    // 1. PSICOLOGÍA (Incluye Motivo Manifiesto y Motivo Latente)
+    if (disc === "psicologia") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-3">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 mb-1">
+                  Anamnesis y Motivo de Consulta Manifiesto
+                </label>
+                <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+                <span class="text-[11px] text-noche/60">Demanda consciente verbalizada por el consultante y factores desencadenantes.</span>
+              </div>
+
+              <div class="pt-2 border-t border-noche/10 bg-petroleo/5 p-3 rounded-xl border border-petroleo/15">
+                <label class="block text-xs font-bold uppercase tracking-wider text-petroleo flex items-center gap-1.5 mb-1">
+                  <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+                  <span>Motivo de Consulta Latente (Demanda Inconsciente / Conflicto de Fondo)</span>
+                </label>
+                <textarea id="fichaMotivoLatente" rows="3" placeholder="Hipótesis psicodinámica, demanda no verbalizada, posición subjetiva y conflicto psíquico subyacente..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-petroleo/30 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsultaLatente || ""}</textarea>
+                <span class="text-[11px] text-petroleo/80 font-medium">Lectura clínica interpretativa que orienta la dirección de la cura psicoterapéutica.</span>
+              </div>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Clínico (CIE-11 / DSM-5)
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+              <span class="text-[11px] text-noche/60">Código y denominación médica formal para licencias justificadas y reembolsos Isapre/FONASA.</span>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Hipótesis Comprensiva y Objetivos Terapéuticos
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Antecedentes Médicos / Quirúrgicos</label>
+              <textarea id="fichaAntMedicos" rows="3" class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.antecedentesMedicos || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Antecedentes Psiquiátricos / Familiares</label>
+              <textarea id="fichaAntPsiquiatricos" rows="3" class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.antecedentesPsiquiatricos || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Farmacoterapia y Alergias</label>
+              <textarea id="fichaMedicacion" rows="3" class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.medicacionActual ? "Fármacos: " + p.medicacionActual : ""}${p.alergias ? "\nAlergias: " + p.alergias : ""}</textarea>
+            </div>
+          </div>
+
+          <!-- Contacto de Emergencia -->
+          <div class="bg-perla/50 p-4 rounded-2xl border border-noche/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+            <div>
+              <strong class="text-noche font-bold">Contacto de Emergencia Registrado:</strong>
+              <span class="text-noche/80 ml-1">
+                ${p.contactoEmergenciaNombre ? `${p.contactoEmergenciaNombre} (${p.contactoEmergenciaParentesco || "Familiar"}) · Tel: ${p.contactoEmergenciaTelefono}` : "No informado aún"}
+              </span>
+            </div>
+            <button type="button" onclick="window.abrirModalEditarPaciente('${p.id}')" class="text-petroleo font-semibold hover:underline">
+              Actualizar contacto
+            </button>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Psicológica en Gentia Vault</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 2. NUTRICIÓN Y DIETÉTICA
+    if (disc === "nutricion") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Motivo de Consulta Nutricional
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+              <span class="text-[11px] text-noche/60">Objetivo del paciente (rendimiento deportivo, recomposición corporal, patología digestiva o geriátrica).</span>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Anamnesis Alimentaria & Hábitos de Consumo
+              </label>
+              <textarea id="adhocNutriAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.anamnesisAlimentaria || ""}</textarea>
+              <span class="text-[11px] text-noche/60">Horarios de ingesta, nivel de saciedad, apetito y consumo hídrico diario.</span>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Nutricional Integrado
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Objetivos Nutricionales Concertados & Metas
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Antecedentes Gastrointestinales & Tránsito</label>
+              <textarea id="fichaAntMedicos" rows="3" placeholder="Reflujo, meteorismo, hinchazón, intolerancias..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.antecedentesMedicos || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Alergias, Intolerancias y Aversiones</label>
+              <textarea id="fichaAntPsiquiatricos" rows="3" placeholder="Lactosa, gluten, fructosa, aversiones sensoriales..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.alergias || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Suplementación Deportiva y Fármacos</label>
+              <textarea id="fichaMedicacion" rows="3" placeholder="Creatina, proteína, multivitamínicos, fármacos..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.medicacionActual || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Nutricional en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 3. MATRONERÍA
+    if (disc === "matroneria") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Motivo de Consulta Gineco-Obstétrica & Perinatal
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Antecedentes Gineco-Obstétricos (AGO)
+              </label>
+              <textarea id="adhocMatronaAgo" rows="3" placeholder="Menarquia, FUR, Regularidad del ciclo, Fórmula Obstétrica (G_ P_ A_ C_)..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.formulaObstetrica ? `Fórmula Obstétrica: ${adhoc.formulaObstetrica}\nFUR: ${adhoc.fur || "No informada"}\nCiclos: ${adhoc.ciclos || "Regulares"}` : ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico / Condición Clínica
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Plan de Acompañamiento Perinatal & Salud Sexual
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Método Anticonceptivo Actual (MAC)</label>
+              <textarea id="adhocMatronaMac" rows="3" placeholder="DIU, implante, ACO, barrera y tolerancia..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.metodoAnticonceptivo || p.medicacionActual || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Tamizajes Preventivos al Día</label>
+              <textarea id="fichaAntMedicos" rows="3" placeholder="Último PAP, VPH, Mamografía o ecografía mamaria..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.tamizajePAP ? `PAP: ${adhoc.tamizajePAP}\nMamografía: ${adhoc.tamizajeMamario || "Al día"}` : ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Salud Sexual & Perfil Sensorial</label>
+              <textarea id="adhocMatronaSensorial" rows="3" placeholder="Dispareunia, hipersensibilidad al instrumental, adaptaciones..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.saludSexualSensorial || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Gineco-Obstétrica en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 4. TERAPIA OCUPACIONAL
+    if (disc === "terapia_ocupacional") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Motivo de Consulta Ocupacional & Desempeño
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Desempeño en Actividades de la Vida Diaria (AVD)
+              </label>
+              <textarea id="adhocToAvd" rows="3" placeholder="AVD Básicas (alimentación, vestido, aseo) e Instrumentales (transporte, dinero, compras)..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.avdBasicas ? `Básicas: ${adhoc.avdBasicas}\nInstrumentales: ${adhoc.avdInstrumentales || ""}` : ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Funcional Ocupacional
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Objetivos Ocupacionales y Plan de Trabajo
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Perfil Sensorial y Procesamiento</label>
+              <textarea id="adhocToSensorial" rows="3" placeholder="Búsqueda propioceptiva, hipersensibilidad acústica, táctil..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.perfilSensorial || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Balance Ocupacional y Rutinas</label>
+              <textarea id="adhocToBalance" rows="3" placeholder="Sueño, descanso, productividad y ocio..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.balanceOcupacional || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Adaptaciones Ambientales & Ergonomía</label>
+              <textarea id="adhocToAdaptaciones" rows="3" placeholder="Cojines propioceptivos, temporizadores visuales, apoyos..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.adaptacionesAmbientales || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Ocupacional en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 5. FONOAUDIOLOGÍA
+    if (disc === "fonoaudiologia") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Motivo de Consulta Fonoaudiológica
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Niveles del Lenguaje (Léxico, Sintaxis, Pragmática)
+              </label>
+              <textarea id="adhocFonoLenguaje" rows="3" placeholder="Desempeño fonológico, vocabulario, inferencias sociales y dobles intenciones..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.nivelesLenguaje || ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Fonoaudiológico / Comunicación
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Objetivos Comunicativos Funcionales
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Evaluación de Voz (Escala RASATI)</label>
+              <textarea id="adhocFonoVoz" rows="3" placeholder="Tensión, fatiga vocal, ronquera, soporte aéreo..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.evaluacionVoz || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Motricidad Orofacial & Deglución</label>
+              <textarea id="adhocFonoDeglucion" rows="3" placeholder="Respiración, masticación, patrón deglutorio..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.motricidadOrofacial || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Apoyos SAAC y Guiones Sociales</label>
+              <textarea id="adhocFonoSaac" rows="3" placeholder="Sistemas aumentativos/alternativos, apoyos visuales..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.apoyosComunicativos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Fonoaudiológica en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 6. TRABAJO SOCIAL
+    if (disc === "trabajo_social") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Demanda Social y Situación de Vulnerabilidad
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Genograma Familiar & Dinámica de Cuidadores
+              </label>
+              <textarea id="adhocTsGenograma" rows="3" placeholder="Estructura familiar, cuidadora principal, sobrecarga del cuidador (Zarit)..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.genogramaFamiliar || ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Social Integrado
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Plan de Intervención Social y Redes
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Registro Social de Hogares (RSH)</label>
+              <textarea id="adhocTsRsh" rows="3" placeholder="Tramo socioeconómico (40%, 60%), ingresos familiares..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.registroSocialHogares || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Condiciones de Vivienda & Accesibilidad</label>
+              <textarea id="adhocTsVivienda" rows="3" placeholder="Tenencia, barreras arquitectónicas en baño/accesos..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.condicionesVivienda || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Red Institucional (COMPIN / Chile Cuida)</label>
+              <textarea id="adhocTsRedes" rows="3" placeholder="Trámites de credencial RND, CESFAM, subsidios..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.redesComunitarias || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Social en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 7. MEDICINA / PSIQUIATRÍA
+    if (disc === "medicina_psiquiatria") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Motivo de Consulta Médico-Psiquiátrica
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Historia de la Enfermedad Actual (HEA) & Cronología
+              </label>
+              <textarea id="adhocMedHea" rows="3" placeholder="Tiempo de evolución, gatillantes, fluctuación circadiana, episodios previos..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.heacronologia || ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Diagnóstico Nosológico Formal (CIE-11 / DSM-5)
+              </label>
+              <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Plan Terapéutico y Coordinación Psicoterapéutica
+              </label>
+              <textarea id="fichaObjetivos" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Esquema Farmacológico Actual & Dosis</label>
+              <textarea id="fichaMedicacion" rows="3" placeholder="Fármaco, posología, tiempo de uso, tolerancia gástrica..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.esquemaFarmacologico || p.medicacionActual || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Exámenes Paraclínicos & Laboratorio</label>
+              <textarea id="adhocMedLab" rows="3" placeholder="Hemograma, perfil lipídico, TSH, Vitamina D, ECG..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.paraclinicos || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Pronóstico y Reposo Médico (Licencia)</label>
+              <textarea id="adhocMedLicencia" rows="3" placeholder="Días indicados, justificación clínica de reposo..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.justificacionLicencia || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Ficha Médica en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // 8. ABOGACÍA DE FAMILIA Y MEDIACIÓN FAMILIAR
+    if (disc === "abogacia_mediacion") {
+      return `
+        <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Materia Jurídico-Familiar y Motivo de Consulta
+              </label>
+              <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
+              <span class="text-[11px] text-noche/60">Demanda legal: Alimentos, Cuidado Personal (Tuición), RDR o Mediación Previa Obligatoria (Ley 19.968).</span>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Datos de la Causa Judicial y Tribunal Competente
+              </label>
+              <textarea id="adhocAbogCausa" rows="2" placeholder="Tribunal de Familia, N° RIT / Causa y estado procesal..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.datosCausa ? `${adhoc.datosCausa} · Tribunal: ${adhoc.tribunalCompetente || ""}` : ""}</textarea>
+            </div>
+
+            <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+                Partes Involucradas y NNA (Hijos/as en Común)
+              </label>
+              <textarea id="adhocAbogPartes" rows="3" placeholder="Solicitante (Cliente), Contraparte y Niños, Niñas y Adolescentes involucrados con edades..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${adhoc.partesInvolucradas ? `${adhoc.partesInvolucradas}\nNNA: ${adhoc.nnaInvolucrados || ""}` : ""}</textarea>
+
+              <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
+                Estrategia Legal y Objetivos de la Mediación
+              </label>
+              <textarea id="fichaObjetivos" rows="3" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Puntos Críticos de Conflicto y Voluntad Dialógica</label>
+              <textarea id="adhocAbogConflicto" rows="3" placeholder="Desacuerdos en régimen de visitas, indexación de alimentos, voluntad colaborativa..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.puntosConflicto || ""}</textarea>
+            </div>
+            <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
+              <label class="block text-xs font-bold text-noche/80">Estrategia de Acuerdo y Corresponsabilidad</label>
+              <textarea id="adhocAbogEstrategia" rows="3" placeholder="Borrador de acuerdos, cláusulas de cuidado compartido, derivación a psicología..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${adhoc.estrategiaAcuerdo || ""}</textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+              <span>Guardar Expediente Jurídico en Gentia</span>
+            </button>
+          </div>
+        </form>
+      `;
+    }
+
+    // Default fallback
     return `
-      <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-5">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
-              Anamnesis y Motivo de Consulta Principal
-            </label>
-            <textarea id="fichaAnamnesis" rows="4" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.motivoConsulta || ""}</textarea>
-            <span class="text-[11px] text-noche/60">Historia de la problemática actual, tiempo de evolución y factores gatillantes.</span>
-          </div>
-
-          <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
-              Diagnóstico Clínico (CIE-11 / DSM-5)
-            </label>
-            <input type="text" id="fichaDiagnostico" value="${p.diagnosticoCIE || ""}" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm text-noche font-semibold focus:outline-none focus:border-petroleo" />
-            <span class="text-[11px] text-noche/60">Código y denominación médica formal para licencias justificadas y reembolsos Isapre/FONASA.</span>
-
-            <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 pt-2">
-              Objetivos Terapéuticos y Plan de Trabajo
-            </label>
-            <textarea id="fichaObjetivos" rows="2" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo leading-relaxed">${p.objetivosTerapeuticos || ""}</textarea>
-          </div>
+      <form onsubmit="window.guardarFichaIngreso(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Motivo de Atención / Anamnesis</label>
+          <textarea id="fichaAnamnesis" rows="3" class="w-full px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche">${p.motivoConsulta || ""}</textarea>
         </div>
-
-        <!-- Antecedentes Médicos, Psiquiátricos y Farmacoterapia -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
-            <label class="block text-xs font-bold text-noche/80">Antecedentes Médicos / Quirúrgicos</label>
-            <textarea id="fichaAntMedicos" rows="3" class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.antecedentesMedicos || ""}</textarea>
-          </div>
-
-          <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
-            <label class="block text-xs font-bold text-noche/80">Antecedentes Psiquiátricos / Familiares</label>
-            <textarea id="fichaAntPsiquiatricos" rows="3" class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.antecedentesPsiquiatricos || ""}</textarea>
-          </div>
-
-          <div class="bg-perla/70 rounded-2xl p-4 border border-noche/10 space-y-1.5">
-            <label class="block text-xs font-bold text-noche/80">Farmacoterapia y Alergias</label>
-            <textarea id="fichaMedicacion" rows="3" placeholder="Medicación actual y alergias..." class="w-full px-3 py-2 rounded-xl bg-white border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${p.medicacionActual ? "Fármacos: " + p.medicacionActual : ""}${p.alergias ? "\nAlergias: " + p.alergias : ""}</textarea>
-          </div>
-        </div>
-
-        <!-- Contacto de Emergencia -->
-        <div class="bg-perla/50 p-4 rounded-2xl border border-noche/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div>
-            <strong class="text-noche font-bold">Contacto de Emergencia Registrado:</strong>
-            <span class="text-noche/80 ml-1">
-              ${p.contactoEmergenciaNombre ? `${p.contactoEmergenciaNombre} (${p.contactoEmergenciaParentesco || "Familiar"}) · Tel: ${p.contactoEmergenciaTelefono}` : "No informado aún"}
-            </span>
-          </div>
-          <button type="button" onclick="window.abrirModalEditarPaciente('${p.id}')" class="text-petroleo font-semibold hover:underline">
-            Actualizar contacto
-          </button>
-        </div>
-
-        <div class="flex items-center justify-end gap-3 pt-2">
-          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
-            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
-            <span>Guardar Antecedentes en Gentia Vault</span>
-          </button>
-        </div>
+        <button type="submit" class="btn-petroleo py-2.5 px-5 rounded-xl text-xs font-semibold">Guardar en Gentia</button>
       </form>
     `;
   }
 
-  // 2.2. Sub-pestaña Examen Mental V70
+  // ============================================================================
+  // 2.2. SUB-PESTAÑA 2: EVALUACIONES AD-HOC SEGÚN ESPECIALIDAD (EXAMEN / INGESTA / ETC)
+  // ============================================================================
   function renderizarSubExamenMental(p) {
     const ex = p.examenMental || {};
     return `
-      <form onsubmit="window.guardarExamenMental(event)" class="space-y-4">
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
           <span>Evaluación estandarizada del estado psíquico actual bajo protocolo Gentia V70.</span>
-          <span class="font-mono text-petroleo font-bold">Evaluación Clínica</span>
+          <span class="font-mono text-petroleo font-bold">Psicología Clínica</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1062,7 +2018,7 @@
             <textarea id="emSensopercepcion" rows="2" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${ex.sensopercepcion || ""}</textarea>
           </div>
           <div class="space-y-1">
-            <label class="block text-xs font-semibold text-noche/80">Juicio de Realidad e Insight (Conciencia de Enfermedad)</label>
+            <label class="block text-xs font-semibold text-noche/80">Juicio de Realidad e Insight (Conciencia de Problema)</label>
             <textarea id="emJuicio" rows="2" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${ex.juicioInsight || ""}</textarea>
           </div>
         </div>
@@ -1071,6 +2027,298 @@
           <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
             <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
             <span>Actualizar Examen Mental en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubNutricion(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Evaluación Antropométrica ISAK II, Tránsito Digestivo y Pauta de Macronutrientes.</span>
+          <span class="font-mono text-petroleo font-bold">Nutrición & Dietética</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Peso (kg)</label>
+            <input type="number" step="0.1" id="subNutriPeso" value="${a.pesoActual || 60}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Talla (cm)</label>
+            <input type="number" id="subNutriTalla" value="${a.talla || 165}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">IMC (kg/m²)</label>
+            <input type="number" step="0.1" id="subNutriImc" value="${a.imc || 22.0}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">% Grasa</label>
+            <input type="number" step="0.1" id="subNutriGrasa" value="${a.porcentajeGrasa || 20.0}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Masa Músc. (kg)</label>
+            <input type="number" step="0.1" id="subNutriMusculo" value="${a.masaMuscular || 26.5}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Cintura (cm)</label>
+            <input type="number" step="0.5" id="subNutriCintura" value="${a.perimetroCintura || 68}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Tránsito Gastrointestinal (Escala de Bristol)</label>
+            <textarea id="subNutriBristol" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.transitoDigestivo || "Tipo 3-4 (Normal). Sin distensión."}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Requerimientos Energéticos & Pauta (GET kcal y Macros)</label>
+            <textarea id="subNutriPauta" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.pautaRequerimientos || "GET: 2.100 kcal. Proteínas: 1.6 g/kg."}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Evaluación Nutricional en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubMatroneria(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Control Gineco-Obstétrico, Salud Perinatal y Lactancia Respetuosa.</span>
+          <span class="font-mono text-petroleo font-bold">Matronería</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Fórmula Obstétrica</label>
+            <input type="text" id="subMatronaFo" value="${a.formulaObstetrica || "G0 P0 A0 C0"}" class="w-full font-mono font-bold text-noche text-sm focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Fecha Última Regla (FUR)</label>
+            <input type="date" id="subMatronaFur" value="${a.fur || ""}" class="w-full font-bold text-noche text-xs focus:outline-none" />
+          </div>
+          <div class="bg-white p-3 rounded-xl border border-noche/10">
+            <label class="block text-[11px] font-semibold text-noche/70">Características del Ciclo</label>
+            <input type="text" id="subMatronaCiclos" value="${a.ciclos || "28 días / Regular"}" class="w-full font-bold text-noche text-xs focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Tamizajes Preventivos (PAP / VPH / Mamografía)</label>
+            <textarea id="subMatronaTamizajes" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.tamizajePAP ? `PAP: ${a.tamizajePAP}\nMamografía: ${a.tamizajeMamario || "Normal"}` : ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Lactancia Materna, Piso Pélvico y Sensorialidad</label>
+            <textarea id="subMatronaLactancia" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.saludSexualSensorial || "Sin alteraciones en piso pélvico. Protocolo de adaptación sensorial respetuosa."}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Evaluación de Matronería en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubTerapiaOcupacional(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Evaluación de Integración Sensorial, AVD y Organización de Rutinas.</span>
+          <span class="font-mono text-petroleo font-bold">Terapia Ocupacional</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Procesamiento Sensorial (Propioceptivo, Vestibular, Táctil, Auditivo)</label>
+            <textarea id="subToSensorial" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.perfilSensorial || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Desempeño en AVD Básicas e Instrumentales</label>
+            <textarea id="subToAvd" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.avdBasicas ? `${a.avdBasicas}\n${a.avdInstrumentales || ""}` : ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Balance Ocupacional y Manejo de Fatiga</label>
+            <textarea id="subToBalance" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.balanceOcupacional || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Adaptaciones Ambientales, Ergonomía y Apoyos</label>
+            <textarea id="subToAdaptaciones" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.adaptacionesAmbientales || ""}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Evaluación Ocupacional en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubFonoaudiologia(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Evaluación de Lenguaje, Habla, Voz (Escala RASATI) y Motricidad Orofacial.</span>
+          <span class="font-mono text-petroleo font-bold">Fonoaudiología</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Niveles del Lenguaje y Comunicación Pragmática</label>
+            <textarea id="subFonoLenguaje" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.nivelesLenguaje || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Parámetros Vocales (Escala RASATI)</label>
+            <textarea id="subFonoVoz" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.evaluacionVoz || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Motricidad Orofacial y Patrón Deglutorio</label>
+            <textarea id="subFonoDeglucion" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.motricidadOrofacial || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Sistemas de Comunicación (SAAC / Guiones)</label>
+            <textarea id="subFonoSaac" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.apoyosComunicativos || ""}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Evaluación Fonoaudiológica en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubTrabajoSocial(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Diagnóstico Sociofamiliar, Calificación RSH y Gestión de Redes.</span>
+          <span class="font-mono text-petroleo font-bold">Trabajo Social</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Composición Familiar y Genograma</label>
+            <textarea id="subTsGenograma" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.genogramaFamiliar || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Registro Social de Hogares & Ingresos</label>
+            <textarea id="subTsRsh" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.registroSocialHogares || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Condiciones de Habitabilidad & Barreras</label>
+            <textarea id="subTsVivienda" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.condicionesVivienda || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Gestión de Redes (COMPIN / Chile Cuida / SENAMA)</label>
+            <textarea id="subTsRedes" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.redesComunitarias || ""}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Ficha Social en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubMedicinaPsiquiatria(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Evaluación Médica, Psicofarmacología y Examen Somático.</span>
+          <span class="font-mono text-petroleo font-bold">Medicina / Psiquiatría</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Historia de la Enfermedad Actual (HEA)</label>
+            <textarea id="subMedHea" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.heacronologia || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Esquema Farmacológico Actual y Tolerancia</label>
+            <textarea id="subMedFarmacos" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.esquemaFarmacologico || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Signos Somáticos & Paraclínicos (PA, FC, Lab)</label>
+            <textarea id="subMedSignos" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.signosSomaticos ? `${a.signosSomaticos}\n${a.paraclinicos || ""}` : ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Indicación de Reposo Médico (Licencia Laboral)</label>
+            <textarea id="subMedLicencia" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.justificacionLicencia || ""}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Evaluación Médica en Gentia</span>
+          </button>
+        </div>
+      </form>
+    `;
+  }
+
+  function renderizarSubAbogacia(p) {
+    const a = p.datosAdHoc || {};
+    return `
+      <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
+        <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
+          <span>Expediente de Mediación Familiar, Cláusulas y Borradores de Acuerdo.</span>
+          <span class="font-mono text-petroleo font-bold">Abogacía & Mediación</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Datos de la Causa Judicial y Tribunal</label>
+            <textarea id="subAbogCausa" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.datosCausa ? `${a.datosCausa} · Tribunal: ${a.tribunalCompetente || ""}` : ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Partes Involucradas y NNA</label>
+            <textarea id="subAbogPartes" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.partesInvolucradas ? `${a.partesInvolucradas}\nNNA: ${a.nnaInvolucrados || ""}` : ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Puntos Críticos de Conflicto</label>
+            <textarea id="subAbogConflicto" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.puntosConflicto || ""}</textarea>
+          </div>
+          <div class="space-y-1">
+            <label class="block text-xs font-semibold text-noche/80">Borrador de Acuerdos / Cláusulas de Alimentos y RDR</label>
+            <textarea id="subAbogAcuerdos" rows="3" class="w-full px-3 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs text-noche focus:outline-none focus:border-petroleo">${a.estrategiaAcuerdo || ""}</textarea>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="submit" class="btn-petroleo py-2.5 px-6 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+            <i data-lucide="check" class="w-4 h-4 text-emerald-300"></i>
+            <span>Actualizar Expediente de Mediación en Gentia</span>
           </button>
         </div>
       </form>
@@ -1366,6 +2614,40 @@
       medicacionActual: document.getElementById("fichaMedicacion")?.value || ""
     };
 
+    // Motivo Latente (Psicología)
+    const latente = document.getElementById("fichaMotivoLatente")?.value;
+    if (latente !== undefined) {
+      datosActualizados.motivoConsultaLatente = latente;
+    }
+
+    // Campos Ad-Hoc según disciplina
+    const adhoc = { ...(pacienteActivo.datosAdHoc || {}) };
+    if (document.getElementById("adhocNutriAnamnesis")) adhoc.anamnesisAlimentaria = document.getElementById("adhocNutriAnamnesis").value;
+    if (document.getElementById("adhocMatronaAgo")) adhoc.formulaObstetrica = document.getElementById("adhocMatronaAgo").value;
+    if (document.getElementById("adhocMatronaMac")) adhoc.metodoAnticonceptivo = document.getElementById("adhocMatronaMac").value;
+    if (document.getElementById("adhocMatronaSensorial")) adhoc.saludSexualSensorial = document.getElementById("adhocMatronaSensorial").value;
+    if (document.getElementById("adhocToAvd")) adhoc.avdBasicas = document.getElementById("adhocToAvd").value;
+    if (document.getElementById("adhocToSensorial")) adhoc.perfilSensorial = document.getElementById("adhocToSensorial").value;
+    if (document.getElementById("adhocToBalance")) adhoc.balanceOcupacional = document.getElementById("adhocToBalance").value;
+    if (document.getElementById("adhocToAdaptaciones")) adhoc.adaptacionesAmbientales = document.getElementById("adhocToAdaptaciones").value;
+    if (document.getElementById("adhocFonoLenguaje")) adhoc.nivelesLenguaje = document.getElementById("adhocFonoLenguaje").value;
+    if (document.getElementById("adhocFonoVoz")) adhoc.evaluacionVoz = document.getElementById("adhocFonoVoz").value;
+    if (document.getElementById("adhocFonoDeglucion")) adhoc.motricidadOrofacial = document.getElementById("adhocFonoDeglucion").value;
+    if (document.getElementById("adhocFonoSaac")) adhoc.apoyosComunicativos = document.getElementById("adhocFonoSaac").value;
+    if (document.getElementById("adhocTsGenograma")) adhoc.genogramaFamiliar = document.getElementById("adhocTsGenograma").value;
+    if (document.getElementById("adhocTsRsh")) adhoc.registroSocialHogares = document.getElementById("adhocTsRsh").value;
+    if (document.getElementById("adhocTsVivienda")) adhoc.condicionesVivienda = document.getElementById("adhocTsVivienda").value;
+    if (document.getElementById("adhocTsRedes")) adhoc.redesComunitarias = document.getElementById("adhocTsRedes").value;
+    if (document.getElementById("adhocMedHea")) adhoc.heacronologia = document.getElementById("adhocMedHea").value;
+    if (document.getElementById("adhocMedLab")) adhoc.paraclinicos = document.getElementById("adhocMedLab").value;
+    if (document.getElementById("adhocMedLicencia")) adhoc.justificacionLicencia = document.getElementById("adhocMedLicencia").value;
+    if (document.getElementById("adhocAbogCausa")) adhoc.datosCausa = document.getElementById("adhocAbogCausa").value;
+    if (document.getElementById("adhocAbogPartes")) adhoc.partesInvolucradas = document.getElementById("adhocAbogPartes").value;
+    if (document.getElementById("adhocAbogConflicto")) adhoc.puntosConflicto = document.getElementById("adhocAbogConflicto").value;
+    if (document.getElementById("adhocAbogEstrategia")) adhoc.estrategiaAcuerdo = document.getElementById("adhocAbogEstrategia").value;
+
+    datosActualizados.datosAdHoc = adhoc;
+
     try {
       await fetch("/api/profesionales/pacientes/actualizar", {
         method: "POST",
@@ -1382,20 +2664,78 @@
     }
   };
 
-  window.guardarExamenMental = async function (e) {
+  window.guardarEvaluacionEspecialidad = async function (e) {
     if (e) e.preventDefault();
     if (!pacienteActivo) return;
 
-    const examenMental = {
-      porteActitud: document.getElementById("emPorte")?.value || "",
-      conciencia: document.getElementById("emConciencia")?.value || "",
-      psicomotricidad: document.getElementById("emPsicomotricidad")?.value || "",
-      afectividad: document.getElementById("emAfectividad")?.value || "",
-      pensamiento: document.getElementById("emPensamiento")?.value || "",
-      lenguaje: document.getElementById("emLenguaje")?.value || "",
-      sensopercepcion: document.getElementById("emSensopercepcion")?.value || "",
-      juicioInsight: document.getElementById("emJuicio")?.value || ""
-    };
+    const disc = profesionalActivo?.disciplinaId || "psicologia";
+
+    if (disc === "psicologia") {
+      const examenMental = {
+        porteActitud: document.getElementById("emPorte")?.value || "",
+        conciencia: document.getElementById("emConciencia")?.value || "",
+        psicomotricidad: document.getElementById("emPsicomotricidad")?.value || "",
+        afectividad: document.getElementById("emAfectividad")?.value || "",
+        pensamiento: document.getElementById("emPensamiento")?.value || "",
+        lenguaje: document.getElementById("emLenguaje")?.value || "",
+        sensopercepcion: document.getElementById("emSensopercepcion")?.value || "",
+        juicioInsight: document.getElementById("emJuicio")?.value || ""
+      };
+      try {
+        await fetch("/api/profesionales/pacientes/actualizar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            pacienteId: pacienteActivo.id,
+            datos: { examenMental }
+          })
+        });
+        pacienteActivo.examenMental = examenMental;
+        mostrarAlertaPortal("✓ Examen mental V70 actualizado y respaldado en Gentia Vault.", "success");
+      } catch (_err) {
+        mostrarAlertaPortal("Error al guardar examen mental.", "error");
+      }
+      return;
+    }
+
+    // Otras especialidades: actualizar datosAdHoc
+    const adhoc = { ...(pacienteActivo.datosAdHoc || {}), disciplinaId: disc };
+
+    if (disc === "nutricion") {
+      adhoc.pesoActual = Number(document.getElementById("subNutriPeso")?.value || 0);
+      adhoc.talla = Number(document.getElementById("subNutriTalla")?.value || 0);
+      adhoc.imc = Number(document.getElementById("subNutriImc")?.value || 0);
+      adhoc.porcentajeGrasa = Number(document.getElementById("subNutriGrasa")?.value || 0);
+      adhoc.masaMuscular = Number(document.getElementById("subNutriMusculo")?.value || 0);
+      adhoc.perimetroCintura = Number(document.getElementById("subNutriCintura")?.value || 0);
+      adhoc.transitoDigestivo = document.getElementById("subNutriBristol")?.value || "";
+      adhoc.pautaRequerimientos = document.getElementById("subNutriPauta")?.value || "";
+    } else if (disc === "matroneria") {
+      adhoc.formulaObstetrica = document.getElementById("subMatronaFo")?.value || "";
+      adhoc.fur = document.getElementById("subMatronaFur")?.value || "";
+      adhoc.ciclos = document.getElementById("subMatronaCiclos")?.value || "";
+      adhoc.saludSexualSensorial = document.getElementById("subMatronaLactancia")?.value || "";
+    } else if (disc === "terapia_ocupacional") {
+      adhoc.perfilSensorial = document.getElementById("subToSensorial")?.value || "";
+      adhoc.balanceOcupacional = document.getElementById("subToBalance")?.value || "";
+      adhoc.adaptacionesAmbientales = document.getElementById("subToAdaptaciones")?.value || "";
+    } else if (disc === "fonoaudiologia") {
+      adhoc.evaluacionVoz = document.getElementById("subFonoVoz")?.value || "";
+      adhoc.motricidadOrofacial = document.getElementById("subFonoDeglucion")?.value || "";
+      adhoc.apoyosComunicativos = document.getElementById("subFonoSaac")?.value || "";
+    } else if (disc === "trabajo_social") {
+      adhoc.genogramaFamiliar = document.getElementById("subTsGenograma")?.value || "";
+      adhoc.registroSocialHogares = document.getElementById("subTsRsh")?.value || "";
+      adhoc.condicionesVivienda = document.getElementById("subTsVivienda")?.value || "";
+      adhoc.redesComunitarias = document.getElementById("subTsRedes")?.value || "";
+    } else if (disc === "medicina_psiquiatria") {
+      adhoc.heacronologia = document.getElementById("subMedHea")?.value || "";
+      adhoc.paraclinicos = document.getElementById("subMedLab")?.value || "";
+      adhoc.justificacionLicencia = document.getElementById("subMedLicencia")?.value || "";
+    } else if (disc === "abogacia_mediacion") {
+      adhoc.puntosConflicto = document.getElementById("subAbogConflicto")?.value || "";
+      adhoc.estrategiaAcuerdo = document.getElementById("subAbogEstrategia")?.value || "";
+    }
 
     try {
       await fetch("/api/profesionales/pacientes/actualizar", {
@@ -1403,15 +2743,17 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pacienteId: pacienteActivo.id,
-          datos: { examenMental }
+          datos: { datosAdHoc: adhoc }
         })
       });
-      pacienteActivo.examenMental = examenMental;
-      mostrarAlertaPortal("✓ Examen mental V70 actualizado y respaldado en Gentia Vault.", "success");
+      pacienteActivo.datosAdHoc = adhoc;
+      mostrarAlertaPortal("✓ Evaluación de especialidad actualizada con éxito en Gentia Vault.", "success");
     } catch (_err) {
-      mostrarAlertaPortal("Error al guardar examen mental.", "error");
+      mostrarAlertaPortal("Error al guardar evaluación de especialidad.", "error");
     }
   };
+
+  window.guardarExamenMental = window.guardarEvaluacionEspecialidad;
 
   window.guardarNuevaEvolucionDAP = async function (e) {
     if (e) e.preventDefault();
@@ -1553,6 +2895,7 @@
       contactoEmergenciaParentesco: document.getElementById("crearPacEmergenciaParentesco")?.value || "",
       contactoEmergenciaTelefono: document.getElementById("crearPacEmergenciaTelefono")?.value || "",
       motivoConsulta: document.getElementById("crearPacMotivo")?.value || "",
+      motivoConsultaLatente: document.getElementById("crearPacMotivoLatente")?.value || "",
       diagnosticoCIE: document.getElementById("crearPacDiagnostico")?.value || "",
       antecedentesMedicos: document.getElementById("crearPacAntMedicos")?.value || "",
       medicacionActual: document.getElementById("crearPacMedicacion")?.value || "",
@@ -1605,6 +2948,9 @@
     document.getElementById("editPacEmergenciaNombre").value = pac.contactoEmergenciaNombre || "";
     document.getElementById("editPacEmergenciaParentesco").value = pac.contactoEmergenciaParentesco || "";
     document.getElementById("editPacEmergenciaTelefono").value = pac.contactoEmergenciaTelefono || "";
+    if (document.getElementById("editPacMotivoLatente")) {
+      document.getElementById("editPacMotivoLatente").value = pac.motivoConsultaLatente || "";
+    }
     document.getElementById("editPacFlagSui").checked = Boolean(pac.flagSui);
     document.getElementById("editPacFlagVIF").checked = Boolean(pac.flagVIF);
     document.getElementById("editPacFlagAbuso").checked = Boolean(pac.flagAbuso);
@@ -1644,6 +2990,7 @@
       contactoEmergenciaNombre: document.getElementById("editPacEmergenciaNombre")?.value || "",
       contactoEmergenciaParentesco: document.getElementById("editPacEmergenciaParentesco")?.value || "",
       contactoEmergenciaTelefono: document.getElementById("editPacEmergenciaTelefono")?.value || "",
+      motivoConsultaLatente: document.getElementById("editPacMotivoLatente")?.value || "",
       flagSui: Boolean(document.getElementById("editPacFlagSui")?.checked),
       flagVIF: Boolean(document.getElementById("editPacFlagVIF")?.checked),
       flagAbuso: Boolean(document.getElementById("editPacFlagAbuso")?.checked)
@@ -1764,25 +3111,33 @@
     }
   };
 
-  window.abrirFichaClinicaPaciente = function (citaId) {
+  window.guardarHorariosDisponibilidad = function () {
+    const domingoActivo = Boolean(document.getElementById("checkHorarioDomingo")?.checked);
+    mostrarAlertaPortal(`✓ Horarios y disponibilidad semanal sincronizados con Gentia. (Domingo: ${domingoActivo ? "Habilitado para reservas" : "No disponible"}).`, "success");
+  };
+
+  window.abrirFichaClinicaPaciente = function (identificador) {
     window.cambiarPestana('fichas');
-    // Si viene de una cita, mapeamos al paciente o cargamos el primer paciente
-    if (citaId.startsWith("cbl_pac_")) {
-      window.cargarFichaClinicaPaciente(citaId);
-    } else {
-      // Buscar por nombre aproximado en sesiones
-      const ses = SESIONES_MOCK.find(s => s.citaId === citaId);
-      if (ses) {
-        const found = listaPacientesDirectorio.find(p => p.nombre.toLowerCase().includes(ses.pacienteNombre.toLowerCase().split(" ")[0]));
-        if (found) {
-          window.cargarFichaClinicaPaciente(found.id);
-          return;
-        }
-      }
+    if (!identificador) {
       if (listaPacientesDirectorio.length > 0) {
         window.cargarFichaClinicaPaciente(listaPacientesDirectorio[0].id);
       }
+      return;
     }
+    const foundDirect = listaPacientesDirectorio.find(p => p.id === identificador);
+    if (foundDirect) {
+      window.cargarFichaClinicaPaciente(foundDirect.id);
+      return;
+    }
+    const foundApprox = listaPacientesDirectorio.find(p => 
+      p.nombre.toLowerCase().includes(identificador.toLowerCase()) || 
+      (p.rut && p.rut.includes(identificador))
+    );
+    if (foundApprox) {
+      window.cargarFichaClinicaPaciente(foundApprox.id);
+      return;
+    }
+    window.cargarFichaClinicaPaciente(identificador);
   };
 
   window.guardarCambiosPerfil = async function (e) {
@@ -1885,37 +3240,63 @@
     const container = document.getElementById("containerListaSesiones");
     if (!container) return;
 
-    container.innerHTML = SESIONES_MOCK.map(
-      s => `
+    let pacientesProf = (listaPacientesDirectorio && listaPacientesDirectorio.length > 0)
+      ? listaPacientesDirectorio
+      : obtenerPacientesFallback(prof ? prof.uid : undefined);
+
+    if (!pacientesProf || pacientesProf.length === 0) {
+      container.innerHTML = `
+        <div class="bg-perla/60 rounded-2xl p-8 border border-dashed border-noche/15 text-center text-noche/60 text-xs sm:text-sm">
+          No hay sesiones agendadas en este momento. Las reservas ingresadas por consultantes en el catálogo público aparecerán aquí automáticamente.
+        </div>
+      `;
+      return;
+    }
+
+    const horariosMock = [
+      { fecha: "Mañana, Jueves 22 Octubre", hora: "10:00" },
+      { fecha: "Viernes 23 Octubre", hora: "16:30" },
+      { fecha: "Lunes 26 Octubre", hora: "11:00" },
+      { fecha: "Martes 27 Octubre", hora: "15:00" }
+    ];
+
+    container.innerHTML = pacientesProf.map((p, idx) => {
+      const horario = horariosMock[idx % horariosMock.length];
+      const citaId = `CBL-SES-2026-00${idx + 1}`;
+      const tieneAlertas = p.flagSui || p.flagVIF || p.flagAbuso || p.alertaCritica;
+      const telLimpio = (p.telefono || "+56912345678").replace(/[^0-9]/g, "");
+
+      return `
       <div class="bg-perla rounded-2xl p-5 border border-noche/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div class="space-y-1.5 flex-1">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              Pago Aprobado Webpay Plus Directo
+              Pago Aprobado Webpay Plus Directo ($${Number(prof ? prof.precioCLP : 35000).toLocaleString("es-CL")} CLP)
             </span>
-            <span class="text-xs font-mono text-noche/60">${s.citaId}</span>
+            <span class="text-xs font-mono text-noche/60">${citaId}</span>
+            ${tieneAlertas ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800 border border-red-200">⚠️ Alerta Clínica</span>` : ""}
           </div>
-          <h4 class="font-serif text-lg font-bold text-noche">${s.pacienteNombre}</h4>
+          <h4 class="font-serif text-lg font-bold text-noche">${p.nombre}</h4>
           <div class="text-xs text-noche/75 flex flex-wrap items-center gap-x-4 gap-y-1">
-            <span>📅 <strong>${s.fecha} · ${s.hora} hrs</strong></span>
-            <span>📍 ${s.modalidad}</span>
-            <span>📋 RUT: ${s.pacienteRut} (${s.prevision})</span>
+            <span>📅 <strong>${horario.fecha} · ${horario.hora} hrs</strong></span>
+            <span>📍 Online (WebRTC Gentia / Google Meet)</span>
+            <span>📋 RUT: <strong>${p.rut || "Sin RUT"}</strong> (${p.prevision || "Particular"})</span>
           </div>
-          <p class="text-xs text-noche/70 italic mt-1">"${s.motivo}"</p>
+          <p class="text-xs text-noche/70 italic mt-1">"${p.motivoConsulta || "Acompañamiento clínico integral en Clínica Cabal Salud."}"</p>
         </div>
 
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0 w-full md:w-auto">
           <button
             type="button"
-            onclick="window.abrirFichaClinicaPaciente('${s.citaId}')"
+            onclick="window.abrirFichaClinicaPaciente('${p.id}')"
             class="py-2.5 px-3.5 rounded-xl border border-emerald-300 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow-sm"
-            title="Ver o editar Ficha Clínica y Epicrisis en Bóveda Gentia"
+            title="Abrir Ficha Clínica y Epicrisis Oficial en Bóveda Gentia"
           >
             <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-700"></i>
             <span>Ficha & Epicrisis</span>
           </button>
           <a
-            href="https://gentia.cl/sala-sesion.html?id=${s.citaId}&role=profesional"
+            href="https://gentia.cl/sala-sesion.html?id=${citaId}&pacienteId=${p.id}&role=profesional"
             target="_blank"
             rel="noopener"
             class="btn-petroleo py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2"
@@ -1924,19 +3305,21 @@
             <span>Ingresar a Sala WebRTC</span>
           </a>
           <a
-            href="https://wa.me/${s.pacienteTelefono.replace(/[^0-9]/g, '')}?text=Hola%20${encodeURIComponent(s.pacienteNombre)}%2C%20te%20escribe%20${encodeURIComponent(prof.nombre)}%20de%20Cl%C3%ADnica%20Cabal%20Salud."
+            href="https://wa.me/${telLimpio}?text=Hola%20${encodeURIComponent(p.nombre)}%2C%20te%20escribe%20${encodeURIComponent(prof ? prof.nombre : 'tu especialista')}%20de%20Cl%C3%ADnica%20Cabal%20Salud."
             target="_blank"
             rel="noopener"
             class="btn-noche-outline py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5"
-            title="Contactar al paciente por WhatsApp"
+            title="Contactar al consultante por WhatsApp"
           >
             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
             <span>WhatsApp</span>
           </a>
         </div>
       </div>
-    `
-    ).join("");
+      `;
+    }).join("");
+
+    refreshIcons();
   }
 
   // Previsualización de Ficha Pública
