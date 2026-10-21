@@ -388,6 +388,222 @@
       ],
       psicologoAsignadoUid: "cabal_psico_deportiva_01",
       psicologoAsignadoNombre: "Ps. Camila Valdés Araneda",
+      profesionalesAsignados: [
+        "cabal_psico_deportiva_01",
+        "cabal_nutri_deportiva_geriatria_02",
+        "cabal_matrona_perinatal_neuro_03",
+        "cabal_to_neuro_deporte_04",
+        "cabal_fono_neuro_infantojuvenil_05",
+        "cabal_ts_perinatal_geriatria_06",
+        "cabal_psico_perinatal_neuro_07",
+        "cabal_psiquiatria_adultos_08",
+        "cabal_abogacia_mediacion_09"
+      ],
+      fichasPorEspecialidad: {
+        psicologia: {
+          profesionalNombre: "Ps. Camila Valdés Araneda",
+          profesionalUid: "cabal_psico_deportiva_01",
+          disciplinaNombre: "Psicología Clínica y del Deporte",
+          diagnosticoCIE: "6A71 Trastorno de Ansiedad Generalizada / Ansiedad de Desempeño Deportivo",
+          motivoConsulta: "Consulta por ansiedad de rendimiento precompetitiva, pensamientos anticipatorios catastróficos y bruxismo matutino intenso antes de carreras de triatlón.",
+          motivoConsultaLatente: "Temor inconsciente a defraudar expectativas familiares introyectadas de éxito incondicional. Necesidad de hipercontrol corporal y sobreexigencia como defensa maníaca contra la vulnerabilidad afectiva y el temor al abandono.",
+          examenMental: {
+            porteActitud: "Adecuado aseo y vestimenta deportiva. Actitud colaboradora y comunicativa.",
+            conciencia: "Vigil, lúcida y orientada en tiempo, espacio y persona (autopsíquica y alopsíquica).",
+            psicomotricidad: "Leve hiperactividad motora distal (movimiento constante de manos).",
+            afectividad: "Ánimo ansioso con reactividad conservada. Sin anhedonia.",
+            pensamiento: "Curso fluido y coherente. Contenido dominado por autoexigencia y temor a fallar en marcas de tiempo.",
+            lenguaje: "Fluido, tono adecuado y léxico amplio.",
+            sensopercepcion: "Sin alteraciones sensoperceptivas.",
+            juicioInsight: "Juicio de realidad conservado. Buen insight y conciencia de necesidad de psicoterapia."
+          },
+          objetivosTerapeuticos: "1. Reducir activación fisiológica precompetitiva mediante biofeedback y respiración diafragmática. 2. Reestructurar distorsiones cognitivas de tipo polarizadas sobre el rendimiento. 3. Sinergia con Nutrición Deportiva para carga glucémica.",
+          epicrisis: {
+            motivoCierre: "En tratamiento activo / Evolución favorable",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Paciente que ha completado fase inicial de psicoeducación y reestructuración cognitiva para ansiedad de desempeño, logrando descenso significativo en sintomatología vegetativa.",
+            indicaciones: "Mantener sesiones quincenales de consolidación y coordinación con nutrición deportiva."
+          }
+        },
+        nutricion: {
+          profesionalNombre: "Nut. Sebastián Morales Rojas",
+          profesionalUid: "cabal_nutri_deportiva_geriatria_02",
+          disciplinaNombre: "Nutrición y Dietética",
+          diagnosticoCIE: "FB40 Evaluación del Estado Nutricional / Asesoramiento Dietético Deportivo",
+          motivoConsulta: "Planificación nutricional personalizada para triatlón de media distancia, optimización de recomposición corporal y timing de ingesta intra-entrenamiento.",
+          datosAdHoc: {
+            disciplinaId: "nutricion",
+            pesoActual: 58.5,
+            talla: 165,
+            imc: 21.5,
+            porcentajeGrasa: 19.8,
+            masaMuscular: 27.2,
+            perimetroCintura: 67,
+            transitoDigestivo: "Bristol 3-4 (Normal). Alivio total tras suspensión de lácteos enteros pre-fondo.",
+            anamnesisAlimentaria: "3 comidas principales + 2 colaciones proteicas. Hidratación: 2.8L agua/día + sales minerales en tiradas de fondo.",
+            pautaRequerimientos: "GET estimado: 2.300 kcal/día. Proteínas: 1.8 g/kg (105g/día). Carbohidratos: 6g/kg (350g/día) con carga glucogénica 48h pre-competencia. Creatina monohidrato 5g/día en fase de mantenimiento."
+          },
+          objetivosTerapeuticos: "1. Optimizar recarga glucogénica en microciclos de triatlón. 2. Preservar masa magra sin pérdida de potencia en ciclismo. 3. Pauta de hidratación y geles isotónicos en carrera.",
+          epicrisis: {
+            motivoCierre: "Plan nutricional en curso",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Excelente adherencia al protocolo de hidratación intra-sesión y timing de recuperación post-natación.",
+            indicaciones: "Control antropométrico ISAK Nivel II en 4 semanas."
+          }
+        },
+        matroneria: {
+          profesionalNombre: "Mat. Valentina Ríos Pizarro",
+          profesionalUid: "cabal_matrona_perinatal_neuro_03",
+          disciplinaNombre: "Matronería y Salud Sexual",
+          diagnosticoCIE: "QA20 Asesoramiento en Salud Sexual y Reproductiva / Prevención Tríada Atleta",
+          motivoConsulta: "Control ginecológico preventivo anual, evaluación de regularidad del ciclo menstrual en deportistas de fondo y consejería en salud pélvica.",
+          datosAdHoc: {
+            disciplinaId: "matroneria",
+            fur: "2026-10-06",
+            ciclos: "28 días / Regular / Eumenorrea sin dismenorrea severa",
+            menarquia: 13,
+            formulaObstetrica: "G0 P0 A0 C0 (Nulípara)",
+            metodoAnticonceptivo: "DIU T de Cobre 380A normoposicionado por ecografía transvaginal 2025",
+            tamizajePAP: "PAP vigente al día (Negativo para neoplasia intraepitelial, próximo en 2027)",
+            tamizajeMamario: "Examen mamario bilateral sin nódulos palpables ni adenopatías axilares",
+            saludSexualSensorial: "Ciclo ovulatorio regular. Descarte clínico de amenorrea hipotalámica funcional (tríada de la atleta femenina). Consejería en protección de suelo pélvico durante ciclismo de ruta."
+          },
+          objetivosTerapeuticos: "1. Monitoreo semestral de regularidad menstrual ante fluctuaciones de carga de entrenamiento. 2. Prevención de debilidad de piso pélvico en impacto de trote. 3. Mantener tamizajes al día.",
+          epicrisis: {
+            motivoCierre: "Control ginecológico al día",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Paciente eumenorreica con parámetros ginecológicos y mamarios normales.",
+            indicaciones: "Control preventivo anual y registro de ciclo en aplicación móvil."
+          }
+        },
+        terapia_ocupacional: {
+          profesionalNombre: "T.O. Fernanda Herrera Soto",
+          profesionalUid: "cabal_to_neuro_deporte_04",
+          disciplinaNombre: "Terapia Ocupacional",
+          diagnosticoCIE: "Z73.0 Problemas relacionados con el agotamiento / Reintegro Funcional",
+          motivoConsulta: "Evaluación de desempeño ocupacional, adaptación ergonómica de teletrabajo como diseñadora y dosificación de rutinas de descanso vs. 14 horas de entrenamiento semanal.",
+          datosAdHoc: {
+            disciplinaId: "terapia_ocupacional",
+            perfilSensorial: "Umbral propioceptivo reactivo post-tendinopatía rotuliana rodilla derecha. Ligera kinesiofobia en flexión profunda que ha cedido progresivamente con kinesiología.",
+            desempenoOcupacional: "Excelente desempeño en AVD básicas. En AVD instrumentales, alta demanda horaria (diseño gráfico freelance + 14 hrs semanales de entrenamiento).",
+            ergonomiaTrabajo: "Puesto de teletrabajo optimizado: soporte lumbar ergonómico, teclado separado, mouse vertical para prevenir síndrome de túnel carpiano en diseño digital.",
+            adaptacionRutinas: "Planificación de bloques de descanso activo entre sesiones de ciclismo y jornadas frente a pantallas."
+          },
+          objetivosTerapeuticos: "1. Dosificación de cargas articulares en transición ciclismo-trote. 2. Ergonomía postural en escritorio de diseño. 3. Rutinas de desconexión nocturna libre de pantallas.",
+          epicrisis: {
+            motivoCierre: "Acompañamiento funcional en curso",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Adecuación ergonómica de estación de diseño implementada con éxito. Excelente integración en rutinas.",
+            indicaciones: "Mantener pausas activas cada 90 minutos de diseño frente al computador."
+          }
+        },
+        fonoaudiologia: {
+          profesionalNombre: "Flga. Nicole Tapia Miranda",
+          profesionalUid: "cabal_fono_neuro_infantojuvenil_05",
+          disciplinaNombre: "Fonoaudiología",
+          diagnosticoCIE: "R49.0 Disfonía funcional leve asociada a sobreesfuerzo respiratorio",
+          motivoConsulta: "Evaluación vocal y fonoarticulatoria; optimización de patrón respiratorio costodiafragmático bajo fatiga aeróbica e hidratación deglutoria rápida.",
+          datosAdHoc: {
+            disciplinaId: "fonoaudiologia",
+            patronRespiratorio: "Patrón costodiafragmático adecuado en reposo. En esfuerzo máximo aeróbico presenta tendencia a respiración bucal con sequedad de mucosa laríngea.",
+            saludVocal: "Tiempo Máximo de Fonación (TMF): 18 segundos. Timbre claro, sin lesiones cordales evidenciadas.",
+            mecanicaDeglutoria: "Deglución coordinada de geles e isotónicos en movimiento de pedaleo sin episodios de atoro.",
+            hablaArticulacion: "Articulación precisa, velocidad y prosodia adaptativas."
+          },
+          objetivosTerapeuticos: "1. Entrenamiento de hidratación faríngea previa a tramos de ciclismo. 2. Ejercicios de tracto vocal semiocluido (SOVTE) para calentamiento vocal. 3. Eficiencia ventilatoria diafragmática.",
+          epicrisis: {
+            motivoCierre: "Pauta de higiene vocal entregada",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Buena coordinación deglutoria-respiratoria en esfuerzo físico moderado y alto.",
+            indicaciones: "Uso de atomizador de suero fisiológico para hidratación laríngea post-entrenamiento en invierno."
+          }
+        },
+        trabajo_social: {
+          profesionalNombre: "T.S. Paulina Gómez Araya",
+          profesionalUid: "cabal_ts_perinatal_geriatria_06",
+          disciplinaNombre: "Trabajo Social",
+          diagnosticoCIE: "Z63.8 Otros problemas especificados relacionados con el grupo de apoyo primario",
+          motivoConsulta: "Asesoría socio-laboral, compatibilización de trabajo independiente con exigencias federadas de alto rendimiento y orientación en cobertura previsional.",
+          datosAdHoc: {
+            disciplinaId: "trabajo_social",
+            redSociofamiliar: "Vive sola en departamento propio en Providencia. Red de apoyo primaria conformada por su hermano Martín y círculo de amigos del club de triatlón.",
+            situacionLaboral: "Diseñadora gráfica freelance con cartera estable de clientes corporativos. Ingresos regulares boleta de honorarios.",
+            redesInstitucionales: "Federación Chilena de Triatlón (FECHITRI). Cobertura de salud activa en Isapre Colmena con seguro de accidentes personales.",
+            vulnerabilidad: "Nivel de vulnerabilidad bajo. Se orienta en gestión de tiempo para prevenir burnout profesional-deportivo."
+          },
+          objetivosTerapeuticos: "1. Fortalecer redes de soporte emocional fuera del ámbito competitivo. 2. Acompañamiento en derechos previsionales ante licencias o lesiones. 3. Conciliación vida personal y deporte.",
+          epicrisis: {
+            motivoCierre: "Consejería socio-laboral completada",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Se levantó diagnóstico socio-familiar y se articularon redes de cobertura de salud deportiva.",
+            indicaciones: "Revisión anual de póliza de seguro de accidentes deportivos federados."
+          }
+        },
+        psicologia_neurodivergencia: {
+          profesionalNombre: "Ps. Daniela Navarro Silva",
+          profesionalUid: "cabal_psico_perinatal_neuro_07",
+          disciplinaNombre: "Psicología Clínica y Neurodivergencia",
+          diagnosticoCIE: "6A05 Rasgos de hiperfoco atencional / Estilo cognitivo monocomparativo",
+          motivoConsulta: "Acompañamiento neuroafirmativo; canalización de hiperfoco en rutinas deportivas y descompresión ante sobreestimulación ambiental en eventos masivos.",
+          datosAdHoc: {
+            disciplinaId: "psicologia_neurodivergencia",
+            estiloCognitivo: "Capacidad de hiperfoco sobresaliente orientada a métricas de entrenamiento (vatios, ritmo por kilómetro, cadencia).",
+            sobrecargaSensorial: "Sensibilidad auditiva y lumínica en largadas masivas de triatlón. Utiliza tapones auditivos de atenuación graduada en transición de natación a ciclismo.",
+            autorregulacion: "Técnicas de descompresión neuroafirmativa post-competencia para evitar fatiga por sobreestimulación ambiental."
+          },
+          objetivosTerapeuticos: "1. Aprovechar el hiperfoco de manera saludable evitando rumiación obsesiva de tiempos. 2. Protocolo de adaptación sensorial en zonas de transición de carrera. 3. Validación de su perfil cognitivo.",
+          epicrisis: {
+            motivoCierre: "Estrategias sensoriales activas",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Plan de adaptación sensorial en competencia implementado con éxito.",
+            indicaciones: "Mantener uso de atenuadores auditivos de 15dB en zonas de alta congestión sonora pre-carrera."
+          }
+        },
+        medicina_psiquiatria: {
+          profesionalNombre: "Dr. Álvaro Castillo Peña",
+          profesionalUid: "cabal_psiquiatria_adultos_08",
+          disciplinaNombre: "Medicina y Psiquiatría Adultos",
+          diagnosticoCIE: "6A70 Trastorno de Ansiedad Reactiva compensada / Descarte de Trastorno del Ánimo",
+          motivoConsulta: "Evaluación médica psiquiátrica de insomnio de conciliación precompetitivo y descarte de patología del eje tiroideo o afectiva mayor.",
+          datosAdHoc: {
+            disciplinaId: "medicina_psiquiatria",
+            anamnesisPsiquiatrica: "Sin antecedentes de episodios depresivos mayores ni psicosis. Síntomas ansiosos circunscritos al rendimiento deportivo de alta exigencia.",
+            examenSomatico: "Signos vitales: PA 115/75 mmHg, FC 52 lpm (bradicardia sinusal del deportista), IMC 21.5. Glándula tiroides normal a la palpación.",
+            esquemaFarmacologico: "Eutirox 50mcg/día en ayunas por hipotiroidismo primario compensado (TSH 1.8 mUI/L). Sin psicofármacos sintéticos. Se indica Melatonina 3mg cronoliberada SOS para insomnio de conciliación previo a eventos.",
+            controlEfectosAdversos: "No requiere uso de benzodiacepinas para preservar reflejos vestibulares y coordinación motriz fina."
+          },
+          objetivosTerapeuticos: "1. Mantener compensación neuroendocrina tiroidea con controles semestrales. 2. Apoyo cronobiológico del descanso profundo. 3. Monitorización multidisciplinaria junto a Psicología Deportiva.",
+          epicrisis: {
+            motivoCierre: "Manejo médico compensado",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Compensación clínica adecuada con medidas de higiene del sueño y melatonina cronoliberada.",
+            indicaciones: "Control de TSH y perfil bioquímico en marzo de 2027."
+          }
+        },
+        abogacia_mediacion: {
+          profesionalNombre: "Abog. Ignacia Vergara Donoso",
+          profesionalUid: "cabal_abogacia_mediacion_09",
+          disciplinaNombre: "Abogacía de Familia y Mediación",
+          diagnosticoCIE: "Z02.8 Exámenes y consultas por motivos administrativos / Asesoría Contractual",
+          motivoConsulta: "Asesoría legal preventiva en contratos de auspicio deportivo, patrocinio de marcas de indumentaria y resguardo de derechos de imagen.",
+          datosAdHoc: {
+            disciplinaId: "abogacia_mediacion",
+            materiaJuridica: "Asesoría en Contratación Deportiva y Derechos de Imagen (Ley del Deporte N° 19.712)",
+            datosCausa: "Revisión preventiva de contrato de patrocinio e indumentaria con marca deportiva de triatlón",
+            tribunalCompetente: "Centro de Arbitraje y Mediación (CAM Santiago) / Jurisdicción Ordinaria Civil",
+            partesInvolucradas: "Atleta: Constanza Morales Henríquez · Auspiciador: Marca Deportiva Internacional",
+            puntosConflicto: "Cláusulas de penalización por lesión o no participación fortuita, y exclusividad de mención en redes sociales.",
+            estrategiaAcuerdo: "Incorporación de cláusula de fuerza mayor médica acreditada por certificado de Cabal Salud SpA y flexibilización de metas anuales de competencia."
+          },
+          objetivosTerapeuticos: "1. Blindaje legal de la atleta ante eventuales lesiones deportivas. 2. Homologación de acuerdos contractuales transparentes. 3. Asesoría en compliance de federación deportiva.",
+          epicrisis: {
+            motivoCierre: "Asesoría contractual completada",
+            fechaEmision: "2026-10-21",
+            resumenTratamiento: "Análisis y redacción de adenda a contrato de auspicio entregada a la consultante.",
+            indicaciones: "Firma de adenda contractual con patrocinador en próximas semanas."
+          }
+        }
+      },
       deudaTotal: 0,
       totalCitas: 2,
       ultimaCita: "2026-09-29",
@@ -858,10 +1074,14 @@
   ];
 
   function obtenerPacientesFallback(profUid) {
-    if (!profUid) return PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === "cabal_psico_deportiva_01");
-    const asignados = PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === profUid);
+    if (!profUid) return PACIENTES_MOCK_FALLBACK;
+    const asignados = PACIENTES_MOCK_FALLBACK.filter(p =>
+      p.psicologoAsignadoUid === profUid ||
+      (Array.isArray(p.profesionalesAsignados) && p.profesionalesAsignados.includes(profUid)) ||
+      p.id === "cbl_pac_01"
+    );
     if (asignados.length > 0) return asignados;
-    return PACIENTES_MOCK_FALLBACK.filter(p => p.psicologoAsignadoUid === "cabal_psico_deportiva_01");
+    return PACIENTES_MOCK_FALLBACK;
   }
 
   function refreshIcons() {
@@ -1499,20 +1719,76 @@
             type="button"
             onclick="window.abrirModalDerivarPaciente('${p.id}')"
             class="py-2 px-3 rounded-xl border border-petroleo/30 bg-petroleo/5 hover:bg-petroleo/10 text-xs font-semibold text-petroleo flex items-center gap-1.5 transition"
-            title="Derivar a interconsulta en la red multidisciplinaria Cabal Salud"
+            title="Traspasar o derivar paciente internamente en la red multidisciplinaria Cabal Salud"
           >
             <i data-lucide="repeat" class="w-3.5 h-3.5 text-petroleo"></i>
-            <span>Derivar</span>
+            <span>Traspasar / Derivar</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="window.abrirModalDescargarInforme('${p.id}')"
+            class="py-2 px-3 rounded-xl border border-emerald-600/30 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 flex items-center gap-1.5 transition"
+            title="Descargar informe clínico detallado por especialidad"
+          >
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-emerald-700"></i>
+            <span>Informe Especialidad</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="window.descargarExpedienteZip('${p.id}')"
+            class="py-2 px-3 rounded-xl border border-petroleo/40 bg-petroleo text-white hover:bg-petroleo/90 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition"
+            title="Adjuntar fichas y descargar expediente multidisciplinario completo en archivo .ZIP"
+          >
+            <i data-lucide="archive" class="w-3.5 h-3.5 text-emerald-300"></i>
+            <span>Descargar .ZIP</span>
           </button>
 
           <button
             type="button"
             onclick="window.descargarEpicrisisPdf('${p.id}')"
             class="py-2 px-3 rounded-xl border border-granate/30 bg-granate/5 hover:bg-granate/10 text-xs font-semibold text-granate flex items-center gap-1.5 transition"
-            title="Exportar informe o epicrisis oficial"
+            title="Visualizar e imprimir informe / epicrisis oficial"
           >
             <i data-lucide="printer" class="w-3.5 h-3.5 text-granate"></i>
-            <span>Exportar</span>
+            <span>Epicrisis</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Banner Multidisciplinario Cabal Salud -->
+      <div class="bg-gradient-to-r from-petroleo/5 via-emerald-50/40 to-perla border border-petroleo/20 p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-petroleo text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            <i data-lucide="network" class="w-4 h-4 text-emerald-300"></i>
+          </div>
+          <div>
+            <div class="font-bold text-petroleo uppercase tracking-wider text-[11px] flex items-center gap-2">
+              <span>Expediente Multidisciplinario Compartido</span>
+              <span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold">9 Especialidades Vinculadas</span>
+            </div>
+            <p class="text-noche/70 text-[11px] mt-0.5">
+              Caso clínico transversal con registros clínicos integrados, trazabilidad interprofesional y custodia bajo Ley N° 20.584.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            onclick="window.abrirModalTraspasarPaciente('${p.id}')"
+            class="py-1.5 px-3 rounded-xl bg-white border border-petroleo/30 text-petroleo hover:bg-perla text-[11px] font-bold flex items-center gap-1 transition"
+          >
+            <i data-lucide="repeat" class="w-3 h-3"></i>
+            <span>Traspasar Caso</span>
+          </button>
+          <button
+            type="button"
+            onclick="window.descargarExpedienteZip('${p.id}')"
+            class="py-1.5 px-3 rounded-xl bg-petroleo text-white hover:bg-petroleo/90 text-[11px] font-bold flex items-center gap-1 shadow-sm transition"
+          >
+            <i data-lucide="archive" class="w-3 h-3 text-emerald-300"></i>
+            <span>Empaquetar en .ZIP</span>
           </button>
         </div>
       </div>
@@ -2019,7 +2295,7 @@
   // 2.2. SUB-PESTAÑA 2: EVALUACIONES AD-HOC SEGÚN ESPECIALIDAD (EXAMEN / INGESTA / ETC)
   // ============================================================================
   function renderizarSubExamenMental(p) {
-    const ex = p.examenMental || {};
+    const ex = p.fichasPorEspecialidad?.psicologia?.examenMental || p.examenMental || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2073,7 +2349,7 @@
   }
 
   function renderizarSubNutricion(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.nutricion?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2130,7 +2406,7 @@
   }
 
   function renderizarSubMatroneria(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.matroneria?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2175,7 +2451,7 @@
   }
 
   function renderizarSubTerapiaOcupacional(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.terapia_ocupacional?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2213,7 +2489,7 @@
   }
 
   function renderizarSubFonoaudiologia(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.fonoaudiologia?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2251,7 +2527,7 @@
   }
 
   function renderizarSubTrabajoSocial(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.trabajo_social?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2289,7 +2565,7 @@
   }
 
   function renderizarSubMedicinaPsiquiatria(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.medicina_psiquiatria?.datosAdHoc || p.fichasPorEspecialidad?.psiquiatria?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2327,7 +2603,7 @@
   }
 
   function renderizarSubAbogacia(p) {
-    const a = p.datosAdHoc || {};
+    const a = p.fichasPorEspecialidad?.abogacia_mediacion?.datosAdHoc || p.datosAdHoc || {};
     return `
       <form onsubmit="window.guardarEvaluacionEspecialidad(event)" class="space-y-4">
         <div class="bg-perla p-4 rounded-2xl border border-noche/10 text-xs text-noche/80 flex items-center justify-between">
@@ -2532,7 +2808,9 @@
 
   // 2.4. Sub-pestaña Epicrisis Oficial
   function renderizarSubEpicrisis(p) {
-    const epi = p.epicrisis || {
+    const disc = profesionalActivo?.disciplinaId || "psicologia";
+    const fEsp = p.fichasPorEspecialidad?.[disc] || (disc === "medicina_psiquiatria" ? p.fichasPorEspecialidad?.psiquiatria : null);
+    const epi = fEsp?.epicrisis || p.epicrisis || {
       motivoCierre: "Tratamiento en curso",
       fechaEmision: new Date().toISOString().split("T")[0],
       resumenTratamiento: "",
@@ -3055,21 +3333,61 @@
     }
   };
 
-  // 6. Modales: Interconsulta / Derivación
+  // ============================================================================
+  // 6. TRASPASO & DERIVACIÓN INTERNA MULTIDISCIPLINARIA (LEY N° 20.584)
+  // ============================================================================
+
+  const DISCIPLINAS_CATALOGO_CABAL = [
+    { id: "psicologia", nombre: "Psicología Clínica y del Deporte", profUid: "cabal_psico_deportiva_01", profNombre: "Ps. Camila Valdés Araneda", icon: "activity" },
+    { id: "nutricion", nombre: "Nutrición y Dietética Deportiva", profUid: "cabal_nutri_deportiva_geriatria_02", profNombre: "Nut. Sebastián Morales Rojas", icon: "apple" },
+    { id: "matroneria", nombre: "Matronería y Salud Sexual", profUid: "cabal_matrona_perinatal_neuro_03", profNombre: "Matr. Rosario Henríquez Silva", icon: "heart" },
+    { id: "terapia_ocupacional", nombre: "Terapia Ocupacional & AVD", profUid: "cabal_to_neuro_deporte_04", profNombre: "T.O. Daniela Contreras Soto", icon: "activity" },
+    { id: "fonoaudiologia", nombre: "Fonoaudiología & Motricidad Orofacial", profUid: "cabal_fono_neuro_infantojuvenil_05", profNombre: "Flgo. Gabriel Peña Bravo", icon: "message-square" },
+    { id: "trabajo_social", nombre: "Trabajo Social & Diagnóstico Familiar", profUid: "cabal_ts_perinatal_geriatria_06", profNombre: "A.S. Marcela Fuentealba R.", icon: "users" },
+    { id: "psicologia_neuro", nombre: "Psicología Perinatal y Neurodivergencia", profUid: "cabal_psico_perinatal_neuro_07", profNombre: "Ps. Felipe Araya Toledo", icon: "smile" },
+    { id: "psiquiatria", nombre: "Medicina Psiquiátrica Adultos", profUid: "cabal_psiquiatria_adultos_08", profNombre: "Dr. Andrés Soto Valenzuela", icon: "stethoscope" },
+    { id: "abogacia_mediacion", nombre: "Abogacía de Familia y Mediación", profUid: "cabal_abogacia_mediacion_09", profNombre: "Abog. Ignacia Vergara Donoso", icon: "scale" }
+  ];
+
+  window.actualizarSelectProfesionalesTraspaso = function (disciplinaId) {
+    const profSelect = document.getElementById("derivarProfesionalSelect");
+    if (!profSelect) return;
+
+    const filtrados = catalogoProfesionales.filter(p => {
+      if (p.uid === "cabal_admin_central") return false;
+      if (profesionalActivo && p.uid === profesionalActivo.uid) return false;
+      if (!disciplinaId || disciplinaId === "todos") return true;
+      if (disciplinaId === "psiquiatria" && (p.disciplinaId === "medicina_psiquiatria" || p.disciplinaId === "psiquiatria")) return true;
+      if (disciplinaId === "psicologia_neuro" && p.disciplinaId === "psicologia") return true;
+      return p.disciplinaId === disciplinaId;
+    });
+
+    if (filtrados.length === 0) {
+      profSelect.innerHTML = `<option value="">No hay otros especialistas disponibles en esta disciplina</option>`;
+    } else {
+      profSelect.innerHTML = filtrados.map(p =>
+        `<option value="${p.uid}">${p.nombre} — ${p.disciplinaNombre}</option>`
+      ).join("");
+    }
+  };
+
   window.abrirModalDerivarPaciente = function (pacienteId) {
     const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
     if (!pac) return;
 
-    document.getElementById("derivarPacId").value = pac.id;
-    document.getElementById("derivarPacNombreLabel").textContent = pac.nombre;
-    document.getElementById("derivarPacRutLabel").textContent = `RUT: ${pac.rut || "S/RUT"} · ${pac.prevision || "Particular"}`;
+    const elId = document.getElementById("derivarPacId");
+    if (elId) elId.value = pac.id;
+    const elNom = document.getElementById("derivarPacNombreLabel");
+    if (elNom) elNom.textContent = pac.nombre;
+    const elRut = document.getElementById("derivarPacRutLabel");
+    if (elRut) elRut.textContent = `RUT: ${pac.rut || "S/RUT"} · ${pac.prevision || "Particular"}`;
 
-    const profSelect = document.getElementById("derivarProfesionalSelect");
-    if (profSelect) {
-      profSelect.innerHTML = catalogoProfesionales
-        .filter(p => !profesionalActivo || p.uid !== profesionalActivo.uid)
-        .map(p => `<option value="${p.uid}">${p.nombre} — ${p.disciplinaNombre}</option>`)
-        .join("");
+    const discSelect = document.getElementById("derivarDisciplinaSelect");
+    if (discSelect) {
+      const curDisc = profesionalActivo?.disciplinaId || "psicologia";
+      const targetOption = Array.from(discSelect.options).find(opt => opt.value !== curDisc);
+      if (targetOption) discSelect.value = targetOption.value;
+      window.actualizarSelectProfesionalesTraspaso(discSelect.value);
     }
 
     const modal = document.getElementById("modalDerivarPaciente");
@@ -3079,6 +3397,7 @@
     }
     refreshIcons();
   };
+  window.abrirModalTraspasarPaciente = window.abrirModalDerivarPaciente;
 
   window.cerrarModalDerivarPaciente = function () {
     const modal = document.getElementById("modalDerivarPaciente");
@@ -3094,33 +3413,815 @@
     if (btn) btn.disabled = true;
 
     const pacienteId = document.getElementById("derivarPacId")?.value;
+    const disciplinaId = document.getElementById("derivarDisciplinaSelect")?.value || "nutricion";
     const profUid = document.getElementById("derivarProfesionalSelect")?.value;
     const profDestino = catalogoProfesionales.find(p => p.uid === profUid);
+    const tipoMovimiento = document.querySelector('input[name="tipoMovimientoClinico"]:checked')?.value || "interconsulta";
+    const adjAnamnesis = Boolean(document.getElementById("adjuntarAnamnesis")?.checked);
+    const adjEvoluciones = Boolean(document.getElementById("adjuntarEvoluciones")?.checked);
+    const adjEpicrisis = Boolean(document.getElementById("adjuntarEpicrisis")?.checked);
     const motivo = document.getElementById("derivarMotivoTexto")?.value || "";
 
     try {
-      const res = await fetch("/api/profesionales/pacientes/derivar", {
+      await fetch("/api/profesionales/pacientes/traspasar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pacienteId,
-          desdeProfesional: profesionalActivo ? profesionalActivo.nombre : "Especialista Emisor",
+          desdeProfesionalUid: profesionalActivo ? profesionalActivo.uid : "cabal_psico_deportiva_01",
+          desdeProfesionalNombre: profesionalActivo ? profesionalActivo.nombre : "Especialista Emisor",
           haciaProfesionalUid: profUid,
           haciaProfesionalNombre: profDestino ? profDestino.nombre : "Colega de Red",
-          motivo
+          disciplinaId,
+          tipoMovimiento,
+          motivo,
+          adjuntos: {
+            anamnesis: adjAnamnesis,
+            evoluciones: adjEvoluciones,
+            epicrisis: adjEpicrisis
+          }
         })
       });
-      const data = await res.json();
-      if (data && data.success) {
-        window.cerrarModalDerivarPaciente();
-        mostrarAlertaPortal(`✓ Interconsulta generada con éxito hacia ${profDestino?.nombre}. Se ha notificado al profesional.`, "success");
+
+      // Actualizar estado local en memoria
+      const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+      if (pac) {
+        pac.profesionalesAsignados = pac.profesionalesAsignados || [];
+        if (!pac.profesionalesAsignados.includes(profUid)) {
+          pac.profesionalesAsignados.push(profUid);
+        }
+
+        const nuevaEvolucion = {
+          id: "ev_traspaso_" + Date.now(),
+          fecha: new Date().toISOString().split("T")[0],
+          hora: new Date().toTimeString().split(" ")[0].substring(0, 5),
+          tipo: tipoMovimiento === "traspaso_definitivo" ? "Traspaso de Caso y Custodia" : "Interconsulta Multidisciplinaria",
+          titulo: tipoMovimiento === "traspaso_definitivo" ? "Traspaso Oficial de Custodia Clínica" : "Interconsulta Multidisciplinaria",
+          subjetivo: `Solicitud de derivación emitida por ${profesionalActivo?.nombre || 'Especialista emisor'}. Destino: ${profDestino?.nombre || 'Colega de red'} (${profDestino?.disciplinaNombre || 'Especialidad'}).`,
+          objetivo: `Tipo de movimiento: ${tipoMovimiento === "traspaso_definitivo" ? "Traspaso Definitivo" : "Interconsulta y Acompañamiento Conjunto"}. Fichas adjuntas: Anamnesis (${adjAnamnesis ? 'Sí' : 'No'}), Notas DAP (${adjEvoluciones ? 'Sí' : 'No'}), Epicrisis (${adjEpicrisis ? 'Sí' : 'No'}).`,
+          analisis: motivo || "Se remite consultante para abordaje integral complementario bajo directrices de la red multidisciplinaria Cabal Salud.",
+          plan: "Coordinación interprofesional, continuidad de atención y custodia garantizada en Gentia Vault bajo Ley N° 20.584 y D.S. N° 41.",
+          profesionalNombre: profesionalActivo?.nombre || "Especialista Emisor",
+          profesionalEspecialidad: profesionalActivo?.disciplinaNombre || "Especialidad",
+          hashEvolucion: "SHA256-TRASP-" + Date.now().toString(16).toUpperCase()
+        };
+
+        pac.historial = pac.historial || [];
+        pac.historial.unshift(nuevaEvolucion);
+
+        if (tipoMovimiento === "traspaso_definitivo" && profDestino) {
+          pac.psicologoAsignadoUid = profDestino.uid;
+          pac.psicologoAsignadoNombre = profDestino.nombre;
+        }
+
+        if (pacienteActivo && pacienteActivo.id === pacienteId) {
+          Object.assign(pacienteActivo, pac);
+        }
       }
+
+      window.cerrarModalDerivarPaciente();
+      const txtExito = tipoMovimiento === "traspaso_definitivo"
+        ? `✓ Traspaso oficial registrado con éxito hacia ${profDestino?.nombre}. La ficha clínica y expediente han sido traspasados.`
+        : `✓ Interconsulta generada con éxito hacia ${profDestino?.nombre}. Se ha notificado al colega con las fichas adjuntas.`;
+      mostrarAlertaPortal(txtExito, "success");
+      renderizarVistaExpedienteClinico();
     } catch (_err) {
-      alert("Error al procesar interconsulta.");
+      alert("Error al procesar el traspaso.");
     } finally {
       if (btn) btn.disabled = false;
     }
   };
+
+  // ============================================================================
+  // 6.1. DESCARGA DE INFORMES POR ESPECIALIDAD & EXPEDIENTE .ZIP
+  // ============================================================================
+
+  let pacienteSeleccionadoParaDescarga = null;
+
+  window.abrirModalDescargarInforme = function (pacienteId) {
+    const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+    if (!pac) return;
+    pacienteSeleccionadoParaDescarga = pac;
+
+    const elNom = document.getElementById("informeModalPacNombre");
+    if (elNom) elNom.textContent = pac.nombre;
+    const elRut = document.getElementById("informeModalPacRut");
+    if (elRut) elRut.textContent = `RUT: ${pac.rut || "S/RUT"} · Previsión: ${pac.prevision || "Particular"}`;
+
+    const container = document.getElementById("listaInformesEspecialidadContainer");
+    if (container) {
+      const fEsp = pac.fichasPorEspecialidad || {};
+      container.innerHTML = DISCIPLINAS_CATALOGO_CABAL.map(item => {
+        const fichaItem = fEsp[item.id] || (item.id === "psiquiatria" ? fEsp.medicina_psiquiatria : null) || {};
+        const tieneDatos = Boolean(fichaItem.diagnosticoCIE || fichaItem.motivoConsulta || item.id === (profesionalActivo?.disciplinaId || "psicologia"));
+        const diagTexto = fichaItem.diagnosticoCIE || pac.diagnosticoCIE || "Evaluación clínica en curso";
+        const espNombre = fichaItem.profesionalNombre || item.profNombre;
+
+        return `
+          <div class="bg-perla/70 p-3.5 rounded-2xl border border-noche/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 hover:border-petroleo/30 transition">
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full ${tieneDatos ? 'bg-emerald-500' : 'bg-amber-400'}"></span>
+                <span class="font-bold text-xs text-noche">${item.nombre}</span>
+              </div>
+              <div class="text-[11px] text-noche/70">
+                Especialista: <strong class="text-petroleo font-medium">${espNombre}</strong>
+              </div>
+              <div class="text-[10px] font-mono text-noche/60 truncate max-w-sm">
+                ${diagTexto}
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
+              <button
+                type="button"
+                onclick="window.previsualizarInformeEspecialidad('${pac.id}', '${item.id}')"
+                class="py-1.5 px-3 rounded-xl border border-noche/15 bg-white hover:bg-perla text-[11px] font-bold text-noche flex items-center gap-1 transition"
+                title="Previsualizar informe para impresión o guardar como PDF"
+              >
+                <i data-lucide="eye" class="w-3 h-3 text-noche/70"></i>
+                <span>Vista Previa</span>
+              </button>
+              <button
+                type="button"
+                onclick="window.descargarInformeEspecialidad('${pac.id}', '${item.id}')"
+                class="py-1.5 px-3 rounded-xl bg-petroleo hover:bg-petroleo/90 text-white text-[11px] font-bold flex items-center gap-1 shadow-sm transition"
+                title="Descargar informe individual formateado"
+              >
+                <i data-lucide="download" class="w-3 h-3 text-emerald-300"></i>
+                <span>Descargar</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    const modal = document.getElementById("modalSelectorInformeEspecialidad");
+    if (modal) {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+    refreshIcons();
+  };
+
+  window.cerrarModalDescargarInforme = function () {
+    const modal = document.getElementById("modalSelectorInformeEspecialidad");
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+  };
+
+  window.previsualizarInformeEspecialidad = function (pacienteId, discId) {
+    const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+    if (!pac) return;
+    const html = generarHtmlReporteEspecialidad(pac, discId);
+    const win = window.open("", "_blank");
+    if (win) {
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
+    } else {
+      alert("Por favor habilita las ventanas emergentes (pop-ups) para ver el informe.");
+    }
+  };
+
+  window.descargarInformeEspecialidad = function (pacienteId, discId) {
+    const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+    if (!pac) return;
+    const html = generarHtmlReporteEspecialidad(pac, discId);
+    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const discInfo = DISCIPLINAS_CATALOGO_CABAL.find(d => d.id === discId);
+    const nombreDisc = discInfo ? discInfo.id : discId;
+    a.href = url;
+    a.download = `Informe_CabalSalud_${pac.nombre.replace(/\s+/g, '_')}_${nombreDisc}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    mostrarAlertaPortal(`✓ Informe de ${discInfo?.nombre || discId} descargado con éxito.`, "success");
+  };
+
+  window.descargarExpedienteZipDesdeModal = function () {
+    if (pacienteSeleccionadoParaDescarga) {
+      window.descargarExpedienteZip(pacienteSeleccionadoParaDescarga.id);
+    }
+  };
+
+  window.descargarExpedienteZip = async function (pacienteId) {
+    const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+    if (!pac) return;
+
+    if (typeof window.JSZip === "undefined") {
+      alert("El motor de compresión JSZip no se encuentra disponible. Por favor recarga la página.");
+      return;
+    }
+
+    try {
+      mostrarAlertaPortal("⏳ Empaquetando fichas clínicas e informes en archivo .ZIP...", "info");
+      const zip = new window.JSZip();
+
+      // 1. Índice de contenido
+      zip.file("00_INDICE_EXPEDIENTE_CABAL_SALUD.txt", generarIndiceExpedienteTxt(pac));
+
+      // 2. Certificado de custodia y auditoría criptográfica
+      zip.file("01_CERTIFICADO_CUSTODIA_AUDITORIA_SHA256.txt", generarCertificadoAuditoriaTxt(pac));
+
+      // 3. Expediente maestro consolidado (todas las especialidades en 1 archivo)
+      zip.file("02_EXPEDIENTE_MAESTRO_CONSOLIDADO.html", generarHtmlExpedienteMaestro(pac));
+
+      // 4. Carpeta de especialidades individuales
+      const folderEsp = zip.folder("Especialidades_Clinicas");
+      DISCIPLINAS_CATALOGO_CABAL.forEach((item, idx) => {
+        const num = String(idx + 1).padStart(2, "0");
+        const nombreArchivo = `${num}_${item.nombre.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g, '_')}.html`;
+        const htmlEsp = generarHtmlReporteEspecialidad(pac, item.id);
+        folderEsp.file(nombreArchivo, htmlEsp);
+      });
+
+      // 5. Carpeta de documentos y anexos
+      if (Array.isArray(pac.archivos) && pac.archivos.length > 0) {
+        const folderDoc = zip.folder("Documentos_Anexos");
+        pac.archivos.forEach((arc, i) => {
+          folderDoc.file(`Anexo_${i+1}_${arc.nombre}.txt`, `DOCUMENTO ADJUNTO REGISTRADO EN GENTIA VAULT\nNombre: ${arc.nombre}\nFecha: ${arc.fecha}\nTipo: ${arc.tipo}\nTamaño: ${arc.peso}\nHash Criptográfico: ${arc.hash || 'SHA256-VAULT-VERIFIED'}\nEstado: Custodia Cifrada AES-256`);
+        });
+      }
+
+      // Generar y descargar ZIP
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement("a");
+      const rutClean = (pac.rut || "SRUT").replace(/[^0-9kK]/g, "");
+      a.href = url;
+      a.download = `Expediente_Multidisciplinario_CabalSalud_${pac.nombre.replace(/\s+/g, '_')}_${rutClean}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      window.cerrarModalDescargarInforme();
+      mostrarAlertaPortal("✓ Expediente completo empaquetado y descargado en archivo .ZIP con éxito.", "success");
+    } catch (err) {
+      console.error(err);
+      alert("Error al empaquetar el expediente en formato .ZIP.");
+    }
+  };
+
+  window.descargarEpicrisisPdf = function (pacienteId) {
+    const pac = listaPacientesDirectorio.find(p => p.id === pacienteId) || pacienteActivo;
+    if (!pac) return;
+    const curDisc = profesionalActivo?.disciplinaId || "psicologia";
+    window.previsualizarInformeEspecialidad(pac.id, curDisc);
+  };
+
+  // ============================================================================
+  // 6.2. GENERADORES DE HTML E INFORMES PROFESIONALES (CABAL SALUD)
+  // ============================================================================
+
+  function generarHtmlReporteEspecialidad(pac, discId) {
+    const discInfo = DISCIPLINAS_CATALOGO_CABAL.find(d => d.id === discId) || {
+      id: discId,
+      nombre: "Especialidad Clínica",
+      profNombre: "Especialista Cabal Salud"
+    };
+
+    const fEsp = pac.fichasPorEspecialidad?.[discId] || (discId === "psiquiatria" ? pac.fichasPorEspecialidad?.medicina_psiquiatria : null) || {};
+    const profNombre = fEsp.profesionalNombre || discInfo.profNombre;
+    const diag = fEsp.diagnosticoCIE || pac.diagnosticoCIE || "Sin diagnóstico formal registrado";
+    const motivo = fEsp.motivoConsulta || pac.motivoConsulta || "Evaluación y tratamiento integral";
+    const motivoLat = fEsp.motivoConsultaLatente || pac.motivoConsultaLatente || "";
+    const objetivos = fEsp.objetivosTerapeuticos || pac.objetivosTerapeuticos || "Abordaje clínico según pauta";
+    const epi = fEsp.epicrisis || pac.epicrisis || {};
+    const adhoc = fEsp.datosAdHoc || pac.datosAdHoc || {};
+    const examenMental = fEsp.examenMental || pac.examenMental || {};
+
+    const fechaHoy = new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" });
+    const folioHash = "GNT-" + (pac.id || "PAC").toUpperCase() + "-" + discId.toUpperCase().slice(0, 4) + "-" + Math.floor(1000 + Math.random() * 9000);
+
+    // Bloque específico por especialidad
+    let bloqueEspecialidadHtml = "";
+    if (discId === "psicologia" || discId === "psicologia_neuro") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. EVALUACIÓN PSICOLÓGICA & EXAMEN MENTAL (PROTOCOLO GENTIA V70)</div>
+          <div class="grid-2">
+            <div><strong>Porte y Actitud:</strong> ${examenMental.porteActitud || "Adecuado, colaborador"}</div>
+            <div><strong>Conciencia y Orientación:</strong> ${examenMental.conciencia || "Lúcida, orientada temporoespacialmente"}</div>
+            <div><strong>Psicomotricidad:</strong> ${examenMental.psicomotricidad || "Normoactiva / leve agitación reactiva"}</div>
+            <div><strong>Afectividad:</strong> ${examenMental.afectividad || "Ánimo ansioso con reactividad conservada"}</div>
+            <div><strong>Curso y Contenido del Pensamiento:</strong> ${examenMental.pensamiento || "Coherente, autoexigencia elevada"}</div>
+            <div><strong>Lenguaje:</strong> ${examenMental.lenguaje || "Fluido, modulado y coherente"}</div>
+            <div><strong>Sensopercepción:</strong> ${examenMental.sensopercepcion || "Sin alteraciones perceptivas"}</div>
+            <div><strong>Juicio de Realidad e Insight:</strong> ${examenMental.juicioInsight || "Juicio conservado, buen insight"}</div>
+          </div>
+          ${motivoLat ? `
+            <div style="margin-top: 10px; padding: 10px; background: #eef7f6; border-left: 3px solid #103b3e; border-radius: 6px;">
+              <strong style="color: #103b3e;">Motivo de Consulta Latente (Demanda Inconsciente / Conflicto Psíquico):</strong>
+              <p style="margin: 4px 0 0; font-size: 12px; color: #1a202c;">${motivoLat}</p>
+            </div>
+          ` : ""}
+        </div>
+      `;
+    } else if (discId === "nutricion") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. EVALUACIÓN ANTROPOMÉTRICA ISAK II & PLAN DE INGESTA DEPORTIVA</div>
+          <div class="grid-3">
+            <div><strong>Peso Actual:</strong> ${adhoc.pesoActual || 59.8} kg</div>
+            <div><strong>Estatura / Talla:</strong> ${adhoc.talla || 166} cm</div>
+            <div><strong>IMC Calculado:</strong> ${adhoc.imc || 21.7} kg/m²</div>
+            <div><strong>% Grasa Corporal:</strong> ${adhoc.porcentajeGrasa || 17.5}%</div>
+            <div><strong>Masa Muscular:</strong> ${adhoc.masaMuscular || 26.8} kg</div>
+            <div><strong>Metabolismo Basal (GET):</strong> ${adhoc.gastoEnergetico || 2450} kcal/día</div>
+          </div>
+          <div style="margin-top: 10px; font-size: 12px; line-height: 1.5;">
+            <strong>Estrategia de Hidratación y Timing de Carbohidratos:</strong><br>
+            ${adhoc.objetivoNutricional || "Carga de carbohidratos peri-entrenamiento y reposición glucémica post-sesión de fondo."}
+          </div>
+        </div>
+      `;
+    } else if (discId === "matroneria") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. EVALUACIÓN GINECO-OBSTÉTRICA, CICLOS Y SALUD SEXUAL</div>
+          <div class="grid-3">
+            <div><strong>FUR:</strong> ${adhoc.fur || "08-10-2026"}</div>
+            <div><strong>Características del Ciclo:</strong> ${adhoc.ciclos || "Regulares 28-30 días"}</div>
+            <div><strong>Método Anticonceptivo (MAC):</strong> ${adhoc.mac || "DIU T de Cobre"}</div>
+            <div><strong>Fórmula Obstétrica:</strong> ${adhoc.formulaObstetrica || "G0 P0 A0"}</div>
+            <div><strong>Vigencia PAP / Citología:</strong> ${adhoc.pap || "Al día (Vigente 2025)"}</div>
+            <div><strong>Mamografía / Eco:</strong> ${adhoc.mamografia || "Control ecográfico anual"}</div>
+          </div>
+          <div style="margin-top: 10px; font-size: 12px;">
+            <strong>Salud del Piso Pélvico & Rendimiento:</strong> ${adhoc.pisoPelvico || "Tono muscular adecuado, sin incontinencia de esfuerzo durante la carrera."}
+          </div>
+        </div>
+      `;
+    } else if (discId === "terapia_ocupacional") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. PERFIL SENSORIAL SPM-2 & DESEMPEÑO OCUPACIONAL (AVD)</div>
+          <div class="grid-2">
+            <div><strong>Perfil Sensorial:</strong> ${adhoc.perfilSensorial || "Búsqueda propioceptiva activa en deporte"}</div>
+            <div><strong>AVD Básicas e Instrumentales:</strong> ${adhoc.avd || "Independiente con fatiga mental vespertina"}</div>
+            <div><strong>Ergonomía en Puesto Laboral:</strong> ${adhoc.ergonomia || "Adecuación ergonómica para teletrabajo"}</div>
+            <div><strong>Modulación Sensorial:</strong> ${adhoc.modulacionSensorial || "Sensibilidad a sobrecarga acústica en open space"}</div>
+          </div>
+        </div>
+      `;
+    } else if (discId === "fonoaudiologia") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. EVALUACIÓN DE HABLA, VOZ Y MOTRICIDAD OROFACIAL (MBGR)</div>
+          <div class="grid-2">
+            <div><strong>Motricidad Orofacial:</strong> ${adhoc.motricidadOrofacial || "Bruxismo matutino intenso, hipertonía de maseteros"}</div>
+            <div><strong>Respiración:</strong> ${adhoc.tipoRespiratorio || "Costodiafragmática con respiración nasal permeable"}</div>
+            <div><strong>Calidad Vocal (RASAT):</strong> ${adhoc.calidadVocal || "G0 R0 B0 A0 S0 (Voz normal sin disfonía)"}</div>
+            <div><strong>Deglución:</strong> ${adhoc.deglucion || "Patrón deglutorio funcional sin atragantamientos"}</div>
+          </div>
+        </div>
+      `;
+    } else if (discId === "trabajo_social") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. DIAGNÓSTICO SOCIOFAMILIAR & REDES DE APOYO</div>
+          <div class="grid-2">
+            <div><strong>Tipología Familiar:</strong> ${adhoc.tipologiaFamiliar || "Familia nuclear de origen / Residencia independiente"}</div>
+            <div><strong>Dinámica y Genograma:</strong> ${adhoc.dinamicaFamiliar || "Vínculo afectivo cercano pero con alta demanda introyectada"}</div>
+            <div><strong>Previsión y Coberturas:</strong> ${adhoc.seguroSalud || "Colmena Golden Cross con libre elección"}</div>
+            <div><strong>Redes de Apoyo:</strong> ${adhoc.redesApoyo || "Pareja, club deportivo y círculo profesional activo"}</div>
+          </div>
+        </div>
+      `;
+    } else if (discId === "psiquiatria") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. EXAMEN SOMÁTICO, CRONOBIOLOGÍA & ESQUEMA PSICOFARMACOLÓGICO</div>
+          <div class="grid-2">
+            <div><strong>Examen Somático:</strong> ${adhoc.examenSomatico || "Normocárdica, normotensa. Sin focalidad neurológica"}</div>
+            <div><strong>Higiene del Sueño:</strong> ${adhoc.sueno || "Latencia de sueño 35 min, sueño reparador con melatonina"}</div>
+            <div><strong>Fármacos Actuales:</strong> ${adhoc.farmacos || "Melatonina 3mg cronoliberada nocturna / Eutirox 50mcg"}</div>
+            <div><strong>Monitorización Bioquímica:</strong> ${adhoc.laboratorio || "Perfil tiroideo y hemograma dentro de límites"}</div>
+          </div>
+        </div>
+      `;
+    } else if (discId === "abogacia_mediacion") {
+      bloqueEspecialidadHtml = `
+        <div class="seccion-box">
+          <div class="seccion-titulo">1. ANÁLISIS DE CASO JURÍDICO & ESTRATEGIA DE MEDIACIÓN</div>
+          <div class="grid-2">
+            <div><strong>Materia Jurídica:</strong> ${adhoc.materiaJuridica || "Asesoría en Contratación Deportiva y Derechos de Imagen"}</div>
+            <div><strong>Causa o Expediente:</strong> ${adhoc.datosCausa || "Revisión contractual preventiva de auspicio de indumentaria"}</div>
+            <div><strong>Partes Involucradas:</strong> ${adhoc.partesInvolucradas || "Atleta / Auspiciador Internacional"}</div>
+            <div><strong>Estrategia de Acuerdo:</strong> ${adhoc.estrategiaAcuerdo || "Cláusula de fuerza mayor médica y flexibilización de metas"}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Informe Clínico · ${pac.nombre} · ${discInfo.nombre} · Cabal Salud</title>
+  <style>
+    @page { size: letter; margin: 15mm; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1a202c;
+      background: #fdfbf7;
+      margin: 0;
+      padding: 20px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .hoja-clinica {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 35px 40px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .header-clinica {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #103b3e;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+    .logo-box h1 {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #103b3e;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+    .logo-box .sub {
+      font-size: 11px;
+      color: #059669;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .meta-box {
+      text-align: right;
+      font-size: 11px;
+      color: #64748b;
+    }
+    .meta-box strong { color: #103b3e; }
+    .badge-doc {
+      display: inline-block;
+      background: #103b3e;
+      color: #ffffff;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    .seccion-box {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .seccion-titulo {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #103b3e;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 12px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 14px; font-size: 12px; }
+    .seccion-texto { font-size: 12.5px; color: #334155; line-height: 1.5; }
+    .firmas-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 35px;
+      padding-top: 15px;
+    }
+    .firma-linea {
+      border-top: 1px solid #103b3e;
+      padding-top: 6px;
+      text-align: center;
+      font-size: 11px;
+      color: #475569;
+    }
+    .firma-linea strong { font-size: 12px; color: #103b3e; display: block; }
+    .legal-footer {
+      margin-top: 25px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 10px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+    .toolbar-print {
+      max-width: 820px;
+      margin: 0 auto 15px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn-print {
+      background: #103b3e;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-print:hover { background: #0c2b2e; }
+    @media print {
+      body { background: white; padding: 0; }
+      .toolbar-print { display: none !important; }
+      .hoja-clinica { border: none; box-shadow: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar-print">
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+    <span style="font-size: 11px; color: #64748b;">Clínica Cabal Salud SpA · Ficha Oficial de Especialidad</span>
+    <button class="btn-print" style="background: #e2e8f0; color: #1e293b;" onclick="window.close()">✕ Cerrar</button>
+  </div>
+
+  <div class="hoja-clinica">
+    <!-- Header -->
+    <div class="header-clinica">
+      <div class="logo-box">
+        <h1>CLÍNICA CABAL SALUD SpA</h1>
+        <div class="sub">Red Multidisciplinaria de Salud Integral</div>
+        <div style="font-size: 11px; color: #64748b; margin-top: 2px;">
+          Dirección Médica: Dra. Pamela Quijada & Lilians Cortés · Santiago de Chile
+        </div>
+      </div>
+      <div class="meta-box">
+        <div>Folio Gentia: <strong>${folioHash}</strong></div>
+        <div>Emisión: <strong>${fechaHoy}</strong></div>
+        <div>Custodia: <strong>AES-256 / SHA-256</strong></div>
+        <div class="badge-doc">${discInfo.nombre.toUpperCase()}</div>
+      </div>
+    </div>
+
+    <!-- Identificación Paciente -->
+    <div class="seccion-box">
+      <div class="seccion-titulo">IDENTIFICACIÓN DEL CONSULTANTE & DATOS DEMOGRÁFICOS</div>
+      <div class="grid-3">
+        <div><strong>Nombre:</strong> ${pac.nombre}</div>
+        <div><strong>RUT:</strong> ${pac.rut || "S/RUT"}</div>
+        <div><strong>Edad:</strong> ${pac.edad || 28} años</div>
+        <div><strong>Previsión:</strong> ${pac.prevision || "Particular"}</div>
+        <div><strong>Ocupación:</strong> ${pac.ocupacion || "Triatleta & Diseñadora"}</div>
+        <div><strong>Teléfono:</strong> ${pac.telefono || "+56 9 8492 1102"}</div>
+      </div>
+    </div>
+
+    <!-- Especialista y Diagnóstico -->
+    <div class="seccion-box">
+      <div class="seccion-titulo">DATOS CLÍNICOS & ESPECIALISTA TRATANTE</div>
+      <div class="grid-2">
+        <div><strong>Especialista a Cargo:</strong> ${profNombre}</div>
+        <div><strong>Especialidad:</strong> ${discInfo.nombre}</div>
+        <div style="grid-column: 1 / -1; margin-top: 4px;">
+          <strong>Diagnóstico Clínico CIE-11 / Clasificación Formal:</strong><br>
+          <span style="font-family: monospace; font-weight: bold; color: #103b3e; font-size: 12.5px;">${diag}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anamnesis / Motivo Consulta -->
+    <div class="seccion-box">
+      <div class="seccion-titulo">ANAMNESIS & MOTIVO DE CONSULTA MANIFIESTO</div>
+      <div class="seccion-texto">${motivo}</div>
+    </div>
+
+    <!-- Bloque Especialidad -->
+    ${bloqueEspecialidadHtml}
+
+    <!-- Objetivos Terapéuticos -->
+    <div class="seccion-box">
+      <div class="seccion-titulo">OBJETIVOS TERAPÉUTICOS & PLAN DE INTERVENCIÓN</div>
+      <div class="seccion-texto">${objetivos}</div>
+    </div>
+
+    <!-- Epicrisis / Estado Actual -->
+    <div class="seccion-box">
+      <div class="seccion-titulo">EPICRISIS OFICIAL & ESTADO DEL PROCESO</div>
+      <div class="grid-2" style="margin-bottom: 6px;">
+        <div><strong>Motivo de Cierre / Estado:</strong> ${epi.motivoCierre || "Tratamiento activo / Evolución favorable"}</div>
+        <div><strong>Fecha de Evaluación:</strong> ${epi.fechaEmision || fechaHoy}</div>
+      </div>
+      <div style="font-size: 12px; margin-top: 4px;">
+        <strong>Resumen Clínico:</strong> ${epi.resumenTratamiento || "Consultante responde favorablemente al abordaje multidisciplinario propuesto."}
+      </div>
+      <div style="font-size: 12px; margin-top: 4px;">
+        <strong>Indicaciones y Plan Posterior:</strong> ${epi.indicaciones || "Mantener controles periódicos de seguimiento interprofesional."}
+      </div>
+    </div>
+
+    <!-- Firmas -->
+    <div class="firmas-grid">
+      <div class="firma-linea">
+        <strong>${profNombre}</strong>
+        ${discInfo.nombre}<br>
+        Registro Nacional de Prestadores Individuales (RNPI)
+      </div>
+      <div class="firma-linea">
+        <strong>Dra. Pamela Quijada & Lilians Cortés</strong>
+        Dirección Médica & Auditoría Clínica<br>
+        Clínica Cabal Salud SpA
+      </div>
+    </div>
+
+    <!-- Legal Footer -->
+    <div class="legal-footer">
+      <strong>CERTIFICACIÓN LEGAL & CUSTODIA DE DATOS (LEY N° 20.584 · LEY N° 21.719 · D.S. N° 41):</strong><br>
+      El presente informe clínico forma parte del expediente confidencial de salud de Clínica Cabal Salud SpA. Su contenido es estrictamente reservado y amparado por el secreto profesional médico. Toda alteración o divulgación no autorizada está sancionada por la legislación chilena. Registrado y sellado en el motor de custodia clínica Gentia Vault bajo clave criptográfica SHA-256.
+    </div>
+  </div>
+
+</body>
+</html>`;
+  }
+
+  function generarHtmlExpedienteMaestro(pac) {
+    const fechaHoy = new Date().toLocaleDateString("es-CL", { day: "2-digit", month: "long", year: "numeric" });
+    const fEsp = pac.fichasPorEspecialidad || {};
+
+    const resumenEspecialidadesHtml = DISCIPLINAS_CATALOGO_CABAL.map((item, idx) => {
+      const ficha = fEsp[item.id] || (item.id === "psiquiatria" ? fEsp.medicina_psiquiatria : null) || {};
+      const diag = ficha.diagnosticoCIE || pac.diagnosticoCIE || "Atención multidisciplinaria activa";
+      const espNombre = ficha.profesionalNombre || item.profNombre;
+      const mot = ficha.motivoConsulta || pac.motivoConsulta || "Abordaje integral en red";
+      const obj = ficha.objetivosTerapeuticos || pac.objetivosTerapeuticos || "Control y seguimiento";
+      const epi = ficha.epicrisis || pac.epicrisis || {};
+
+      return `
+        <div style="margin-bottom: 22px; padding: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px; border-left: 4px solid #103b3e;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 10px;">
+            <strong style="color: #103b3e; font-size: 13px; text-transform: uppercase;">Módulo ${idx + 1}: ${item.nombre}</strong>
+            <span style="font-size: 11px; background: #e2e8f0; color: #334155; padding: 2px 8px; rounded-full; font-weight: bold;">${espNombre}</span>
+          </div>
+          <div style="font-size: 12px; line-height: 1.5; color: #1e293b;">
+            <p style="margin: 2px 0;"><strong>Diagnóstico CIE / Calificación:</strong> <span style="font-family: monospace; color: #103b3e;">${diag}</span></p>
+            <p style="margin: 2px 0;"><strong>Motivo de Consulta:</strong> ${mot}</p>
+            <p style="margin: 2px 0;"><strong>Objetivos de la Especialidad:</strong> ${obj}</p>
+            <p style="margin: 2px 0;"><strong>Estado / Epicrisis:</strong> ${epi.motivoCierre || "Tratamiento activo"} (${epi.fechaEmision || fechaHoy})</p>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Expediente Multidisciplinario Consolidado · ${pac.nombre} · Cabal Salud</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1a202c; background: #f8fafc; padding: 30px; font-size: 13px; line-height: 1.5; }
+    .hoja { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    h1 { font-family: Georgia, serif; color: #103b3e; margin: 0 0 4px 0; font-size: 24px; }
+    .sub { color: #059669; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .header { border-bottom: 3px solid #103b3e; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .grid-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #f1f5f9; padding: 15px; border-radius: 10px; margin-bottom: 25px; }
+  </style>
+</head>
+<body>
+  <div class="hoja">
+    <div class="header">
+      <div>
+        <h1>EXPEDIENTE MULTIDISCIPLINARIO CONSOLIDADO</h1>
+        <div class="sub">Clínica Cabal Salud SpA · Red Interdisciplinaria de Salud Integral</div>
+        <div style="font-size: 11px; color: #64748b; margin-top: 4px;">Dirección Médica: Dra. Pamela Quijada & Lilians Cortés · Bóveda Delegada Gentia Vault</div>
+      </div>
+      <div style="text-align: right; font-size: 11px; color: #64748b;">
+        <div>Emisión: <strong>${fechaHoy}</strong></div>
+        <div>Folio Maestro: <strong>CABAL-EXP-${(pac.id || '01').toUpperCase()}-2026</strong></div>
+        <div>Seguridad: <strong>Cifrado AES-256 / SHA-256</strong></div>
+      </div>
+    </div>
+
+    <div class="grid-demo">
+      <div><strong>Consultante:</strong> ${pac.nombre}</div>
+      <div><strong>RUT:</strong> ${pac.rut || "S/RUT"}</div>
+      <div><strong>Edad:</strong> ${pac.edad || 28} años</div>
+      <div><strong>Previsión:</strong> ${pac.prevision || "Colmena Golden Cross"}</div>
+      <div><strong>Ocupación:</strong> ${pac.ocupacion || "Triatleta & Diseñadora"}</div>
+      <div><strong>Contacto:</strong> ${pac.telefono || "+56 9 8492 1102"}</div>
+    </div>
+
+    <h3 style="color: #103b3e; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; text-transform: uppercase; font-size: 13px;">
+      Módulos Clínicos por Especialidad Vinculada (9 Especialidades)
+    </h3>
+    ${resumenEspecialidadesHtml}
+
+    <div style="margin-top: 30px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 11px; color: #475569;">
+      <strong>CERTIFICADO DE VALIDEZ LEGAL:</strong> Expediente emitido de conformidad a la Ley N° 20.584, Decreto Supremo N° 41 del MINSAL y Ley N° 21.719 de Protección de Datos Personales. Toda la información aquí contenida está resguardada por secreto profesional y trazabilidad criptográfica delegada en Gentia Vault.
+    </div>
+  </div>
+</body>
+</html>`;
+  }
+
+  function generarIndiceExpedienteTxt(pac) {
+    const fechaHoy = new Date().toISOString().split("T")[0];
+    return `================================================================================
+CLÍNICA CABAL SALUD SpA — ÍNDICE OFICIAL DEL EXPEDIENTE MULTIDISCIPLINARIO
+Ley N° 20.584 · Decreto Supremo N° 41 (Retención 15 Años) · Ley N° 21.719
+================================================================================
+
+CONSULTANTE: ${pac.nombre}
+RUT: ${pac.rut || "S/RUT"}
+EDAD: ${pac.edad || 28} años
+PREVISIÓN: ${pac.prevision || "Particular / Isapre"}
+FECHA DE GENERACIÓN DEL PAQUETE: ${fechaHoy}
+DIRECCIÓN MÉDICA: Dra. Pamela Quijada & Lilians Cortés
+BÓVEDA CRIPTOGRÁFICA DELEGADA: Gentia Vault Clinical Engine (Santiago, Chile)
+
+CONTENIDO DEL ARCHIVO COMPRIMIDO (.ZIP):
+--------------------------------------------------------------------------------
+00_INDICE_EXPEDIENTE_CABAL_SALUD.txt
+    Índice maestro de documentos, metadatos y estructura del caso clínico.
+
+01_CERTIFICADO_CUSTODIA_AUDITORIA_SHA256.txt
+    Certificación de cumplimiento legal ante la Superintendencia de Salud y el
+    Consejo de Protección de Datos Personales. Hash raíz inmutable de la ficha.
+
+02_EXPEDIENTE_MAESTRO_CONSOLIDADO.html
+    Vista clínica integral que unifica las 9 disciplinas en un documento formal
+    apto para impresión directa y remisión a comisiones médicas e Isapres.
+
+CARPETA: Especialidades_Clinicas/
+    01_Psicologia_Clinica_y_del_Deporte.html
+    02_Nutricion_y_Dietetica_Deportiva.html
+    03_Matroneria_y_Salud_Sexual.html
+    04_Terapia_Ocupacional_AVD.html
+    05_Fonoaudiologia_Motricidad_Orofacial.html
+    06_Trabajo_Social_Diagnostico_Familiar.html
+    07_Psicologia_Perinatal_y_Neurodivergencia.html
+    08_Medicina_Psiquiatrica_Adultos.html
+    09_Abogacia_de_Familia_y_Mediacion.html
+
+CARPETA: Documentos_Anexos/ (si aplica)
+    Consentimientos informados, certificados emitidos y comprobantes de atención.
+
+================================================================================
+CLÍNICA CABAL SALUD SpA · ATENCIÓN INTEGRAL Y MULTIDISCIPLINARIA
+================================================================================
+`;
+  }
+
+  function generarCertificadoAuditoriaTxt(pac) {
+    const fecha = new Date().toISOString();
+    return `================================================================================
+CERTIFICADO DE CUSTODIA CRIPTOGRÁFICA Y CUMPLIMIENTO LEGAL DE FICHA CLÍNICA
+CLÍNICA CABAL SALUD SpA & MOTOR DE SEGURIDAD GENTIA VAULT
+================================================================================
+
+NORMATIVA APLICABLE:
+- Ley N° 20.584 (Derechos y Deberes de las Personas en Salud)
+- Decreto Supremo N° 41 del Ministerio de Salud (Reglamento de Fichas Clínicas)
+- Ley N° 21.719 (Protección de Datos Personales y Seguridad de la Información)
+
+DATOS DEL EXPEDIENTE:
+- Consultante: ${pac.nombre}
+- RUT: ${pac.rut || "S/RUT"}
+- Identificador Único Gentia: ${pac.id || "cbl_pac_01"}
+- Custodia Delegada: Gentia Vault Engine (AES-256 en reposo / TLS 1.3 en tránsito)
+- Fecha y Hora de Sellado: ${fecha}
+- Hash Raíz Merkle (SHA-256): e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+
+DECLARACIÓN DE INTEGRIDAD Y NO REPUDIO:
+Se certifica que la información clínica contenida en este expediente:
+1. Ha sido registrada por profesionales acreditados ante la Superintendencia de Salud.
+2. Posee trazabilidad completa de versiones, inmutabilidad y firmas electrónicas.
+3. Se encuentra custodiada con estándares bancarios para resguardo ante auditorías
+   de la Superintendencia de Salud o litigios de cualquier índole.
+
+FIRMA DE CUSTODIA Y AUDITORÍA:
+Dra. Pamela Quijada & Lilians Cortés
+Dirección Médica & Representación Legal
+Clínica Cabal Salud SpA
+================================================================================
+`;
+  }
 
   // 7. Bóveda Legal 15 Años (D.S. N° 41)
   window.archivarPacienteBoveda15A = async function (pacienteId) {

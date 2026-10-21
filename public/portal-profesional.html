@@ -1108,54 +1108,176 @@
   </div>
 
   <!-- ========================================================================
-       MODAL: INTERCONSULTA / DERIVACIÓN INTERNA MULTIDISCIPLINARIA
+       MODAL: SISTEMA DE TRASPASO Y DERIVACIÓN INTERNA MULTIDISCIPLINARIA
        ======================================================================== -->
   <div id="modalDerivarPaciente" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-4 my-8 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-noche/10 pb-3">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-petroleo/10 text-petroleo flex items-center justify-center font-bold">
+          <div class="w-10 h-10 rounded-xl bg-petroleo text-white flex items-center justify-center font-bold shadow-sm">
             <i data-lucide="repeat" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="font-serif text-lg font-bold text-noche">Derivación / Interconsulta Interna</h3>
-            <span class="text-[11px] text-noche/60">Red Multidisciplinaria Cabal Salud</span>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">Traspaso & Derivación Interna</h3>
+            <span class="text-[11px] text-noche/60">Red Multidisciplinaria Cabal Salud — Ficha Clínica Integrada</span>
           </div>
         </div>
-        <button type="button" onclick="window.cerrarModalDerivarPaciente()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
+        <button type="button" onclick="window.cerrarModalDerivarPaciente()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center font-bold">✕</button>
       </div>
 
       <form id="formDerivarPaciente" onsubmit="window.ejecutarDerivacionInterna(event)" class="space-y-4">
         <input type="hidden" id="derivarPacId" />
 
-        <div class="bg-perla/70 p-3.5 rounded-2xl border border-noche/10 text-xs space-y-1">
-          <div class="text-noche/60">Consultante a derivar:</div>
-          <div id="derivarPacNombreLabel" class="font-serif text-sm font-bold text-noche">Constanza Morales</div>
-          <div id="derivarPacRutLabel" class="font-mono text-[11px] text-noche/75">RUT: 18.392.104-5</div>
+        <!-- 1. Consultante -->
+        <div class="bg-perla/80 p-3.5 rounded-2xl border border-noche/10 text-xs space-y-1">
+          <div class="text-noche/60 font-semibold">Consultante a traspasar / derivar:</div>
+          <div id="derivarPacNombreLabel" class="font-serif text-base font-bold text-noche">Constanza Morales Henríquez</div>
+          <div id="derivarPacRutLabel" class="font-mono text-[11px] text-noche/75">RUT: 18.392.104-5 · Reembolso Isapres (Colmena)</div>
         </div>
 
-        <div>
-          <label class="block text-xs font-semibold text-noche/80 mb-1">Especialista Destino de Cabal Salud *</label>
-          <select id="derivarProfesionalSelect" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
-            <!-- Injected dynamically with the 9 specialists -->
-          </select>
+        <!-- 2. Filtro en Cascada: Disciplina y Especialista Destino -->
+        <div class="bg-petroleo/5 p-4 rounded-2xl border border-petroleo/20 space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-petroleo block flex items-center gap-1.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span>Destino del Caso en la Red Cabal Salud</span>
+          </span>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-noche/80 mb-1">1. Disciplina de Destino *</label>
+              <select id="derivarDisciplinaSelect" onchange="window.actualizarSelectProfesionalesTraspaso(this.value)" required class="w-full px-3 py-2 rounded-xl bg-white border border-petroleo/30 text-xs font-bold text-petroleo focus:outline-none focus:border-petroleo cursor-pointer">
+                <option value="psicologia">Psicología Clínica y del Deporte / Perinatal</option>
+                <option value="nutricion" selected>Nutrición y Dietética</option>
+                <option value="matroneria">Matronería y Salud Sexual</option>
+                <option value="terapia_ocupacional">Terapia Ocupacional</option>
+                <option value="fonoaudiologia">Fonoaudiología</option>
+                <option value="trabajo_social">Trabajo Social</option>
+                <option value="medicina_psiquiatria">Medicina / Psiquiatría Adultos</option>
+                <option value="abogacia_mediacion">Abogacía de Familia y Mediación</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-noche/80 mb-1">2. Especialista Destino *</label>
+              <select id="derivarProfesionalSelect" required class="w-full px-3 py-2 rounded-xl bg-white border border-noche/20 text-xs font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+                <!-- Dynamically populated according to selected discipline -->
+              </select>
+            </div>
+          </div>
         </div>
 
+        <!-- 3. Tipo de Movimiento Clínico -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-noche/80">Modalidad del Traspaso Clínico</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <label class="p-3 rounded-xl border border-petroleo/30 bg-white hover:bg-perla/50 flex items-start gap-2.5 cursor-pointer">
+              <input type="radio" name="derivarTipoMovimiento" value="interconsulta" checked class="accent-petroleo mt-0.5" />
+              <div>
+                <strong class="text-noche block">Interconsulta Multidisciplinaria</strong>
+                <span class="text-noche/65 text-[11px]">Ambos especialistas comparten el caso y colaboran sobre la misma ficha clínica.</span>
+              </div>
+            </label>
+            <label class="p-3 rounded-xl border border-noche/15 bg-white hover:bg-perla/50 flex items-start gap-2.5 cursor-pointer">
+              <input type="radio" name="derivarTipoMovimiento" value="traspaso_total" class="accent-petroleo mt-0.5" />
+              <div>
+                <strong class="text-noche block">Traspaso Definitivo de Caso</strong>
+                <span class="text-noche/65 text-[11px]">El especialista receptor asume como terapeuta principal del consultante.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- 4. Ficha Clínica y Opciones -->
+        <div class="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200/80 space-y-2 text-xs text-emerald-950">
+          <span class="font-bold block">Adjuntar Ficha & Notificación</span>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="derivarCheckAdjuntarFicha" checked class="accent-emerald-700 w-4 h-4 rounded" />
+            <span><strong>Adjuntar Ficha Clínica y Notas DAP:</strong> Traspasa el historial anamnésico, diagnósticos CIE-11 y evolución clínica al profesional receptor.</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="derivarCheckNotificarEmail" checked class="accent-emerald-700 w-4 h-4 rounded" />
+            <span><strong>Notificar por Correo Corporativo:</strong> Despacha aviso automático con el resumen clínico y enlace al expediente.</span>
+          </label>
+        </div>
+
+        <!-- 5. Motivo y Resumen Clínico -->
         <div>
-          <label class="block text-xs font-semibold text-noche/80 mb-1">Motivo de Interconsulta y Pregunta Clínica *</label>
-          <textarea id="derivarMotivoTexto" rows="3" required placeholder="Ej. Se solicita evaluación nutricional deportiva para complementar psicoterapia de ansiedad precompetitiva..." class="w-full px-3.5 py-2 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed"></textarea>
+          <label class="block text-xs font-bold text-noche/80 mb-1">Motivo del Traspaso / Resumen Clínico *</label>
+          <textarea id="derivarMotivoTexto" rows="3" required placeholder="Describe el motivo de la derivación, objetivos terapéuticos para la nueva especialidad y recomendaciones de manejo..." class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed"></textarea>
         </div>
 
         <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-noche/10">
           <button type="button" onclick="window.cerrarModalDerivarPaciente()" class="px-4 py-2.5 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
             Cancelar
           </button>
-          <button type="submit" id="btnSubmitDerivar" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 shadow">
+          <button type="submit" id="btnSubmitDerivar" class="btn-petroleo px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-md">
             <i data-lucide="send" class="w-4 h-4 text-emerald-300"></i>
-            <span>Confirmar Interconsulta</span>
+            <span>Confirmar Traspaso y Enviar Ficha</span>
           </button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: DESCARGA DE INFORMES CLÍNICOS POR ESPECIALIDAD & EXPEDIENTE
+       ======================================================================== -->
+  <div id="modalSelectorInformeEspecialidad" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 border border-noche/10 shadow-2xl space-y-4 my-8">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-petroleo text-white flex items-center justify-center font-bold shadow-sm">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-noche">Descargar Informe Clínico</h3>
+            <span class="text-[11px] text-noche/60">Selecciona la especialidad o descarga el expediente completo</span>
+          </div>
+        </div>
+        <button type="button" onclick="window.cerrarModalDescargarInforme()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center font-bold">✕</button>
+      </div>
+
+      <div class="bg-perla/70 p-3.5 rounded-2xl border border-noche/10 text-xs space-y-1">
+        <div class="text-noche/60">Consultante seleccionado:</div>
+        <div id="informeModalPacNombre" class="font-serif text-sm font-bold text-noche">Constanza Morales Henríquez</div>
+        <div id="informeModalPacRut" class="font-mono text-[11px] text-noche/75">RUT: 18.392.104-5 · Reembolso Isapres (Colmena)</div>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
+          Informes Disponibles por Especialidad
+        </label>
+        <div id="listaInformesEspecialidadContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+          <!-- Dynamically populated buttons per specialty -->
+        </div>
+      </div>
+
+      <!-- Opción de Descarga Todo en ZIP -->
+      <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200/80 flex items-center justify-between gap-3">
+        <div class="space-y-0.5">
+          <span class="text-xs font-bold text-emerald-950 flex items-center gap-1.5">
+            <i data-lucide="archive" class="w-4 h-4 text-emerald-700"></i>
+            <span>Expediente Clínico Multidisciplinario (.ZIP)</span>
+          </span>
+          <p class="text-[11px] text-emerald-800">
+            Empaqueta los informes de todas las especialidades, el resumen maestro consolidado y el certificado de custodia criptográfica en un archivo comprimido .ZIP.
+          </p>
+        </div>
+        <button
+          type="button"
+          onclick="window.descargarExpedienteZipDesdeModal()"
+          class="btn-petroleo py-2.5 px-4 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 shadow-md"
+        >
+          <i data-lucide="download" class="w-4 h-4 text-emerald-300"></i>
+          <span>Descargar .ZIP</span>
+        </button>
+      </div>
+
+      <div class="flex items-center justify-end pt-2 border-t border-noche/10">
+        <button type="button" onclick="window.cerrarModalDescargarInforme()" class="px-4 py-2 rounded-xl border border-noche/15 text-xs font-semibold text-noche/70 hover:bg-perla">
+          Cerrar
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1434,6 +1556,8 @@
     </div>
   </footer>
 
+  <!-- JSZip para empaquetado y descarga masiva de expedientes clínicos (.ZIP) -->
+  <script src="/vendor/jszip.min.js"></script>
   <!-- LÓGICA DEL PORTAL PROFESIONAL -->
   <script src="/portal-profesional.js"></script>
 </body>
