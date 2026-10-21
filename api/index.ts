@@ -391,6 +391,7 @@ interface TransaccionLocalCabal {
   fecha: string;
   hora: string;
   modalidad: string;
+  direccion?: string;
   motivo?: string;
   estado: "INICIADA" | "APROBADA" | "RECHAZADA";
   voucher?: any;
@@ -706,6 +707,7 @@ async function ejecutarPreAgendamientoEnGentia(datos: {
   fecha: string;
   hora: string;
   modalidad: string;
+  direccion?: string;
   motivo?: string;
   montoCLP: number;
 }): Promise<{ citaId: string; montoCLP: number; expiresAt: string; sincronizadoGentia: boolean }> {
@@ -747,6 +749,7 @@ async function ejecutarPreAgendamientoEnGentia(datos: {
         fecha: datos.fecha,
         hora: datos.hora,
         modalidad: datos.modalidad || "Online",
+        direccion: datos.direccion || null,
         motivo: datos.motivo || "",
         montoCLP: montoFinal,
         siteOrigin: "https://cabalsalud.cl",
@@ -792,6 +795,7 @@ app.post("/api/agenda/preagendar", async (req, res) => {
       fecha,
       hora,
       modalidad,
+      direccion,
       motivo,
       monto
     } = req.body;
@@ -819,6 +823,7 @@ app.post("/api/agenda/preagendar", async (req, res) => {
       fecha,
       hora,
       modalidad: modalidad || "Online",
+      direccion: direccion || "",
       motivo: motivo || "",
       montoCLP
     });
@@ -861,6 +866,7 @@ app.post("/api/pagos/webpay/crear", async (req, res) => {
       fecha = new Date().toISOString().split("T")[0],
       hora = "10:00",
       modalidad = "Online",
+      direccion = "",
       motivo = "",
       simulacionInmediata = false
     } = req.body;
@@ -890,6 +896,7 @@ app.post("/api/pagos/webpay/crear", async (req, res) => {
       fecha,
       hora,
       modalidad,
+      direccion,
       motivo,
       montoCLP
     });
@@ -943,6 +950,7 @@ app.post("/api/pagos/webpay/crear", async (req, res) => {
       fecha,
       hora,
       modalidad,
+      direccion,
       motivo,
       estado: "INICIADA",
       createdAt: new Date().toISOString()
@@ -1114,6 +1122,17 @@ app.all("/api/pagos/webpay/retorno", async (req, res) => {
       card: String(voucherMetadata.card_number)
     });
 
+    if (txLocal?.profesionalNombre) paramsRedirect.set("prof", txLocal.profesionalNombre);
+    if (txLocal?.especialidad) paramsRedirect.set("esp", txLocal.especialidad);
+    if (txLocal?.fecha) paramsRedirect.set("fecha", txLocal.fecha);
+    if (txLocal?.hora) paramsRedirect.set("hora", txLocal.hora);
+    if (txLocal?.pacienteNombre) paramsRedirect.set("paciente", txLocal.pacienteNombre);
+    if (txLocal?.pacienteRut) paramsRedirect.set("rut", txLocal.pacienteRut);
+    if (txLocal?.modalidad) paramsRedirect.set("modalidad", txLocal.modalidad);
+    if (syncGentia?.patientMeetLink) {
+      paramsRedirect.set("meet", syncGentia.patientMeetLink);
+    }
+
     return res.redirect(`/confirmacion-reserva.html?${paramsRedirect.toString()}`);
   } catch (err: any) {
     console.error("[ERROR /api/pagos/webpay/retorno]:", err);
@@ -1145,6 +1164,7 @@ app.post("/api/pagos/mercadopago/crear", async (req, res) => {
       fecha = new Date().toISOString().split("T")[0],
       hora = "10:00",
       modalidad = "Online",
+      direccion = "",
       motivo = ""
     } = req.body;
 
@@ -1166,6 +1186,7 @@ app.post("/api/pagos/mercadopago/crear", async (req, res) => {
       fecha,
       hora,
       modalidad,
+      direccion,
       motivo,
       montoCLP
     });
@@ -1247,6 +1268,7 @@ app.post("/api/pagos/mercadopago/crear", async (req, res) => {
       fecha,
       hora,
       modalidad,
+      direccion,
       motivo,
       estado: "INICIADA",
       createdAt: new Date().toISOString()
@@ -1325,6 +1347,17 @@ app.all("/api/pagos/mercadopago/retorno", async (req, res) => {
       authCode: String(voucherMp.authorization_code),
       monto: String(voucherMp.amount)
     });
+
+    if (txLocal?.profesionalNombre) paramsRedirect.set("prof", txLocal.profesionalNombre);
+    if (txLocal?.especialidad) paramsRedirect.set("esp", txLocal.especialidad);
+    if (txLocal?.fecha) paramsRedirect.set("fecha", txLocal.fecha);
+    if (txLocal?.hora) paramsRedirect.set("hora", txLocal.hora);
+    if (txLocal?.pacienteNombre) paramsRedirect.set("paciente", txLocal.pacienteNombre);
+    if (txLocal?.pacienteRut) paramsRedirect.set("rut", txLocal.pacienteRut);
+    if (txLocal?.modalidad) paramsRedirect.set("modalidad", txLocal.modalidad);
+    if (syncGentia?.patientMeetLink) {
+      paramsRedirect.set("meet", syncGentia.patientMeetLink);
+    }
 
     return res.redirect(`/confirmacion-reserva.html?${paramsRedirect.toString()}`);
   } catch (err: any) {
@@ -1443,11 +1476,12 @@ app.get("/api/agenda/ics", (req, res) => {
   const citaId = (req.query?.citaId || `cabal_${Date.now()}`) as string;
   const tx = TRANSACCIONES_CABAL_MEMORIA.get(citaId);
 
-  const fechaStr = tx?.fecha || new Date().toISOString().split("T")[0];
-  const horaStr = tx?.hora || "10:00";
-  const profNombre = tx?.profesionalNombre || "Especialista Clínica Cabal Salud";
-  const espNombre = tx?.especialidad || "Consulta de Salud Online";
+  const fechaStr = (req.query?.fecha as string) || tx?.fecha || new Date().toISOString().split("T")[0];
+  const horaStr = (req.query?.hora as string) || tx?.hora || "10:00";
+  const profNombre = (req.query?.prof as string) || tx?.profesionalNombre || "Especialista Clínica Cabal Salud";
+  const espNombre = (req.query?.esp as string) || tx?.especialidad || "Consulta de Salud Online";
   const meetUrl =
+    (req.query?.meet as string) ||
     tx?.gentiaConfirmacion?.patientMeetLink ||
     `https://gentia.cl/sala-sesion.html?id=${encodeURIComponent(citaId)}&role=paciente`;
 

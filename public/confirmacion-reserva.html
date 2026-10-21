@@ -91,27 +91,40 @@
         </div>
       </div>
 
-      <!-- Acciones Directas: Sala de Teleconsulta WebRTC + Descarga .ICS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Acciones Directas: Sala de Teleconsulta WebRTC + Google Calendar + Descarga .ICS -->
+      <div class="space-y-3">
         <a
           id="btnLinkTeleconsulta"
           href="https://gentia.cl/sala-sesion.html"
           target="_blank"
           rel="noopener"
-          class="btn-petroleo py-4 px-5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 text-center"
+          class="btn-petroleo w-full py-4 px-5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 text-center shadow-md"
         >
           <i data-lucide="video" class="w-5 h-5"></i>
           <span>Ingresar a la Sala de Teleconsulta</span>
         </a>
 
-        <a
-          id="btnDescargarIcs"
-          href="/api/agenda/ics"
-          class="btn-noche-outline py-4 px-5 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 text-center"
-        >
-          <i data-lucide="calendar-plus" class="w-5 h-5 text-petroleo"></i>
-          <span>Guardar en mi Calendario (.ics)</span>
-        </a>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <a
+            id="btnGoogleCalendar"
+            href="#"
+            target="_blank"
+            rel="noopener"
+            class="btn-petroleo-outline py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 text-center"
+          >
+            <i data-lucide="calendar" class="w-4 h-4 text-petroleo"></i>
+            <span>Agregar a Google Calendar</span>
+          </a>
+
+          <a
+            id="btnDescargarIcs"
+            href="/api/agenda/ics"
+            class="btn-noche-outline py-3.5 px-4 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 text-center"
+          >
+            <i data-lucide="download" class="w-4 h-4 text-noche"></i>
+            <span>Descargar Archivo .ICS</span>
+          </a>
+        </div>
       </div>
 
       <!-- Comprobante de Transacción Directa (Transbank / Mercado Pago) -->
@@ -188,20 +201,68 @@
       document.getElementById('confAuthCode').textContent = authCode;
       document.getElementById('confCard').textContent = card === 'MP' ? 'Cuenta Mercado Pago' : ('**** ' + card);
       document.getElementById('confMonto').textContent = '$' + monto.toLocaleString('es-CL') + ' CLP';
-      document.getElementById('btnDescargarIcs').href = '/api/agenda/ics?citaId=' + encodeURIComponent(citaId);
-      document.getElementById('btnLinkTeleconsulta').href = 'https://gentia.cl/sala-sesion.html?id=' + encodeURIComponent(citaId) + '&role=paciente';
+
+      // Fallbacks resilientes a partir de query params (para superar stateless lambdas)
+      let profNombre = params.get('prof') || 'Especialista Clínica Cabal Salud';
+      let espNombre = params.get('esp') || 'Atención Integral Online';
+      let fecha = params.get('fecha') || new Date().toISOString().split('T')[0];
+      let hora = params.get('hora') || '10:00';
+      let modalidad = params.get('modalidad') || 'Videoconsulta Online';
+      let pacNombre = params.get('paciente') || 'Paciente Cabal Salud';
+      let pacRut = params.get('rut') || '';
+      let meetUrl = params.get('meet') || ('https://gentia.cl/sala-sesion.html?id=' + encodeURIComponent(citaId) + '&role=paciente');
+
+      function renderizarDatosReserva(pProf, pEsp, pFecha, pHora, pMod, pPac, pRut, pMeet) {
+        document.getElementById('confProfNombre').textContent = pProf;
+        document.getElementById('confEspecialidad').textContent = pEsp;
+        document.getElementById('confFechaHora').textContent = pFecha + ' · ' + pHora + ' hrs';
+        document.getElementById('confModalidad').textContent = 'Modalidad: ' + pMod;
+        document.getElementById('confPacienteNombre').textContent = pPac;
+        if (pRut) document.getElementById('confPacienteRut').textContent = 'RUT: ' + pRut;
+        document.getElementById('btnLinkTeleconsulta').href = pMeet;
+
+        // Actualizar enlace de descarga .ICS
+        const icsParams = new URLSearchParams({
+          citaId,
+          prof: pProf,
+          esp: pEsp,
+          fecha: pFecha,
+          hora: pHora,
+          meet: pMeet
+        });
+        document.getElementById('btnDescargarIcs').href = '/api/agenda/ics?' + icsParams.toString();
+
+        // Actualizar botón directo de Google Calendar
+        try {
+          const [yyyy, mm, dd] = pFecha.split('-').map(Number);
+          const [hh, min] = pHora.split(':').map(Number);
+          const startUtc = new Date(Date.UTC(yyyy || 2026, (mm || 1) - 1, dd || 1, (hh || 10) + 3, min || 0, 0));
+          const endUtc = new Date(startUtc.getTime() + 50 * 60 * 1000);
+          const formatGDate = d => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+          const gTitle = encodeURIComponent(`Atención Cabal Salud: ${pEsp} con ${pProf}`);
+          const gDetails = encodeURIComponent(`Tu hora en Clínica Cabal Salud está confirmada.\nEspecialista: ${pProf}\nSala de Teleconsulta: ${pMeet}\nOrientación WhatsApp: +56 9 8583 5203`);
+          const gLocation = encodeURIComponent(pMeet);
+          const gUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${gTitle}&dates=${formatGDate(startUtc)}/${formatGDate(endUtc)}&details=${gDetails}&location=${gLocation}`;
+          const btnG = document.getElementById('btnGoogleCalendar');
+          if (btnG) btnG.href = gUrl;
+        } catch (_eg) {}
+      }
+
+      renderizarDatosReserva(profNombre, espNombre, fecha, hora, modalidad, pacNombre, pacRut, meetUrl);
 
       try {
         const res = await fetch('/api/agenda/reserva/' + encodeURIComponent(citaId));
         const data = await res.json();
         if (data && data.success) {
-          if (data.profesionalNombre) document.getElementById('confProfNombre').textContent = data.profesionalNombre;
-          if (data.especialidad) document.getElementById('confEspecialidad').textContent = data.especialidad;
-          if (data.fecha) document.getElementById('confFechaHora').textContent = data.fecha + ' · ' + (data.hora || '10:00') + ' hrs';
-          if (data.modalidad) document.getElementById('confModalidad').textContent = 'Modalidad: ' + data.modalidad;
-          if (data.pacienteNombre) document.getElementById('confPacienteNombre').textContent = data.pacienteNombre;
-          if (data.pacienteRut) document.getElementById('confPacienteRut').textContent = 'RUT: ' + data.pacienteRut + (data.pacientePrevision ? (' · ' + data.pacientePrevision) : '');
-          if (data.patientMeetLink) document.getElementById('btnLinkTeleconsulta').href = data.patientMeetLink;
+          profNombre = data.profesionalNombre || profNombre;
+          espNombre = data.especialidad || espNombre;
+          fecha = data.fecha || fecha;
+          hora = data.hora || hora;
+          modalidad = data.modalidad || modalidad;
+          pacNombre = data.pacienteNombre || pacNombre;
+          pacRut = data.pacienteRut || pacRut;
+          meetUrl = data.patientMeetLink || meetUrl;
+          renderizarDatosReserva(profNombre, espNombre, fecha, hora, modalidad, pacNombre, pacRut, meetUrl);
         }
       } catch (e) {
         console.warn('Detalle de reserva local:', e);

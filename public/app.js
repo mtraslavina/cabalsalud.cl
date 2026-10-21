@@ -748,7 +748,22 @@
       montoTotalEl.textContent = `$${Number(prof.precioCLP || 35000).toLocaleString("es-CL")} CLP`;
     }
 
+    window.onCambioModalidadBooking();
     window.cargarHorariosFechaBooking();
+  };
+
+  window.onCambioModalidadBooking = function () {
+    const modSelect = document.getElementById("bookingModalidadSelect");
+    const container = document.getElementById("bookingDireccionContainer");
+    const input = document.getElementById("bookingDireccionInput");
+    if (!container) return;
+    if (modSelect && modSelect.value === "Visita a Terreno") {
+      container.classList.remove("hidden");
+      if (input) input.required = true;
+    } else {
+      container.classList.add("hidden");
+      if (input) input.required = false;
+    }
   };
 
   window.cargarHorariosFechaBooking = async function () {
@@ -823,17 +838,53 @@
     }
   };
 
-  // Formateador de RUT Chileno
+  // Validador de RUT Chileno (Algoritmo Módulo 11)
+  function validarRutChileno(rutCompleto) {
+    if (!rutCompleto || typeof rutCompleto !== "string") return false;
+    const limpio = rutCompleto.replace(/[^0-9kK]/g, "").toUpperCase();
+    if (limpio.length < 8 || limpio.length > 9) return false;
+    const cuerpo = limpio.slice(0, -1);
+    const dv = limpio.slice(-1);
+    let suma = 0;
+    let multiplo = 2;
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+      suma += multiplo * parseInt(cuerpo.charAt(i), 10);
+      multiplo = multiplo < 7 ? multiplo + 1 : 2;
+    }
+    const dvEsperadoNum = 11 - (suma % 11);
+    let dvEsperado = "0";
+    if (dvEsperadoNum === 11) dvEsperado = "0";
+    else if (dvEsperadoNum === 10) dvEsperado = "K";
+    else dvEsperado = dvEsperadoNum.toString();
+    return dv === dvEsperado;
+  }
+
+  // Formateador de RUT Chileno con validación visual en tiempo real
   window.formatearRutInput = function (inputEl) {
     let valor = (inputEl.value || "").replace(/[^0-9kK]/g, "").toUpperCase();
     if (valor.length <= 1) {
       inputEl.value = valor;
+      inputEl.classList.remove("border-emerald-500", "border-red-400");
       return;
     }
     const cuerpo = valor.slice(0, -1);
     const dv = valor.slice(-1);
     const cuerpoFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     inputEl.value = `${cuerpoFormateado}-${dv}`;
+
+    // Feedback visual si ya ingresó longitud estándar de RUT
+    if (valor.length >= 8) {
+      const valido = validarRutChileno(inputEl.value);
+      if (valido) {
+        inputEl.classList.remove("border-red-400");
+        inputEl.classList.add("border-emerald-500");
+      } else {
+        inputEl.classList.remove("border-emerald-500");
+        inputEl.classList.add("border-red-400");
+      }
+    } else {
+      inputEl.classList.remove("border-emerald-500", "border-red-400");
+    }
   };
 
   function mostrarAlertaAgendamiento(mensaje, tipo = "info") {
@@ -873,6 +924,20 @@
       return;
     }
 
+    if (!validarRutChileno(rutPaciente) && !modoSimulacionRapida) {
+      mostrarAlertaAgendamiento("El RUT ingresado (" + rutPaciente + ") no es válido. Por favor verifica el dígito verificador para asegurar la correcta emisión de tu comprobante y boleta para reembolso Isapre/FONASA.", "error");
+      return;
+    }
+
+    let direccion = "";
+    if (modalidad === "Visita a Terreno") {
+      direccion = (document.getElementById("bookingDireccionInput")?.value || "").trim();
+      if (!direccion && !modoSimulacionRapida) {
+        mostrarAlertaAgendamiento("Has seleccionado atención en 'Visita a Terreno'. Por favor ingresa la dirección de visita (calle, número y comuna) para coordinar con la Trabajadora Social.", "error");
+        return;
+      }
+    }
+
     if (!consent) {
       mostrarAlertaAgendamiento("Debes aceptar el consentimiento informado (Ley N° 20.584 y Ley N° 21.719) para agendar tu hora.", "error");
       return;
@@ -907,6 +972,7 @@
           fecha,
           hora,
           modalidad,
+          direccion,
           motivo,
           simulacionInmediata: modoSimulacionRapida
         })
