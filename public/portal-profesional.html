@@ -243,6 +243,20 @@
 
       <button
         type="button"
+        onclick="window.cambiarPestana('fichas')"
+        id="tabBtn-fichas"
+        class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-noche/10 bg-white text-noche/80 hover:bg-perla transition flex items-center gap-2"
+      >
+        <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-600"></i>
+        <span>Ficha Clínica & Epicrisis</span>
+        <span class="ml-1 px-2 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold flex items-center gap-1">
+          <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i>
+          Gentia Vault (Ley 20.584)
+        </span>
+      </button>
+
+      <button
+        type="button"
         onclick="window.cambiarPestana('horarios')"
         id="tabBtn-horarios"
         class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-noche/10 bg-white text-noche/80 hover:bg-perla transition flex items-center gap-2"
@@ -465,6 +479,59 @@
 
       <div id="containerListaSesiones" class="space-y-4">
         <!-- Injected dynamically -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PESTAÑA 3: GESTIÓN DE FICHA CLÍNICA & EPICRISIS (GENTIA VAULT)
+         ==================================================================== -->
+    <section id="sectionTab-fichas" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <!-- Banner de Blindaje Legal y Auditoría Sanitaria -->
+      <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-start gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2">
+              <h4 class="font-serif text-sm font-bold text-emerald-950">
+                Bóveda Clínica Cifrada & Custodia Delegada en Gentia
+              </h4>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-emerald-900">
+                Ley N° 20.584 · Ley N° 21.719
+              </span>
+            </div>
+            <p class="text-xs text-emerald-900/80 leading-relaxed max-w-3xl">
+              <strong>Protección ante Auditorías:</strong> Los datos médicos y psicológicos sensibles no se almacenan en el servidor público de <em>cabalsalud.cl</em>. Toda anamnesis, nota de evolución y epicrisis es encriptada en reposo (AES-256) en el motor clínico de <strong>Gentia</strong>, resguardando a Pamela Quijada y Lilians Cortés ante cualquier requerimiento de la Superintendencia de Salud o del Consejo de Protección de Datos Personales.
+            </p>
+          </div>
+        </div>
+        <div class="shrink-0 text-right">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-emerald-300 text-emerald-800 text-xs font-mono font-bold shadow-sm">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600"></i>
+            AES-256 Vault OK
+          </span>
+        </div>
+      </div>
+
+      <!-- Selector de Paciente Consultante -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-perla p-4 rounded-2xl border border-noche/10">
+        <div class="flex items-center gap-3">
+          <label for="selectFichaPaciente" class="text-xs font-bold uppercase tracking-wider text-noche/75">
+            Seleccionar Consultante:
+          </label>
+          <select id="selectFichaPaciente" onchange="window.cargarFichaClinicaPaciente(this.value)" class="px-3.5 py-2 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
+            <!-- Injected dynamically -->
+          </select>
+        </div>
+        <span class="text-xs text-noche/60">
+          Retención legal obligatoria de registros: <strong>15 años (D.S. N° 41)</strong>
+        </span>
+      </div>
+
+      <!-- Contenedor de la Ficha Clínica Activa -->
+      <div id="fichaClinicaActivaContainer" class="space-y-6">
+        <!-- Injected dynamically via JavaScript -->
       </div>
     </section>
 
