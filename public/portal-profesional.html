@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Profesionales — Clínica Cabal Salud</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/logo-cabalsalud.svg" />
+  
+  <!-- Tipografía Google Fonts Oficial: Source Serif 4 (Títulos) + Inter (Cuerpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            perla: '#F7F4ED',
+            noche: '#10263C',
+            petroleo: '#174B4D',
+            granate: '#772F3B'
+          },
+          fontFamily: {
+            serif: ['"Source Serif 4"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    .tab-btn.active {
+      background-color: #174B4D;
+      color: #ffffff;
+      border-color: #174B4D;
+    }
+  </style>
+</head>
+<body class="bg-perla text-noche font-sans min-h-screen flex flex-col justify-between selection:bg-petroleo/20 selection:text-noche">
+
+  <!-- ========================================================================
+       1. CABECERA DEL PORTAL (BRANDING EXCLUSIVO CABAL SALUD)
+       ======================================================================== -->
+  <header class="bg-noche text-perla sticky top-0 z-40 border-b border-white/10 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      <!-- Logo y Título del Portal -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="/" class="shrink-0 flex items-center" title="Volver a Cabal Salud">
+          <img src="/assets/logo-cabalsalud.svg" alt="Clínica Cabal Salud" class="h-10 sm:h-11 w-auto" />
+        </a>
+        <div class="hidden md:block h-6 w-px bg-white/20"></div>
+        <div class="hidden md:flex flex-col">
+          <span class="font-serif text-sm font-semibold tracking-wide text-perla">Portal de Profesionales</span>
+          <span class="text-[11px] text-emerald-300 font-medium flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Red Clínica Cabal Salud · Conectado con Gentia
+          </span>
+        </div>
+      </div>
+
+      <!-- Estado de Sesión y Acciones -->
+      <div id="headerAuthContainer" class="flex items-center gap-2 sm:gap-4">
+        <!-- Renderizado dinámicamente si está logueado o en login -->
+        <a href="/" class="text-xs sm:text-sm font-medium text-perla/80 hover:text-white transition flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Volver al Sitio</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. PANTALLA DE ACCESO (SIN GOOGLE / ACCESO DIRECTO DE PRUEBA)
+       ======================================================================== -->
+  <div id="viewLogin" class="max-w-xl mx-auto w-full px-4 py-12 sm:py-16">
+    <div class="bg-white rounded-3xl p-6 sm:p-10 border border-noche/10 shadow-xl space-y-6">
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-petroleo/10 text-petroleo text-xs font-bold uppercase tracking-wider">
+          <i data-lucide="stethoscope" class="w-4 h-4"></i>
+          <span>Acceso Privado para Especialistas</span>
+        </div>
+        <h1 class="font-serif text-2xl sm:text-3xl font-bold text-noche">
+          Bienvenido a tu Portal Clínico
+        </h1>
+        <p class="text-xs sm:text-sm text-noche/70 max-w-md mx-auto">
+          Gestiona tu perfil público en <strong>cabalsalud.cl</strong>, revisa tus próximas sesiones agendadas y configura tus datos para las liquidaciones mensuales.
+        </p>
+      </div>
+
+      <!-- OPCIÓN 1: Acceso Directo de Prueba (Selector Rápido) -->
+      <div class="bg-perla rounded-2xl p-5 border border-noche/15 space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-bold uppercase tracking-wider text-petroleo flex items-center gap-1.5">
+            <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span>Acceso Inmediato de Prueba (Sin Contraseña)</span>
+          </label>
+          <span class="text-[11px] font-semibold text-noche/60">Modo Administrador / Demo</span>
+        </div>
+        <p class="text-xs text-noche/70">
+          Selecciona cualquiera de los 9 profesionales activos para ver y editar su información de inmediato:
+        </p>
+        <select id="loginDemoSelect" class="w-full px-3.5 py-3 rounded-xl bg-white border border-noche/15 text-sm font-semibold text-noche focus:outline-none focus:border-petroleo">
+          <!-- Injected dynamically -->
+        </select>
+        <button
+          type="button"
+          onclick="window.iniciarSesionDemo()"
+          class="btn-petroleo w-full py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2"
+        >
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Ingresar como este Profesional</span>
+        </button>
+      </div>
+
+      <div class="relative flex py-1 items-center">
+        <div class="flex-grow border-t border-noche/10"></div>
+        <span class="flex-shrink mx-4 text-xs uppercase font-bold text-noche/40">O con tus credenciales directas</span>
+        <div class="flex-grow border-t border-noche/10"></div>
+      </div>
+
+      <!-- OPCIÓN 2: Acceso con Correo y Contraseña (Sin Google) -->
+      <form onsubmit="window.iniciarSesionCredenciales(event)" class="space-y-4">
+        <div>
+          <label for="loginEmailInput" class="block text-xs font-semibold text-noche/80 mb-1">Correo Electrónico *</label>
+          <input
+            type="email"
+            id="loginEmailInput"
+            placeholder="ejemplo@cabalsalud.cl"
+            value="camila.valdes@cabalsalud.cl"
+            required
+            class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo"
+          />
+        </div>
+        <div>
+          <label for="loginPasswordInput" class="block text-xs font-semibold text-noche/80 mb-1">Contraseña o Clave Clínica *</label>
+          <input
+            type="password"
+            id="loginPasswordInput"
+            placeholder="••••••••"
+            value="cabal2026"
+            required
+            class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn-noche w-full py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow"
+        >
+          <i data-lucide="key" class="w-4 h-4 text-amber-300"></i>
+          <span>Ingresar con Credenciales Cabal Salud</span>
+        </button>
+      </form>
+
+      <div class="pt-2 text-center text-xs text-noche/60">
+        ¿Eres especialista de la red y no tienes tu clave? Solicítala a la administración de Cabal Salud vía WhatsApp (+56 9 8583 5203).
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       3. INTERFAZ PRINCIPAL DEL PORTAL (CUANDO ESTÁ LOGUEADO)
+       ======================================================================== -->
+  <main id="viewPortal" class="hidden max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-10 space-y-6">
+
+    <!-- Tarjeta de Bienvenida y Selector Rápido de Profesional -->
+    <div class="bg-white rounded-3xl p-5 sm:p-7 border border-noche/10 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+      <div class="flex items-center gap-4">
+        <img id="portalHeaderFoto" src="" alt="Profesional" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-petroleo/30 shrink-0 shadow-sm" />
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-petroleo text-white text-[11px] font-bold">
+            <span id="portalHeaderDisciplina">Psicología</span>
+          </div>
+          <h2 id="portalHeaderNombre" class="font-serif text-xl sm:text-2xl font-bold text-noche mt-1">
+            Ps. Camila Valdés
+          </h2>
+          <p id="portalHeaderRnpi" class="text-xs text-noche/70 font-mono mt-0.5">
+            RNPI N° 648291 · Universidad de Chile
+          </p>
+        </div>
+      </div>
+
+      <!-- Barra de herramientas superior -->
+      <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+        <!-- Selector rápido de prueba para administradoras -->
+        <div class="flex items-center gap-1.5 bg-perla px-3 py-1.5 rounded-xl border border-noche/10 text-xs">
+          <span class="text-noche/60 font-medium">Ver como:</span>
+          <select id="switchProfSelect" onchange="window.cambiarProfesionalActivo(this.value)" class="bg-transparent font-semibold text-noche focus:outline-none cursor-pointer">
+            <!-- Injected dynamically -->
+          </select>
+        </div>
+
+        <button
+          type="button"
+          onclick="window.abrirModalVistaPrevia()"
+          class="btn-noche-outline py-2 px-3.5 rounded-xl text-xs font-semibold flex items-center gap-1.5"
+          title="Ver cómo ven tu tarjeta los pacientes en cabalsalud.cl"
+        >
+          <i data-lucide="eye" class="w-3.5 h-3.5 text-petroleo"></i>
+          <span>Ficha Pública</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="window.cerrarSesion()"
+          class="py-2 px-3.5 rounded-xl border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 text-xs font-semibold flex items-center gap-1.5 transition"
+        >
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+          <span>Salir</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pestañas de Navegación -->
+    <div class="flex flex-wrap items-center gap-2 border-b border-noche/10 pb-2">
+      <button
+        type="button"
+        onclick="window.cambiarPestana('perfil')"
+        id="tabBtn-perfil"
+        class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-transparent transition flex items-center gap-2"
+      >
+        <i data-lucide="user" class="w-4 h-4"></i>
+        <span>Mi Perfil y Especialidades</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="window.cambiarPestana('sesiones')"
+        id="tabBtn-sesiones"
+        class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-noche/10 bg-white text-noche/80 hover:bg-perla transition flex items-center gap-2"
+      >
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+        <span>Próximas Sesiones y Pacientes</span>
+        <span id="badgeCantSesiones" class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold">2</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="window.cambiarPestana('horarios')"
+        id="tabBtn-horarios"
+        class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-noche/10 bg-white text-noche/80 hover:bg-perla transition flex items-center gap-2"
+      >
+        <i data-lucide="clock" class="w-4 h-4"></i>
+        <span>Horarios y Disponibilidad</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="window.cambiarPestana('banco')"
+        id="tabBtn-banco"
+        class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-noche/10 bg-white text-noche/80 hover:bg-perla transition flex items-center gap-2"
+      >
+        <i data-lucide="credit-card" class="w-4 h-4"></i>
+        <span>Datos de Transferencia y Honorarios</span>
+      </button>
+    </div>
+
+    <!-- ALERTA DE GUARDADO -->
+    <div id="portalAlert" class="hidden rounded-2xl p-4 text-xs sm:text-sm font-semibold"></div>
+
+    <!-- ====================================================================
+         PESTAÑA 1: EDICIÓN COMPLETA DEL PERFIL PROFESIONAL
+         ==================================================================== -->
+    <section id="sectionTab-perfil" class="bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <div class="border-b border-noche/10 pb-4">
+        <h3 class="font-serif text-xl font-bold text-noche">
+          Editar Información Profesional y Ficha Pública
+        </h3>
+        <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+          Los cambios realizados aquí se sincronizan de inmediato con el catálogo oficial de <strong>cabalsalud.cl</strong> y la agenda de <strong>Gentia</strong>.
+        </p>
+      </div>
+
+      <form onsubmit="window.guardarCambiosPerfil(event)" class="space-y-6">
+        <!-- 1. Identificación y Registro -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Nombre Completo *</label>
+            <input type="text" id="editNombre" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-medium text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Título y Profesión *</label>
+            <input type="text" id="editProfesion" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-medium text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Disciplina Clínica *</label>
+            <select id="editDisciplina" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-semibold text-noche focus:outline-none focus:border-petroleo">
+              <option value="psicologia">Psicología</option>
+              <option value="nutricion">Nutrición y Dietética</option>
+              <option value="matroneria">Matronería</option>
+              <option value="terapia_ocupacional">Terapia Ocupacional</option>
+              <option value="fonoaudiologia">Fonoaudiología</option>
+              <option value="trabajo_social">Trabajo Social</option>
+              <option value="medicina_psiquiatria">Medicina General (Salud Mental) / Psiquiatría</option>
+              <option value="derecho_mediacion">Abogacía / Mediación Familiar</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Registro Nacional (RNPI o Colegio) *</label>
+            <input type="text" id="editRnpi" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Universidad de Egreso *</label>
+            <input type="text" id="editUniversidad" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-medium text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Foto de Perfil (URL Directa) *</label>
+            <input type="url" id="editFotoUrl" onchange="document.getElementById('portalHeaderFoto').src = this.value" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+        </div>
+
+        <!-- 2. Enfoque y Resumen Biográfico -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Enfoque Resumen (Visible en Tarjeta Principal) *</label>
+            <textarea id="editEnfoque" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed"></textarea>
+            <span class="text-[11px] text-noche/60">Síntesis de cómo acompañas a las personas y tus principales temáticas.</span>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Experiencia y Trayectoria Clínica Detallada *</label>
+            <textarea id="editExperiencia" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-xs sm:text-sm text-noche focus:outline-none focus:border-petroleo leading-relaxed"></textarea>
+            <span class="text-[11px] text-noche/60">Aparece al abrir tu perfil completo (años de clínica, trabajo colaborativo).</span>
+          </div>
+        </div>
+
+        <!-- 3. Formación Académica (Lista Dinámica) -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-petroleo">Formación Académica y Diplomados</label>
+            <button type="button" onclick="window.agregarItemFormacion()" class="text-xs font-semibold text-petroleo hover:underline flex items-center gap-1">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>Agregar Grado / Diplomado</span>
+            </button>
+          </div>
+          <div id="containerFormacionItems" class="space-y-2">
+            <!-- Dynamic rows -->
+          </div>
+        </div>
+
+        <!-- 4. Áreas de Especialidad y Subespecialidades Estrella -->
+        <div class="bg-perla rounded-2xl p-4 sm:p-5 border border-noche/10 space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-noche/80 mb-1">Áreas de Especialidad (Separadas por comas)</label>
+            <input type="text" id="editEspecialidades" placeholder="Ej. Ansiedad, Depresión, Acompañamiento en Lesiones" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-granate mb-2">Subespecialidades Estrella de Cabal Salud</label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-noche/10 cursor-pointer">
+                <input type="checkbox" id="checkSubDeporte" class="accent-granate w-4 h-4 rounded" />
+                <span>Psicología Deportiva y Nutrición Deportiva</span>
+              </label>
+              <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-noche/10 cursor-pointer">
+                <input type="checkbox" id="checkSubNeuro" class="accent-granate w-4 h-4 rounded" />
+                <span>Neurodivergencia Integral (TEA / TDAH)</span>
+              </label>
+              <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-noche/10 cursor-pointer">
+                <input type="checkbox" id="checkSubPerinatal" class="accent-granate w-4 h-4 rounded" />
+                <span>Salud Mental Perinatal y Preconcepción</span>
+              </label>
+              <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-noche/10 cursor-pointer">
+                <input type="checkbox" id="checkSubGeriatria" class="accent-granate w-4 h-4 rounded" />
+                <span>Infanto-Juvenil y Geriatría</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Modalidades, Previsión y Arancel -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Modalidades de Atención</label>
+            <div class="space-y-1.5 pt-1 text-xs">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" id="checkModOnline" checked class="accent-petroleo w-4 h-4" />
+                <span>Online (Videoconsulta Segura)</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" id="checkModTerreno" class="accent-granate w-4 h-4" />
+                <span>Visita Domiciliaria / a Terreno</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Previsiones Aceptadas</label>
+            <div class="space-y-1.5 pt-1 text-xs">
+              <label class="flex items-center gap-2">
+                <input type="checkbox" id="checkPrevParticular" checked class="accent-petroleo w-4 h-4" />
+                <span>Particular</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" id="checkPrevIsapre" checked class="accent-petroleo w-4 h-4" />
+                <span>Reembolso Isapres (Emisión de Boleta)</span>
+              </label>
+              <label class="flex items-center gap-2">
+                <input type="checkbox" id="checkPrevFonasa" checked class="accent-petroleo w-4 h-4" />
+                <span>FONASA</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-noche/80 mb-1">Arancel por Sesión (CLP) *</label>
+            <input type="number" id="editPrecioCLP" step="1000" min="15000" required class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-serif font-bold text-noche focus:outline-none focus:border-petroleo" />
+            <div class="text-[11px] text-noche/60 mt-1">Duración: 50 minutos estándar.</div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-noche/10 flex items-center justify-end gap-3">
+          <button
+            type="submit"
+            id="btnGuardarPerfil"
+            class="btn-petroleo py-3.5 px-6 rounded-xl text-sm font-semibold flex items-center gap-2 shadow"
+          >
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Guardar y Actualizar mi Ficha</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ====================================================================
+         PESTAÑA 2: PRÓXIMAS SESIONES Y PACIENTES AGENDADOS
+         ==================================================================== -->
+    <section id="sectionTab-sesiones" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-noche/10 pb-4">
+        <div>
+          <h3 class="font-serif text-xl font-bold text-noche">
+            Sesiones Clínicas Confirmadas
+          </h3>
+          <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+            Pacientes que han reservado y completado su pago directo con Cabal Salud SpA.
+          </p>
+        </div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Pagos Verificados · Direct Merchant
+        </span>
+      </div>
+
+      <div id="containerListaSesiones" class="space-y-4">
+        <!-- Injected dynamically -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PESTAÑA 3: HORARIOS Y DISPONIBILIDAD
+         ==================================================================== -->
+    <section id="sectionTab-horarios" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <div class="border-b border-noche/10 pb-4">
+        <h3 class="font-serif text-xl font-bold text-noche">
+          Configuración de Disponibilidad y Bloques Horarios
+        </h3>
+        <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+          Define los días y franjas horarias en que los pacientes pueden agendar citas contigo a través de <strong>cabalsalud.cl</strong>.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-perla rounded-2xl p-5 border border-noche/10 space-y-3">
+          <h4 class="font-serif text-sm font-bold text-noche">Días de Atención Activos</h4>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Lunes</span>
+              <input type="checkbox" checked class="accent-petroleo w-4 h-4">
+            </label>
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Martes</span>
+              <input type="checkbox" checked class="accent-petroleo w-4 h-4">
+            </label>
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Miércoles</span>
+              <input type="checkbox" checked class="accent-petroleo w-4 h-4">
+            </label>
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Jueves</span>
+              <input type="checkbox" checked class="accent-petroleo w-4 h-4">
+            </label>
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Viernes</span>
+              <input type="checkbox" checked class="accent-petroleo w-4 h-4">
+            </label>
+            <label class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-noche/10">
+              <span class="font-semibold text-noche">Sábado</span>
+              <input type="checkbox" class="accent-petroleo w-4 h-4">
+            </label>
+          </div>
+        </div>
+
+        <div class="bg-perla rounded-2xl p-5 border border-noche/10 space-y-4">
+          <h4 class="font-serif text-sm font-bold text-noche">Franjas de Horario Permitidas</h4>
+          <div>
+            <span class="text-xs font-semibold text-noche/70 block mb-1">Jornada Mañana:</span>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <input type="time" value="09:00" class="px-3 py-2 rounded-xl bg-white border border-noche/15 font-semibold text-noche">
+              <input type="time" value="13:00" class="px-3 py-2 rounded-xl bg-white border border-noche/15 font-semibold text-noche">
+            </div>
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-noche/70 block mb-1">Jornada Tarde:</span>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <input type="time" value="15:00" class="px-3 py-2 rounded-xl bg-white border border-noche/15 font-semibold text-noche">
+              <input type="time" value="20:00" class="px-3 py-2 rounded-xl bg-white border border-noche/15 font-semibold text-noche">
+            </div>
+          </div>
+          <div class="pt-2 text-xs text-noche/60 leading-relaxed">
+            💡 Cuando un paciente confirma su pago en Transbank o Mercado Pago, el bloque se bloquea automáticamente en tu calendario de Gentia para evitar solapamientos.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         PESTAÑA 4: DATOS DE TRANSFERENCIA Y HONORARIOS
+         ==================================================================== -->
+    <section id="sectionTab-banco" class="hidden bg-white rounded-3xl p-6 sm:p-8 border border-noche/10 shadow-sm space-y-6">
+      <div class="border-b border-noche/10 pb-4">
+        <h3 class="font-serif text-xl font-bold text-noche">
+          Datos Bancarios para Liquidación de Honorarios
+        </h3>
+        <p class="text-xs sm:text-sm text-noche/70 mt-0.5">
+          Cuenta bancaria a la cual <strong>Pamela Quijada y Lilians Cortés</strong> realizarán las transferencias mensuales correspondientes a tus atenciones realizadas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Banco Destino *</label>
+          <select id="bancoNombre" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo">
+            <option value="Banco de Chile">Banco de Chile / Edwards</option>
+            <option value="Banco Santander">Banco Santander</option>
+            <option value="Banco BCI">Banco BCI / MACH</option>
+            <option value="BancoEstado">BancoEstado (CuentaRUT / Cta Corriente)</option>
+            <option value="Scotiabank">Scotiabank Chile</option>
+            <option value="Itaú">Banco Itaú</option>
+            <option value="Banco BICE">Banco BICE</option>
+            <option value="Banco Security">Banco Security</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Tipo de Cuenta *</label>
+          <select id="bancoTipoCuenta" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm text-noche focus:outline-none focus:border-petroleo">
+            <option value="Corriente">Cuenta Corriente</option>
+            <option value="Vista">Cuenta Vista</option>
+            <option value="Ahorro">Cuenta de Ahorro</option>
+            <option value="CuentaRUT">CuentaRUT</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">Número de Cuenta *</label>
+          <input type="text" id="bancoNumeroCuenta" value="00-1234567-8" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-noche/80 mb-1">RUT del Titular de la Cuenta *</label>
+          <input type="text" id="bancoRutTitular" value="16.482.910-3" class="w-full px-3.5 py-2.5 rounded-xl bg-perla/50 border border-noche/15 text-sm font-mono text-noche focus:outline-none focus:border-petroleo" />
+        </div>
+      </div>
+
+      <div class="bg-emerald-50 rounded-2xl p-4 sm:p-5 border border-emerald-200 flex items-start gap-3">
+        <i data-lucide="shield-check" class="w-5 h-5 text-emerald-700 shrink-0 mt-0.5"></i>
+        <div class="text-xs text-emerald-900 leading-relaxed">
+          <strong>Liquidación Transparente y Directa:</strong> Cada atención realizada en Cabal Salud es registrada de forma inmutable con su voucher Transbank / Mercado Pago. Las administradoras concilian el reporte mensual y transfieren tus honorarios a esta cuenta bancaria.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       MODAL DE VISTA PREVIA: CÓMO TE VEN LOS PACIENTES
+       ======================================================================== -->
+  <div id="modalVistaPrevia" class="hidden fixed inset-0 z-50 bg-noche/80 backdrop-blur-sm p-4 items-center justify-center overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-noche/10 shadow-2xl space-y-5 my-8">
+      <div class="flex items-center justify-between border-b border-noche/10 pb-3">
+        <div class="text-xs font-bold uppercase tracking-wider text-petroleo">
+          Previsualización en cabalsalud.cl
+        </div>
+        <button type="button" onclick="window.cerrarModalVistaPrevia()" class="w-8 h-8 rounded-full bg-perla text-noche/70 hover:text-noche flex items-center justify-center">✕</button>
+      </div>
+
+      <div id="previewCardContent" class="space-y-4">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="pt-2 text-right">
+        <button type="button" onclick="window.cerrarModalVistaPrevia()" class="btn-petroleo px-5 py-2.5 rounded-xl text-xs font-semibold">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-noche text-perla/70 text-xs py-6 border-t border-white/10 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span>© 2026 <strong>Clínica Cabal Salud SpA</strong> (`cabalsalud.cl`) — Portal de Profesionales</span>
+      <a href="https://gentia.cl" target="_blank" rel="noopener" class="text-perla hover:underline font-semibold">Engine powered by Gentia</a>
+    </div>
+  </footer>
+
+  <!-- LÓGICA DEL PORTAL PROFESIONAL -->
+  <script src="/portal-profesional.js"></script>
+</body>
+</html>

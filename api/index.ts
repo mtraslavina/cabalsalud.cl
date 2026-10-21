@@ -1517,6 +1517,70 @@ app.get("/api/agenda/ics", (req, res) => {
   res.send(icsContent);
 });
 
+// ============================================================================
+// ENDPOINTS DEL PORTAL EXCLUSIVO DE PROFESIONALES DE CABAL SALUD
+// ============================================================================
+app.get("/api/profesionales/lista", (_req, res) => {
+  res.json({
+    success: true,
+    profesionales: CATALOGO_PROFESIONALES_CABAL.map(p => ({
+      uid: p.uid,
+      nombre: p.nombre,
+      profesion: p.profesion,
+      disciplinaId: p.disciplinaId,
+      disciplinaNombre: p.disciplinaNombre,
+      fotoUrl: p.fotoUrl,
+      rnpi: p.rnpi,
+      universidad: p.universidad,
+      precioCLP: p.precioCLP,
+      modalidades: p.modalidades,
+      previsiones: p.previsiones,
+      subespecialidadIds: p.subespecialidadIds,
+      subespecialidadesDestacadas: p.subespecialidadesDestacadas,
+      especialidades: p.especialidades,
+      enfoqueResumen: p.enfoqueResumen,
+      experienciaDetalle: p.experienciaDetalle,
+      formacionAcademica: p.formacionAcademica
+    }))
+  });
+});
+
+app.get("/api/profesionales/perfil/:uid", (req, res) => {
+  const { uid } = req.params;
+  const prof = CATALOGO_PROFESIONALES_CABAL.find(p => p.uid === uid);
+  if (!prof) {
+    return res.status(404).json({ success: false, error: "Profesional no encontrado en la red" });
+  }
+  res.json({ success: true, profesional: prof });
+});
+
+app.post("/api/profesionales/perfil/actualizar", (req, res) => {
+  try {
+    const { uid, datos } = req.body;
+    if (!uid || !datos) {
+      return res.status(400).json({ success: false, error: "Faltan parámetros requeridos (uid y datos)." });
+    }
+    const idx = CATALOGO_PROFESIONALES_CABAL.findIndex(p => p.uid === uid);
+    if (idx === -1) {
+      return res.status(404).json({ success: false, error: "Profesional no encontrado." });
+    }
+
+    CATALOGO_PROFESIONALES_CABAL[idx] = {
+      ...CATALOGO_PROFESIONALES_CABAL[idx],
+      ...datos,
+      uid
+    };
+
+    res.json({
+      success: true,
+      mensaje: "Perfil profesional actualizado exitosamente.",
+      profesional: CATALOGO_PROFESIONALES_CABAL[idx]
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Servir archivos estáticos de /public en desarrollo local
 const publicDir = path.join(__dirname, "../public");
 app.use(express.static(publicDir));
