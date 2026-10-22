@@ -729,6 +729,86 @@ p.font.name = "Calibri"
 p.font.size = Pt(10.5)
 p.font.color.rgb = C_NOCHE
 
+
+# ==============================================================================
+# SLIDE 11: PACIENTE TRANSVERSAL, TRASPASO INTERNO Y EXPEDIENTE .ZIP
+# ==============================================================================
+s11_multi = prs.slides.add_slide(blank_layout)
+set_slide_background(s11_multi, C_PERLA)
+add_header(s11_multi, "Expediente Multidisciplinario Compartido, Traspaso Interno y Descarga .ZIP", "RED MULTIDISCIPLINARIA · LEY N° 20.584 Y D.S. N° 41")
+
+c_multi_izq = add_card(s11_multi, Inches(0.8), Inches(1.8), Inches(5.7), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
+tf_multi_izq = c_multi_izq.text_frame
+tf_multi_izq.word_wrap = True
+tf_multi_izq.margin_left = tf_multi_izq.margin_right = Inches(0.35)
+tf_multi_izq.margin_top = Inches(0.25)
+
+p = tf_multi_izq.paragraphs[0]
+p.text = "👥 Paciente Transversal Compartido (Constanza Morales)"
+p.font.name = "Georgia"
+p.font.size = Pt(14)
+p.font.bold = True
+p.font.color.rgb = C_PETROLEO
+p.space_after = Pt(8)
+
+p = tf_multi_izq.add_paragraph()
+p.text = (
+    "• Consultante Única para Toda la Red Cabal Salud:\n"
+    "  Constanza Morales Henríquez (28 años, Triatleta & Diseñadora, RUT 18.392.104-5). "
+    "Al ingresar cualquier especialista a su portal, Constanza aparece en su directorio.\n\n"
+    "• Fichas Ad-Hoc Precargadas para las 9 Especialidades:\n"
+    "  - Psicología Deportiva: Examen Mental V70, ansiedad precompetitiva y motivo latente.\n"
+    "  - Nutrición & Dietética: Evaluación ISAK II (IMC 21.7, 17.5% grasa, timing de HC).\n"
+    "  - Matronería & Salud Sexual: FUR, ciclos regulares, DIU, PAP vigente, piso pélvico.\n"
+    "  - Terapia Ocupacional: Perfil Sensorial SPM-2, AVD y ergonomía en teletrabajo.\n"
+    "  - Fonoaudiología: Protocolo MBGR, bruxismo e hipertonía de maseteros.\n"
+    "  - Trabajo Social: Diagnóstico sociofamiliar, tipología y redes de soporte.\n"
+    "  - Psicología Neurodivergencia: Modulación sensorial y estilo de procesamiento.\n"
+    "  - Psiquiatría: Examen somático, cronobiología y control de melatonina.\n"
+    "  - Mediación Legal: Asesoría contractual de auspicio deportivo y compliance.\n\n"
+    "• Trazabilidad y Confidencialidad:\n"
+    "  Cada profesional edita su área manteniendo resguardo ético según la Ley N° 20.584."
+)
+p.font.name = "Calibri"
+p.font.size = Pt(10.2)
+p.font.color.rgb = C_NOCHE
+
+c_multi_der = add_card(s11_multi, Inches(6.8), Inches(1.8), Inches(5.7), Inches(5.1), C_BLANCO, RGBColor(220, 215, 205))
+tf_multi_der = c_multi_der.text_frame
+tf_multi_der.word_wrap = True
+tf_multi_der.margin_left = tf_multi_der.margin_right = Inches(0.35)
+tf_multi_der.margin_top = Inches(0.25)
+
+p = tf_multi_der.paragraphs[0]
+p.text = "🔄 Traspaso en Cascada, Informes Oficiales & ZIP"
+p.font.name = "Georgia"
+p.font.size = Pt(14)
+p.font.bold = True
+p.font.color.rgb = C_ESMERALDA
+p.space_after = Pt(8)
+
+p = tf_multi_der.add_paragraph()
+p.text = (
+    "• Sistema de Traspaso y Derivación en 2 Pasos:\n"
+    "  1. Disciplina Destino: Psicología, Nutrición, Matronería, T.O., Fonoaudiología, etc.\n"
+    "  2. Especialista Receptor: Selección del colega disponible en dicha área.\n"
+    "  - Modalidad: Interconsulta colaborativa vs. Traspaso definitivo de custodia.\n"
+    "  - Selección de Fichas Adjuntas: Anamnesis, notas DAP de evolución y Epicrisis.\n"
+    "  - Sellado Criptográfico: Inserta registro inmutable con hash SHA-256 en historial.\n\n"
+    "• Descarga de Informes Formateados por Especialidad:\n"
+    "  Modal interactivo '[ 📄 Informe Especialidad ]' con vista previa de impresión "
+    "y descarga HTML/PDF con membrete formal de Cabal Salud SpA para Isapres y peritajes.\n\n"
+    "• Empaquetado Integral en Archivo .ZIP (JSZip):\n"
+    "  Un clic en '[ 📦 Descargar .ZIP ]' comprime al instante sin servidores externos:\n"
+    "  - 00_INDICE_EXPEDIENTE_CABAL_SALUD.txt (Índice maestro de documentos).\n"
+    "  - 01_CERTIFICADO_CUSTODIA_AUDITORIA_SHA256.txt (Certificación D.S. 41 y Ley 20.584).\n"
+    "  - 02_EXPEDIENTE_MAESTRO_CONSOLIDADO.html (Unificación de las 9 disciplinas).\n"
+    "  - Carpeta 'Especialidades_Clinicas/' con las 9 fichas individuales formateadas."
+)
+p.font.name = "Calibri"
+p.font.size = Pt(10.2)
+p.font.color.rgb = C_NOCHE
+
 # ==============================================================================
 # SLIDE 11: SCREENSHOT PANEL DE ADMINISTRACIÓN (PAMELA Y LILIANS EN GENTIA)
 # ==============================================================================
