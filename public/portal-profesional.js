@@ -4666,7 +4666,6 @@ Clínica Cabal Salud SpA
 
     // Reset form
     document.getElementById("formAsignarPacienteAdmin")?.reset();
-    window.setModoAsignacionAdmin("NUEVO");
 
     // Fecha predeterminada: Mañana
     const manana = new Date();
@@ -4686,11 +4685,18 @@ Clínica Cabal Salud SpA
 
     // Poblar selector de pacientes existentes
     const pacSelect = document.getElementById("adminSelectPacienteExistente");
+    const tienePacientes = Array.isArray(listaPacientesDirectorio) && listaPacientesDirectorio.length > 0;
     if (pacSelect) {
-      pacSelect.innerHTML = `<option value="">-- Selecciona un consultante de la lista --</option>` +
+      pacSelect.innerHTML = `<option value="">-- Selecciona un consultante registrado --</option>` +
         listaPacientesDirectorio.map(p => `
           <option value="${p.id}">${p.nombre} (RUT ${p.rut || "S/RUT"}) — ${p.prevision || "Particular"}</option>
         `).join("");
+    }
+
+    if (tienePacientes) {
+      window.setModoAsignacionAdmin("EXISTENTE");
+    } else {
+      window.setModoAsignacionAdmin("NUEVO");
     }
 
     modal.classList.remove("hidden");
@@ -4711,22 +4717,44 @@ Clínica Cabal Salud SpA
     const btnNuevo = document.getElementById("btnModoNuevoPac");
     const btnExistente = document.getElementById("btnModoExistentePac");
     const wrapperExistente = document.getElementById("wrapperSelectorExistenteAdmin");
+    const badge = document.getElementById("badgeAutocompletadoAdmin");
 
     if (modo === "EXISTENTE") {
       if (btnNuevo) btnNuevo.className = "flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition";
       if (btnExistente) btnExistente.className = "flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition font-bold";
       if (wrapperExistente) wrapperExistente.classList.remove("hidden");
+
+      const pacSelect = document.getElementById("adminSelectPacienteExistente");
+      if (pacSelect && pacSelect.value) {
+        window.autocompletarPacienteAdmin(pacSelect.value);
+      }
     } else {
       if (btnNuevo) btnNuevo.className = "flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition font-bold";
       if (btnExistente) btnExistente.className = "flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition";
       if (wrapperExistente) wrapperExistente.classList.add("hidden");
+      if (badge) badge.classList.add("hidden");
+
+      // Limpiar campos para ingreso nuevo
+      ["adminAsignarNombre", "adminAsignarRut", "adminAsignarEmail", "adminAsignarTelefono", "adminAsignarMotivo"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const pacSelect = document.getElementById("adminSelectPacienteExistente");
+      if (pacSelect) pacSelect.value = "";
     }
   };
 
   window.autocompletarPacienteAdmin = function (pacienteId) {
-    if (!pacienteId) return;
+    const badge = document.getElementById("badgeAutocompletadoAdmin");
+    if (!pacienteId) {
+      if (badge) badge.classList.add("hidden");
+      return;
+    }
     const p = listaPacientesDirectorio.find(item => item.id === pacienteId);
-    if (!p) return;
+    if (!p) {
+      if (badge) badge.classList.add("hidden");
+      return;
+    }
     document.getElementById("adminAsignarNombre").value = p.nombre || "";
     document.getElementById("adminAsignarRut").value = p.rut || "";
     document.getElementById("adminAsignarEmail").value = p.email || "";
@@ -4736,6 +4764,10 @@ Clínica Cabal Salud SpA
       if (prevSelect) prevSelect.value = p.prevision;
     }
     document.getElementById("adminAsignarMotivo").value = p.motivoConsulta || "";
+    if (badge) {
+      badge.textContent = `✓ Datos de ${p.nombre} cargados automáticamente desde Gentia Vault.`;
+      badge.classList.remove("hidden");
+    }
   };
 
   window.actualizarSelectProfesionalesAdmin = function (disciplinaId) {

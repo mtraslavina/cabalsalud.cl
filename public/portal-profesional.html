@@ -1300,36 +1300,39 @@
       </div>
 
       <form id="formAsignarPacienteAdmin" onsubmit="window.ejecutarAsignacionPacienteAdmin(event)" class="space-y-5">
-        <!-- Selector Modo: Nuevo o Existente -->
+        <!-- Selector Modo: Consultante Registrado o Nuevo -->
         <div class="bg-perla p-1 rounded-xl flex items-center gap-1 border border-noche/10 text-xs font-semibold">
-          <button
-            type="button"
-            id="btnModoNuevoPac"
-            onclick="window.setModoAsignacionAdmin('NUEVO')"
-            class="flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition"
-          >
-            <i data-lucide="user-plus" class="w-3.5 h-3.5 text-petroleo"></i>
-            <span>Nuevo Consultante</span>
-          </button>
           <button
             type="button"
             id="btnModoExistentePac"
             onclick="window.setModoAsignacionAdmin('EXISTENTE')"
+            class="flex-1 py-2 rounded-lg bg-white text-noche shadow-xs flex items-center justify-center gap-1.5 transition font-bold"
+          >
+            <i data-lucide="users" class="w-3.5 h-3.5 text-petroleo"></i>
+            <span>Consultante Registrado</span>
+          </button>
+          <button
+            type="button"
+            id="btnModoNuevoPac"
+            onclick="window.setModoAsignacionAdmin('NUEVO')"
             class="flex-1 py-2 rounded-lg text-noche/70 hover:bg-white/60 flex items-center justify-center gap-1.5 transition"
           >
-            <i data-lucide="search" class="w-3.5 h-3.5 text-noche/60"></i>
-            <span>Consultante Existente en Bóveda</span>
+            <i data-lucide="user-plus" class="w-3.5 h-3.5 text-noche/60"></i>
+            <span>+ Nuevo Consultante</span>
           </button>
         </div>
 
-        <!-- Selector de Paciente Existente (Condicional) -->
-        <div id="wrapperSelectorExistenteAdmin" class="hidden bg-perla/60 p-4 rounded-2xl border border-noche/10 space-y-1.5">
+        <!-- Selector de Paciente Existente -->
+        <div id="wrapperSelectorExistenteAdmin" class="bg-perla/60 p-4 rounded-2xl border border-noche/10 space-y-1.5">
           <label class="block text-xs font-bold uppercase tracking-wider text-noche/80">
-            Buscar Consultante Registrado en Gentia Vault
+            Seleccionar Consultante Registrado Previamente
           </label>
           <select id="adminSelectPacienteExistente" onchange="window.autocompletarPacienteAdmin(this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-noche/15 text-xs sm:text-sm font-semibold text-noche focus:outline-none focus:border-petroleo cursor-pointer">
             <!-- Injected dynamically -->
           </select>
+          <div id="badgeAutocompletadoAdmin" class="hidden text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2.5 py-1 mt-1.5">
+            ✓ Datos demográficos cargados automáticamente desde su expediente en Gentia Vault.
+          </div>
         </div>
 
         <!-- 1. Datos Demográficos del Consultante -->
