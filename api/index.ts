@@ -2958,100 +2958,135 @@ app.post("/api/admin/asignar-sesion", async (req, res) => {
 
     SESIONES_CABAL_MEMORIA.set(citaId, nuevaSesion);
 
-    // Generar formato de correo para el Profesional
+    const profEmailTarget = `${profesionalUid}@cabalsalud.cl`;
+
+    // Generar formato de correo para el Profesional (Identidad Oficial Cabal Salud)
     const emailProfesional = {
-      destinatario: targetPacEmail.includes("@") ? `${profesionalUid}@cabalsalud.cl` : "especialista@cabalsalud.cl",
+      destinatario: profEmailTarget,
       asunto: `[Cabal Salud] Nueva Sesión Asignada: ${targetPacNombre} · ${fecha} a las ${hora} hrs`,
       timestamp: new Date().toISOString(),
       enviado: Boolean(notificarEmailProfesional !== false),
       contenidoHtml: `
-        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;color:#10263C;">
-          <div style="background:#10263C;padding:24px 28px;color:#F7F4ED;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#10B981;text-transform:uppercase;">Clínica Cabal Salud · Notificación de Asignación</div>
+        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #CBD5E1;color:#10263C;">
+          <div style="background:linear-gradient(135deg, #174B4D 0%, #10263C 100%);padding:26px 28px;color:#F7F4ED;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#A7F3D0;text-transform:uppercase;">Clínica Cabal Salud · Portal Profesional</div>
             <h2 style="margin:6px 0 0;font-size:20px;font-weight:700;color:#FFFFFF;">Nueva Sesión Asignada en tu Agenda</h2>
           </div>
           <div style="padding:28px;">
-            <p style="font-size:14px;line-height:1.6;margin-top:0;">Estimada/o <strong>${profesionalNombre}</strong>,</p>
-            <p style="font-size:13px;line-height:1.6;color:#334155;">La administración de Clínica Cabal Salud (Pamela Quijada & Lilians Cortés) te ha asignado un nuevo consultante en tu agenda:</p>
+            <p style="font-size:14.5px;line-height:1.6;margin-top:0;">Estimada/o <strong>${profesionalNombre}</strong> 👋,</p>
+            <p style="font-size:13px;line-height:1.6;color:#334155;">La administración de Clínica Cabal Salud te ha asignado un nuevo consultante en tu agenda para <strong>${disciplinaNombre || "Salud Mental"}</strong>:</p>
             
-            <div style="background:#FFFFFF;border-radius:14px;padding:18px;margin:20px 0;border:1px solid #cbd5e1;">
-              <table style="width:100%;font-size:13px;border-collapse:collapse;">
-                <tr><td style="padding:4px 0;color:#64748b;width:140px;">Consultante:</td><td style="padding:4px 0;font-weight:700;color:#10263C;">${targetPacNombre}</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;">RUT:</td><td style="padding:4px 0;font-mono;font-weight:600;">${targetPacRut}</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;">Previsión:</td><td style="padding:4px 0;font-weight:600;">${targetPacPrevision}</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;">Fecha & Hora:</td><td style="padding:4px 0;font-weight:700;color:#174B4D;">${fecha} · ${hora} hrs</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;">Modalidad:</td><td style="padding:4px 0;">${modalidad || "Online (Sala WebRTC Gentia)"}</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;">Teléfono / WhatsApp:</td><td style="padding:4px 0;">${targetPacTel}</td></tr>
-                <tr><td style="padding:4px 0;color:#64748b;vertical-align:top;">Motivo informado:</td><td style="padding:4px 0;color:#10263C;font-style:italic;">"${nuevaSesion.motivoConsulta}"</td></tr>
-                ${notaRecepcion ? `<tr><td style="padding:4px 0;color:#64748b;vertical-align:top;">Nota interna:</td><td style="padding:4px 0;color:#772F3B;font-weight:600;">${notaRecepcion}</td></tr>` : ""}
+            <div style="background:#FFFFFF;border-radius:14px;padding:20px;margin:20px 0;border:1px solid #CBD5E1;box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+              <table style="width:100%;font-size:13px;border-collapse:collapse;line-height:1.7;">
+                <tr><td style="padding:5px 0;color:#64748B;width:140px;">Consultante:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${targetPacNombre}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">RUT:</td><td style="padding:5px 0;font-mono;font-weight:600;color:#10263C;">${targetPacRut}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Previsión:</td><td style="padding:5px 0;font-weight:600;color:#10263C;">${targetPacPrevision}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Fecha & Hora:</td><td style="padding:5px 0;font-weight:700;color:#174B4D;">${fecha} · ${hora} hrs</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Modalidad:</td><td style="padding:5px 0;color:#10263C;">${modalidad || "Online (Videoconsulta confidencial WebRTC)"}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Teléfono / WhatsApp:</td><td style="padding:5px 0;color:#10263C;">${targetPacTel}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;vertical-align:top;">Motivo informado:</td><td style="padding:5px 0;color:#10263C;font-style:italic;">"${nuevaSesion.motivoConsulta}"</td></tr>
+                ${notaRecepcion ? `<tr><td style="padding:5px 0;color:#64748B;vertical-align:top;">Nota interna:</td><td style="padding:5px 0;color:#772F3B;font-weight:600;">${notaRecepcion}</td></tr>` : ""}
               </table>
             </div>
 
-            <div style="text-align:center;margin:28px 0;">
-              <a href="${salaWebRTCProfesional}" target="_blank" style="display:inline-block;background:#174B4D;color:#FFFFFF;text-decoration:none;padding:13px 26px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(23,75,77,0.25);">
+            <div style="text-align:center;margin:26px 0;">
+              <a href="${salaWebRTCProfesional}" target="_blank" style="display:inline-block;background:#174B4D;color:#FFFFFF;text-decoration:none;padding:13px 26px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 14px rgba(23,75,77,0.28);">
                 🎥 Ingresar a la Sala WebRTC Profesional
               </a>
             </div>
 
-            <p style="font-size:12px;color:#64748b;line-height:1.5;">La ficha clínica y el expediente del consultante ya están disponibles en tu <strong>Portal Profesional</strong> bajo resguardo cifrado de Gentia Vault (Ley N° 20.584).</p>
+            <p style="font-size:12px;color:#64748B;line-height:1.5;">La ficha clínica y el expediente del consultante ya están disponibles en tu <strong>Portal Profesional</strong> bajo resguardo cifrado de Gentia Vault (Ley N° 20.584 y Ley N° 21.719).</p>
           </div>
-          <div style="background:#F1F5F9;padding:14px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;text-align:center;">
+          <div style="background:#ECE7DC;padding:14px 28px;font-size:11px;color:#5A6578;border-top:1px solid #DCD5C5;text-align:center;">
             Clínica Cabal Salud SpA · Dirección Médica & Administración · cabalsalud.cl
           </div>
         </div>
       `
     };
 
-    // Generar formato de correo para el Paciente
+    // Generar formato de correo para el Paciente (Identidad Oficial Cabal Salud)
     const emailPaciente = {
       destinatario: targetPacEmail,
       asunto: `Confirmación de Tu Sesión en Clínica Cabal Salud — ${profesionalNombre}`,
       timestamp: new Date().toISOString(),
       enviado: Boolean(notificarEmailPaciente !== false),
       contenidoHtml: `
-        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #e2e8f0;color:#10263C;">
-          <div style="background:#174B4D;padding:24px 28px;color:#F7F4ED;">
+        <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:600px;margin:0 auto;background:#F7F4ED;border-radius:18px;overflow:hidden;border:1px solid #CBD5E1;color:#10263C;">
+          <div style="background:linear-gradient(135deg, #174B4D 0%, #10263C 100%);padding:26px 28px;color:#F7F4ED;">
             <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#A7F3D0;text-transform:uppercase;">Clínica Cabal Salud · Cuidado Integral y Humano</div>
             <h2 style="margin:6px 0 0;font-size:20px;font-weight:700;color:#FFFFFF;">Confirmación de Tu Atención</h2>
           </div>
           <div style="padding:28px;">
-            <p style="font-size:14px;line-height:1.6;margin-top:0;">Hola <strong>${targetPacNombre.split(" ")[0]}</strong>,</p>
-            <p style="font-size:13px;line-height:1.6;color:#334155;">Te confirmamos que la administración de Clínica Cabal Salud ha agendado con éxito tu sesión de <strong>${disciplinaNombre || "Salud"}</strong>:</p>
+            <p style="font-size:14.5px;line-height:1.6;margin-top:0;">Hola <strong>${targetPacNombre.split(" ")[0] || targetPacNombre}</strong> 👋,</p>
+            <p style="font-size:13px;line-height:1.6;color:#334155;">Te confirmamos que la administración de <strong>Clínica Cabal Salud</strong> ha agendado con éxito tu atención de <strong>${disciplinaNombre || "Salud"}</strong> con el especialista <strong>${profesionalNombre}</strong>:</p>
             
-            <div style="background:#FFFFFF;border-radius:14px;padding:20px;margin:20px 0;border:1px solid #cbd5e1;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-              <table style="width:100%;font-size:13px;border-collapse:collapse;">
-                <tr><td style="padding:5px 0;color:#64748b;width:130px;">Especialista:</td><td style="padding:5px 0;font-weight:700;color:#174B4D;">${profesionalNombre}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;">Disciplina:</td><td style="padding:5px 0;font-weight:600;">${disciplinaNombre}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;">Fecha:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${fecha}</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;">Horario:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${hora} hrs</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;">Modalidad:</td><td style="padding:5px 0;">Videoconsulta confidencial online</td></tr>
-                <tr><td style="padding:5px 0;color:#64748b;">Código Cita:</td><td style="padding:5px 0;font-mono;font-weight:600;color:#772F3B;">${citaId}</td></tr>
+            <div style="background:#FFFFFF;border-radius:14px;padding:20px;margin:20px 0;border:1px solid #CBD5E1;box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+              <table style="width:100%;font-size:13px;border-collapse:collapse;line-height:1.7;">
+                <tr><td style="padding:5px 0;color:#64748B;width:130px;">Especialista:</td><td style="padding:5px 0;font-weight:700;color:#174B4D;">${profesionalNombre}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Disciplina / Servicio:</td><td style="padding:5px 0;font-weight:600;color:#10263C;">${disciplinaNombre || "Salud"}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Fecha:</td><td style="padding:5px 0;font-weight:700;color:#10263C;">${fecha}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Horario:</td><td style="padding:5px 0;font-weight:700;color:#174B4D;">${hora} hrs</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Modalidad:</td><td style="padding:5px 0;color:#10263C;">${modalidad || "Online (Videoconsulta confidencial WebRTC)"}</td></tr>
+                <tr><td style="padding:5px 0;color:#64748B;">Código Cita:</td><td style="padding:5px 0;font-mono;font-weight:600;color:#772F3B;">${citaId}</td></tr>
               </table>
             </div>
 
-            <div style="text-align:center;margin:28px 0;">
-              <a href="${salaWebRTCPaciente}" target="_blank" style="display:inline-block;background:#10263C;color:#FFFFFF;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 4px 14px rgba(16,38,60,0.25);">
-                👉 Conectarme a mi Videoconsulta el día de la cita
+            <div style="text-align:center;margin:26px 0;">
+              <a href="${salaWebRTCPaciente}" target="_blank" style="display:inline-block;background:#174B4D;color:#FFFFFF;text-decoration:none;padding:14px 28px;border-radius:12px;font-size:13.5px;font-weight:700;box-shadow:0 4px 14px rgba(23,75,77,0.3);">
+                🎥 Conectarme a mi Videoconsulta el día de la cita
               </a>
             </div>
 
-            <div style="background:#ECFDF5;border-radius:12px;padding:14px;border:1px solid #A7F3D0;margin-top:16px;">
-              <strong style="font-size:12px;color:#065F46;display:block;margin-bottom:4px;">💡 Recomendaciones para tu atención:</strong>
-              <ul style="font-size:11.5px;color:#047857;margin:0;padding-left:18px;line-height:1.5;">
+            <div style="background:#ECFDF5;border-radius:12px;padding:16px;border:1px solid #A7F3D0;margin-top:18px;">
+              <strong style="font-size:12.5px;color:#065F46;display:block;margin-bottom:5px;">💡 Recomendaciones para tu atención:</strong>
+              <ul style="font-size:12px;color:#047857;margin:0;padding-left:18px;line-height:1.6;">
                 <li>Busca un lugar tranquilo y con privacidad.</li>
                 <li>Conéctate 5 minutos antes con buena conexión a internet.</li>
-                <li>Si tienes exámenes o informes previos, podrás compartirlos en la sesión.</li>
+                <li>Si tienes antecedentes médicos o informes previos, podrás compartirlos durante la sesión.</li>
               </ul>
             </div>
 
-            <p style="font-size:12px;color:#64748b;line-height:1.5;margin-top:20px;">Si necesitas reagendar o tienes dudas, puedes escribirnos directamente a nuestro WhatsApp oficial: <strong>+56 9 8583 5203</strong>.</p>
+            <p style="font-size:12px;color:#64748B;line-height:1.5;margin-top:20px;">
+              Si necesitas reagendar o tienes dudas, puedes escribirnos directamente a nuestro WhatsApp oficial: <strong style="color:#174B4D;">+56 9 8583 5203</strong>.
+            </p>
           </div>
-          <div style="background:#F1F5F9;padding:14px 28px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;text-align:center;">
+          <div style="background:#ECE7DC;padding:14px 28px;font-size:11px;color:#5A6578;border-top:1px solid #DCD5C5;text-align:center;">
             Clínica Cabal Salud SpA · Providencia, Santiago de Chile · cabalsalud.cl
           </div>
         </div>
       `
     };
+
+    // Despacho transaccional real hacia Gentia Mailer (Resend SMTP / API)
+    try {
+      await llamarGentiaVault("/clinica/despacharNotificacionAsignacion", {
+        clinicaId: CABAL_ENV.GENTIA_CLINICA_ID,
+        citaId,
+        profesionalUid,
+        profesionalNombre,
+        profesionalEmail: profEmailTarget,
+        pacienteId: targetPacId,
+        pacienteNombre: targetPacNombre,
+        pacienteEmail: targetPacEmail,
+        pacienteRut: targetPacRut,
+        pacienteTelefono: targetPacTel,
+        pacientePrevision: targetPacPrevision,
+        disciplinaNombre: disciplinaNombre || "Salud Mental",
+        servicioNombre: `Sesión de ${disciplinaNombre || "Salud"} Online`,
+        fecha,
+        hora,
+        modalidad: modalidad || "Online (Videoconsulta confidencial WebRTC)",
+        motivoConsulta: nuevaSesion.motivoConsulta,
+        notaRecepcion,
+        salaWebRTCProfesional,
+        salaWebRTCPaciente,
+        notificarEmailProfesional,
+        notificarEmailPaciente
+      });
+      console.log(`[Cabal Salud Admin] Notificación despachada con éxito a Gentia Mail Dispatcher para cita ${citaId}`);
+    } catch (errGentiaNotif) {
+      console.warn("[Cabal Salud Admin] Aviso Gentia Mailer:", errGentiaNotif);
+    }
 
     console.log(`[Cabal Salud Admin] Sesión ${citaId} asignada a ${profesionalNombre} para el consultante ${targetPacNombre}. Correos despachados: Especialista=${notificarEmailProfesional !== false}, Paciente=${notificarEmailPaciente !== false}`);
 

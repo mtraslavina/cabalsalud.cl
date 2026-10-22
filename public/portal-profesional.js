@@ -4851,7 +4851,8 @@ Clínica Cabal Salud SpA
     document.getElementById("confLinkProf").textContent = data.salaWebRTCProfesional || s.salaWebRTCProfesional || "https://gentia.cl/...";
     document.getElementById("confLinkPac").textContent = data.salaWebRTCPaciente || s.salaWebRTCPaciente || "https://gentia.cl/...";
 
-    window.verEmailPreview("PROF");
+    // Mostrar por defecto el correo del consultante para verificación inmediata
+    window.verEmailPreview("PAC");
 
     modal.classList.remove("hidden");
     modal.classList.add("flex");
@@ -4865,12 +4866,12 @@ Clínica Cabal Salud SpA
     if (!container || !respuestaUltimaAsignacion) return;
 
     if (tipo === "PROF") {
-      if (btnProf) btnProf.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold";
+      if (btnProf) btnProf.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold shadow-sm";
       if (btnPac) btnPac.className = "px-2.5 py-1 rounded-lg bg-perla text-noche/70 hover:bg-white font-semibold";
       const e = respuestaUltimaAsignacion.emailProfesional || {};
       container.innerHTML = `
         <div class="space-y-1.5 pb-2 mb-2 border-b border-noche/10">
-          <div>Para: <strong class="font-mono text-petroleo">${e.destinatario || "especialista@cabalsalud.cl"}</strong></div>
+          <div>Destinatario: <strong class="font-mono text-petroleo">${e.destinatario || "especialista@cabalsalud.cl"}</strong> <span class="text-[10px] bg-petroleo/10 text-petroleo px-2 py-0.5 rounded-full font-bold ml-1">Especialista</span></div>
           <div>Asunto: <strong class="text-noche">${e.asunto || "Nueva Sesión Asignada"}</strong></div>
           <div class="text-[10px] text-noche/50">Estado: <span class="text-emerald-700 font-bold">✓ Despachado por servidor</span> · ${e.timestamp || ""}</div>
         </div>
@@ -4878,11 +4879,11 @@ Clínica Cabal Salud SpA
       `;
     } else {
       if (btnProf) btnProf.className = "px-2.5 py-1 rounded-lg bg-perla text-noche/70 hover:bg-white font-semibold";
-      if (btnPac) btnPac.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold";
+      if (btnPac) btnPac.className = "px-2.5 py-1 rounded-lg bg-petroleo text-white font-semibold shadow-sm";
       const e = respuestaUltimaAsignacion.emailPaciente || {};
       container.innerHTML = `
         <div class="space-y-1.5 pb-2 mb-2 border-b border-noche/10">
-          <div>Para: <strong class="font-mono text-petroleo">${e.destinatario || "paciente@cabalsalud.cl"}</strong></div>
+          <div>Destinatario: <strong class="font-mono text-petroleo">${e.destinatario || "paciente@cabalsalud.cl"}</strong> <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold ml-1">Consultante</span></div>
           <div>Asunto: <strong class="text-noche">${e.asunto || "Confirmación de Tu Sesión"}</strong></div>
           <div class="text-[10px] text-noche/50">Estado: <span class="text-emerald-700 font-bold">✓ Despachado por servidor</span> · ${e.timestamp || ""}</div>
         </div>
